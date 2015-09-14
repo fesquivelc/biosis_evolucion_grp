@@ -1134,7 +1134,7 @@ public class AsignarPermiso extends javax.swing.JInternalFrame {
     private void imprimirBoleta(Permiso seleccionada) {
         File reporte = new File("reportes/reporte_papeleta_salida.jasper");
 //        List<Long> lista = new ArrayList<>();
-        
+
         Map<String, Object> parametros = new HashMap<>();
         parametros.put("permiso_id", seleccionada.getId());
         parametros.put("por_lote", true);
@@ -1150,7 +1150,7 @@ public class AsignarPermiso extends javax.swing.JInternalFrame {
 
         File reporte = new File("reportes/reporte_papeleta_salida.jasper");
 //        List<Long> lista = new ArrayList<>();
-        
+
         Map<String, Object> parametros = new HashMap<>();
         parametros.put("permiso_id", seleccionada.getPermiso().getId());
         parametros.put("pers_nro_documento", seleccionada.getEmpleado().getNroDocumento());
@@ -1201,31 +1201,33 @@ public class AsignarPermiso extends javax.swing.JInternalFrame {
                 //dnis.add(asignacion.getEmpleado());
                 System.out.println(asignacion.getEmpleado());
                 List<AsignacionPermiso> lista = ac.buscarXFechaDni(asignacion.getEmpleado(), fechaInicio);
-                if(lista.isEmpty()){
-                    
-                }else{
-                   errores++;
-                   mensaje = "El empleado "+asignacion.getEmpleado()+" tiene conflicto con un permiso añadido anteriormente \n Ingrese otro rango de fechas \n";
-                   break;
+                if (lista.isEmpty()) {
+
+                } else if (accion != Controlador.MODIFICAR) {
+                        errores++;
+                        mensaje = "El empleado " + asignacion.getEmpleado() + " tiene conflicto con un permiso añadido anteriormente \n Ingrese otro rango de fechas \n";
+                        break;
+                    }
                 }
             }
+        
             //Traemos los permisos por dni
-        }
-        if(radHora.isSelected()){
+        
+        if (radHora.isSelected()) {
             Date horaInicio = (Date) spHoraInicio.getValue();
             Date horaFin = (Date) spHoraFin.getValue();
-            if(horaInicio.compareTo(horaFin) > 0){
+            if (horaInicio.compareTo(horaFin) > 0) {
                 errores++;
                 mensaje = ">La hora de inicio debe ser menor que la hora de fin \n";
             }
             Permiso paraComprobar = this.controlador.getSeleccionado();
-            for(AsignacionPermiso asignacion : paraComprobar.getAsignacionPermisoList()){
+            for (AsignacionPermiso asignacion : paraComprobar.getAsignacionPermisoList()) {
                 List<AsignacionPermiso> lista = ac.buscarXHora(asignacion.getEmpleado(), horaInicio);
-                if(lista.isEmpty()){
-                
-                }else{
+                if (lista.isEmpty()) {
+
+                } else {
                     errores++;
-                    mensaje = "El empleado "+asignacion.getEmpleado()+" tiene conflicto con un permiso añadido anteriormente \n Ingrese otro rango de horas\n";
+                    mensaje = "El empleado " + asignacion.getEmpleado() + " tiene conflicto con un permiso añadido anteriormente \n Ingrese otro rango de horas\n";
                     break;
                 }
             }
@@ -1238,7 +1240,7 @@ public class AsignarPermiso extends javax.swing.JInternalFrame {
 
     private void mostrarRecord(Empleado empleado) {
         Calendar cal = Calendar.getInstance();
-        cal.setTime(empleado.getFichaLaboral().getFechaInicio());
+        cal.setTime(empleado.getContratoList().get(0).getFechaInicio());
 
         Date fInicio = dcFechaInicio.getDate();
 

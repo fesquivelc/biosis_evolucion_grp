@@ -385,7 +385,7 @@ public class DlgDatosEmpleado extends javax.swing.JDialog {
         
         
         txtRegimenLaboral.setText(contratoVigente.getRegimenLaboral() == null ? "" : contratoVigente.getRegimenLaboral().getNombre());
-        dtFechaContrato.setDate(empleado.getFichaLaboral().getFechaInicio());
+        dtFechaContrato.setDate(empleado.getContratoList().get(0).getFechaInicio());
         txtCodigoModular.setText(empleado.getFichaLaboral().getCodigoTrabajador());
         
         AreaEmpleado areaVigente = new AreaEmpleado();

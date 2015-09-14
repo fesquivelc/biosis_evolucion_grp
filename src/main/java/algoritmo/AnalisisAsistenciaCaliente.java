@@ -437,6 +437,10 @@ public class AnalisisAsistenciaCaliente {
             detalleResultado = 'T';
         } else if (entradaResultado == 'F' && salidaResultado == 'F') {
             detalleResultado = 'F';
+        }else if (entradaResultado == 'R' && salidaResultado == 'F') {
+            detalleResultado = 'F';
+        }else if (entradaResultado == 'F' && salidaResultado == 'R') {
+            detalleResultado = 'F';
         }
 
         asistenciaDetalle.setInicio(entradaResultado != 'F' ? entradaMarcacion.getFechaHora() : null);

@@ -404,6 +404,8 @@ public class CRUDGrupoHorario extends javax.swing.JInternalFrame {
         List<Empleado> listaEmpleados = obtenerEmpleados(grupo.getDetalleGrupoHorarioList());
         if (!listaEmpleados.isEmpty()) {
             mostrarIntegrantes(listaEmpleados);
+        }else{
+            integrantes.clear();
         }
 
     }

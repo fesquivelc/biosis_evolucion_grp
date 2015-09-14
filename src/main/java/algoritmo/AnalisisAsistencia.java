@@ -92,7 +92,7 @@ public class AnalisisAsistencia {
             TCSistema sistema = tcsc.buscarPorId("BIOSIS");
 
             Date fechaCero = sistema.getFechaCero();
-            Date contrato = empleado.getFichaLaboral().getFechaInicio() == null ? fechaCero : empleado.getFichaLaboral().getFechaInicio();
+            Date contrato = empleado.getContratoList().get(0).getFechaInicio() == null ? fechaCero : empleado.getContratoList().get(0).getFechaInicio();
 
             if (contrato.compareTo(fechaCero) <= 0) {
                 partida.setFecha(fechaCero);

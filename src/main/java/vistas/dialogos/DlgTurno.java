@@ -205,6 +205,7 @@ public class DlgTurno extends javax.swing.JDialog {
             turno.setViernes(chkViernes.isSelected());
             turno.setSabado(chkSabado.isSelected());
             turno.setDomingo(chkDomingo.isSelected());
+            turno.setTipo('S');
             this.turnoSeleccionado = turno;
             this.dispose();
         }

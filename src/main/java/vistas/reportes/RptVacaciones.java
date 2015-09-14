@@ -474,7 +474,7 @@ public class RptVacaciones extends javax.swing.JInternalFrame {
 
     public void buscarCrear(Empleado empleado, Periodo periodo) {
         SaldoVacacional sv = svc.buscarXPeriodo(empleado, periodo);
-        Date fechaContrato = empleado.getFichaLaboral().getFechaInicio();
+        Date fechaContrato = empleado.getContratoList().get(0).getFechaInicio();
         calendar.setTime(fechaContrato);
         if (sv == null && periodo.getAnio() > calendar.get(Calendar.YEAR)) {
             //CREAMOS

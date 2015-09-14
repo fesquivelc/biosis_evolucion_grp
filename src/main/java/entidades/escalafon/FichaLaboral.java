@@ -29,7 +29,7 @@ public class FichaLaboral implements Serializable {
     @JoinColumn(name="tipo_contrato_codigo",referencedColumnName="codigo")
     private TipoContrato tipoContrato;
     @ManyToOne(targetEntity = Departamento.class)
-    @JoinColumn(name="area_codigo",referencedColumnName="area_id",nullable=false)
+    @JoinColumn(name="area_codigo",referencedColumnName="area_id",nullable=true)
     private Departamento area;
     @ManyToOne(targetEntity = SituacionTrabajador.class)
     @JoinColumn(name="situacion_trabajador_codigo",referencedColumnName="codigo")

@@ -280,7 +280,7 @@ public class Principal extends javax.swing.JFrame {
         mnuHorario.add(mnuJornada);
 
         jMenuItem4.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        jMenuItem4.setText("Horario rotativo");
+        jMenuItem4.setText("Horarios / Asignar Horarios");
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem4ActionPerformed(evt);

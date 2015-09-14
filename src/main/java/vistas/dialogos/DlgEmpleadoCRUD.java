@@ -59,8 +59,9 @@ public class DlgEmpleadoCRUD extends javax.swing.JDialog {
     /**
      * Creates new form VistaEmpleado
      */
-    private List<AreaEmpleado> lista;
+    private List<AreaEmpleado> lista = new ArrayList();
     private List<Contrato> lista2 = new ArrayList();
+    private boolean tab = true;
 
     private final EmpleadoControlador ec;
     private final JInternalFrame padre;
@@ -105,6 +106,11 @@ public class DlgEmpleadoCRUD extends javax.swing.JDialog {
         if (this.accion == Controlador.MODIFICAR) {
             this.mostrarDatos(empleado);
         }
+        if (this.accion == Controlador.NUEVO) {
+            tab = false;
+            this.tblPane.setEnabledAt(2, false);
+        }
+
         this.setLocationRelativeTo(parent);
         listarArea();
         listarContratos();
@@ -126,7 +132,7 @@ public class DlgEmpleadoCRUD extends javax.swing.JDialog {
         jPanel3 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        tblPane = new javax.swing.JTabbedPane();
         pnlEmpleado = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         pnlNavegacion = new javax.swing.JPanel();
@@ -365,7 +371,7 @@ public class DlgEmpleadoCRUD extends javax.swing.JDialog {
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         pnlEmpleado.add(txtNroDocumento, gridBagConstraints);
 
-        jTabbedPane1.addTab("Datos personales", pnlEmpleado);
+        tblPane.addTab("Datos personales", pnlEmpleado);
 
         jPanel4.setLayout(new java.awt.GridBagLayout());
 
@@ -559,7 +565,7 @@ public class DlgEmpleadoCRUD extends javax.swing.JDialog {
 
         pnlGenerales.setViewportView(jPanel4);
 
-        jTabbedPane1.addTab("Datos generales", pnlGenerales);
+        tblPane.addTab("Datos generales", pnlGenerales);
 
         jPanel6.setLayout(new java.awt.GridBagLayout());
 
@@ -936,7 +942,7 @@ public class DlgEmpleadoCRUD extends javax.swing.JDialog {
         gridBagConstraints.weighty = 0.1;
         jPanel6.add(tabDatosLaborales, gridBagConstraints);
 
-        jTabbedPane1.addTab("Datos laborales", jPanel6);
+        tblPane.addTab("Datos laborales", jPanel6);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -946,12 +952,12 @@ public class DlgEmpleadoCRUD extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 851, Short.MAX_VALUE)
+            .addComponent(tblPane, javax.swing.GroupLayout.DEFAULT_SIZE, 851, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(tblPane, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -984,7 +990,6 @@ public class DlgEmpleadoCRUD extends javax.swing.JDialog {
 
     private void btnAgregarCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarCActionPerformed
         // TODO add your handling code here:
-        
 
         contratosG.setEmpleado(empleado);
         contratosG.setFechaInicio(dcFechaInicio.getDate());
@@ -1002,8 +1007,6 @@ public class DlgEmpleadoCRUD extends javax.swing.JDialog {
 
     private void btnAgregarAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarAActionPerformed
         // TODO add your handling code here:
-
-        
 
         areaF.setEmpleado(empleado);
         areaF.setFechaInicio(dtFechaInicio.getDate());
@@ -1044,8 +1047,7 @@ public class DlgEmpleadoCRUD extends javax.swing.JDialog {
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
-        
-        
+
         accionT = Controlador.MODIFICAR;
 
         int fila = this.tblContratos.getSelectedRow();
@@ -1085,15 +1087,15 @@ public class DlgEmpleadoCRUD extends javax.swing.JDialog {
         // TODO add your handling code here:
 
         Contrato contratoCambio = cc.getSeleccionado();
-        
+
         contratoCambio.setEmpleado(empleado);
         contratoCambio.setFechaInicio(dcFechaInicio.getDate());
         contratoCambio.setFechaFin(dcFechaFin.getDate());
         contratoCambio.setTipoContrato((TipoContrato) cboTipoContrato.getSelectedItem());
         contratoCambio.setRegimenLaboral((RegimenLaboral) cboRegimenLaboral.getSelectedItem());
-        
+
         cc.setSeleccionado(contratoCambio);
-        
+
         cc.accion(accionT);
         FormularioUtil.activarComponente(this.panelDatosC, false);
     }//GEN-LAST:event_btnModDatosCActionPerformed
@@ -1101,13 +1103,13 @@ public class DlgEmpleadoCRUD extends javax.swing.JDialog {
     private void btnModAreasAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModAreasAActionPerformed
         // TODO add your handling code here:
         AreaEmpleado empleadoAreaCambio = ea.getSeleccionado();
-        
+
         empleadoAreaCambio.setEmpleado(empleado);
         empleadoAreaCambio.setFechaInicio(dtFechaInicio.getDate());
         empleadoAreaCambio.setFechaFin(dtFechaFin.getDate());
-        
+
         ea.setSeleccionado(empleadoAreaCambio);
-        
+
         ea.accion(accionT);
         FormularioUtil.activarComponente(this.panelDatosA, false);
     }//GEN-LAST:event_btnModAreasAActionPerformed
@@ -1136,8 +1138,7 @@ public class DlgEmpleadoCRUD extends javax.swing.JDialog {
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
         // TODO add your handling code here:
-        
-        
+
         accionT = Controlador.MODIFICAR;
 
         int fila = this.tblAreas.getSelectedRow();
@@ -1148,7 +1149,7 @@ public class DlgEmpleadoCRUD extends javax.swing.JDialog {
 
             ea.setSeleccionado(lista.get(fila));
             AreaEmpleado areaEmpleados = ea.getSeleccionado();
-            
+
             txtArea.setText(areaEmpleados.getDepartamento().getNombre());
             dcFechaInicio.setDate(areaEmpleados.getFechaInicio());
             dcFechaFin.setDate(areaEmpleados.getFechaFin());
@@ -1238,7 +1239,6 @@ public class DlgEmpleadoCRUD extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JPanel panelDatosA;
     private javax.swing.JPanel panelDatosC;
     private javax.swing.JPanel panelTblA;
@@ -1251,6 +1251,7 @@ public class DlgEmpleadoCRUD extends javax.swing.JDialog {
     private javax.swing.JTabbedPane tabDatosLaborales;
     private javax.swing.JTable tblAreas;
     private javax.swing.JTable tblContratos;
+    private javax.swing.JTabbedPane tblPane;
     private javax.swing.JTextField txtArea;
     private javax.swing.JTextField txtCodigoTrabajador;
     private javax.swing.JTextField txtDireccion;
@@ -1379,6 +1380,7 @@ public class DlgEmpleadoCRUD extends javax.swing.JDialog {
         if (FormularioUtil.dialogoConfirmar(this, accion)) {
             if (this.accion == Controlador.NUEVO) {
                 empleado.setNroDocumento(txtNroDocumento.getText());
+
             }
 
 //            FormularioUtil.convertirMayusculas(pnlLaborales);
@@ -1390,13 +1392,13 @@ public class DlgEmpleadoCRUD extends javax.swing.JDialog {
             empleado.setMaterno(txtMaterno.getText());
             empleado.setPaterno(txtPaterno.getText());
             empleado.setNombre(txtNombres.getText());
-            empleado.setSexo(cboGenero.getSelectedItem().toString().charAt(1));
+            empleado.setSexo(cboGenero.getSelectedItem().toString().charAt(0));
             empleado.setTipoDocumento((TipoDocumento) cboTipoDocumento.getSelectedItem());
 
             FichaGeneral fgen = empleado.getFichaGeneral();
             fgen.setDireccion(txtDireccion.getText());
             fgen.setEmail(txtEmail.getText().toLowerCase());
-            fgen.setEstadoCivil(cboEstadoCivil.getSelectedItem().toString().charAt(1));
+            fgen.setEstadoCivil(cboEstadoCivil.getSelectedItem().toString().charAt(0));
             fgen.setNacionalidad(nacionalidadSeleccion);
             fgen.setNivelEducativo((NivelEducativo) cboNivelEducativo.getSelectedItem());
             fgen.setTelefono1(txtTelefono1.getText());
@@ -1407,32 +1409,36 @@ public class DlgEmpleadoCRUD extends javax.swing.JDialog {
 
             FichaLaboral flab = empleado.getFichaLaboral();
 //            flab.setArea((Departamento) this.cboOficina.getSelectedItem());
-//            flab.setCodigoTrabajador(txtCodigoTrabajador.getText());
+            flab.setCodigoTrabajador(txtNroDocumento.getText());
 //            flab.setFechaInicio(dcFechaInicio.getDate());
 //            flab.setRegimenLaboral((RegimenLaboral) cboRegimenLaboral.getSelectedItem());
 //            flab.setSituacionTrabajador((SituacionTrabajador) cboSituacionEmpleado.getSelectedItem());
 //            flab.setTipoContrato((TipoContrato) cboTipoContrato.getSelectedItem());
 
-            if (!listaAreaEmpleadoG.isEmpty()) {
-                System.out.println("EL TAMAÑO DE AREAS ES: " + listaAreaEmpleadoG.size());
-                for (AreaEmpleado listas : listaAreaEmpleadoG) {
-                    ea.setSeleccionado(listas);
+            if (tab = true) {
+                if (!listaAreaEmpleadoG.isEmpty()) {
+                    System.out.println("EL TAMAÑO DE AREAS ES: " + listaAreaEmpleadoG.size());
+                    for (AreaEmpleado listas : listaAreaEmpleadoG) {
+                        ea.setSeleccionado(listas);
 
-                    ea.accion(accion);
+                        ea.accion(accion);
+                    }
                 }
-            }
 
-            if (!listaContratosG.isEmpty()) {
-                System.out.println("EL TAMAÑO DE CONTRATOS ES: " + listaContratosG.size());
-                for (Contrato listas2 : listaContratosG) {
-                    cc.setSeleccionado(listas2);
-                    cc.accion(accion);
+                if (!listaContratosG.isEmpty()) {
+                    System.out.println("EL TAMAÑO DE CONTRATOS ES: " + listaContratosG.size());
+                    for (Contrato listas2 : listaContratosG) {
+                        cc.setSeleccionado(listas2);
+                        cc.accion(accion);
+                    }
                 }
             }
 
             if (ec.accion(accion)) {
                 FormularioUtil.mensajeExito(this, accion);
+
                 this.dispose();
+
             } else {
                 FormularioUtil.mensajeError(this, accion);
             }
@@ -1454,6 +1460,7 @@ public class DlgEmpleadoCRUD extends javax.swing.JDialog {
         FichaGeneral general = empleado.getFichaGeneral();
 
         char sexo = general.getEstadoCivil();
+        System.out.println("ESTADO C: " + sexo);
 
         switch (sexo) {
             case 'C':
@@ -1493,15 +1500,19 @@ public class DlgEmpleadoCRUD extends javax.swing.JDialog {
         FichaLaboral laboral = empleado.getFichaLaboral();
 //        cboOficina.setSelectedItem(laboral.getArea());
         txtCodigoTrabajador.setText(laboral.getCodigoTrabajador() == null ? "" : laboral.getCodigoTrabajador());
-        cboTipoContrato.setSelectedItem(laboral.getTipoContrato());
-        cboRegimenLaboral.setSelectedItem(laboral.getRegimenLaboral());
-        dcFechaInicio.setDate(laboral.getFechaInicio());
+//        cboTipoContrato.setSelectedItem(laboral.getTipoContrato());
+//        cboRegimenLaboral.setSelectedItem(laboral.getRegimenLaboral());
+//        dcFechaInicio.setDate(laboral.getFechaInicio());
 //        cboSituacionEmpleado.setSelectedItem(laboral.getSituacionTrabajador());
 
     }
 
     private void listarArea() {
-        lista = this.ea.buscarXNombrexFechaASC(empleado);
+        System.out.println("TAMAÑO: " + lista.size());
+        System.out.println("EMPLEADO: " + empleado);
+        if (accion != Controlador.NUEVO) {
+            lista = this.ea.buscarXNombrexFechaASC(empleado);
+        }
         lista = ObservableCollections.observableList(lista);
 
         JTableBinding binding = SwingBindings.createJTableBinding(AutoBinding.UpdateStrategy.READ, lista, tblAreas);
@@ -1520,9 +1531,10 @@ public class DlgEmpleadoCRUD extends javax.swing.JDialog {
     }
 
     private void listarContratos() {
-        lista2 = this.cc.buscarXNombrexFechaASC(empleado);
+        if (accion != Controlador.NUEVO) {
+            lista2 = this.cc.buscarXNombrexFechaASC(empleado);
+        }
         lista2 = ObservableCollections.observableList(lista2);
-
         JTableBinding binding = SwingBindings.createJTableBinding(AutoBinding.UpdateStrategy.READ, lista2, tblContratos);
 
         BeanProperty bEmpleado = BeanProperty.create("empleado");

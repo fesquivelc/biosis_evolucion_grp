@@ -83,7 +83,7 @@ public class HorarioRotativo extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblHorario = new org.jdesktop.swingx.JXTable();
         pnlDatos = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
+        pnlDatosHorario = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         txtCodigo = new javax.swing.JTextField();
@@ -106,8 +106,8 @@ public class HorarioRotativo extends javax.swing.JInternalFrame {
         btnAsignar3 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         pnlBotones = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnGuardar = new javax.swing.JButton();
+        btnCncelar = new javax.swing.JButton();
         onlBusqueda = new javax.swing.JPanel();
         chkFiltrar = new javax.swing.JCheckBox();
         cboTipoFiltro = new javax.swing.JComboBox();
@@ -186,7 +186,7 @@ public class HorarioRotativo extends javax.swing.JInternalFrame {
         java.awt.GridBagLayout jPanel1Layout = new java.awt.GridBagLayout();
         jPanel1Layout.columnWidths = new int[] {0, 5, 0, 5, 0};
         jPanel1Layout.rowHeights = new int[] {0, 5, 0, 5, 0, 5, 0, 5, 0};
-        jPanel1.setLayout(jPanel1Layout);
+        pnlDatosHorario.setLayout(jPanel1Layout);
 
         jLabel9.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel9.setText("Código:");
@@ -194,7 +194,7 @@ public class HorarioRotativo extends javax.swing.JInternalFrame {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        jPanel1.add(jLabel9, gridBagConstraints);
+        pnlDatosHorario.add(jLabel9, gridBagConstraints);
 
         jLabel10.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel10.setText("Nombre:");
@@ -202,7 +202,7 @@ public class HorarioRotativo extends javax.swing.JInternalFrame {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        jPanel1.add(jLabel10, gridBagConstraints);
+        pnlDatosHorario.add(jLabel10, gridBagConstraints);
 
         txtCodigo.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -211,7 +211,7 @@ public class HorarioRotativo extends javax.swing.JInternalFrame {
         gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 0.1;
-        jPanel1.add(txtCodigo, gridBagConstraints);
+        pnlDatosHorario.add(txtCodigo, gridBagConstraints);
 
         txtNombre.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -220,7 +220,7 @@ public class HorarioRotativo extends javax.swing.JInternalFrame {
         gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 0.1;
-        jPanel1.add(txtNombre, gridBagConstraints);
+        pnlDatosHorario.add(txtNombre, gridBagConstraints);
 
         jPanel3.setLayout(new java.awt.GridLayout(0, 1, 5, 5));
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -229,7 +229,7 @@ public class HorarioRotativo extends javax.swing.JInternalFrame {
         gridBagConstraints.gridwidth = 3;
         gridBagConstraints.gridheight = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        jPanel1.add(jPanel3, gridBagConstraints);
+        pnlDatosHorario.add(jPanel3, gridBagConstraints);
 
         jLabel2.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel2.setText("Documento de creación:");
@@ -237,7 +237,7 @@ public class HorarioRotativo extends javax.swing.JInternalFrame {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        jPanel1.add(jLabel2, gridBagConstraints);
+        pnlDatosHorario.add(jLabel2, gridBagConstraints);
 
         txtDocumento.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -246,7 +246,7 @@ public class HorarioRotativo extends javax.swing.JInternalFrame {
         gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 0.1;
-        jPanel1.add(txtDocumento, gridBagConstraints);
+        pnlDatosHorario.add(txtDocumento, gridBagConstraints);
 
         pnlDetalle.setLayout(new java.awt.GridBagLayout());
 
@@ -318,6 +318,11 @@ public class HorarioRotativo extends javax.swing.JInternalFrame {
 
         btnAsignar3.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         btnAsignar3.setText("Eliminar detalles");
+        btnAsignar3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAsignar3ActionPerformed(evt);
+            }
+        });
         pnlAccionAsignado1.add(btnAsignar3);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -338,7 +343,7 @@ public class HorarioRotativo extends javax.swing.JInternalFrame {
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 0.1;
         gridBagConstraints.weighty = 0.1;
-        jPanel1.add(pnlDetalle, gridBagConstraints);
+        pnlDatosHorario.add(pnlDetalle, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -349,7 +354,7 @@ public class HorarioRotativo extends javax.swing.JInternalFrame {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 0.1;
         gridBagConstraints.weighty = 0.1;
-        pnlDatos.add(jPanel1, gridBagConstraints);
+        pnlDatos.add(pnlDatosHorario, gridBagConstraints);
 
         jPanel2.setLayout(new java.awt.GridLayout(1, 0, 10, 0));
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -359,18 +364,23 @@ public class HorarioRotativo extends javax.swing.JInternalFrame {
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 18, 0);
         pnlDatos.add(jPanel2, gridBagConstraints);
 
-        jButton1.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        jButton1.setText("GUARDAR");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnGuardar.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        btnGuardar.setText("GUARDAR");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnGuardarActionPerformed(evt);
             }
         });
-        pnlBotones.add(jButton1);
+        pnlBotones.add(btnGuardar);
 
-        jButton3.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        jButton3.setText("CANCELAR");
-        pnlBotones.add(jButton3);
+        btnCncelar.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        btnCncelar.setText("CANCELAR");
+        btnCncelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCncelarActionPerformed(evt);
+            }
+        });
+        pnlBotones.add(btnCncelar);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -580,6 +590,7 @@ public class HorarioRotativo extends javax.swing.JInternalFrame {
             turno.setHorario(this.horarioControlador.getSeleccionado());
             this.detalleHorarioList.add(turno);
             this.horarioControlador.getSeleccionado().getTurnoList().add(turno);
+            
         }
     }//GEN-LAST:event_btnAsignar2ActionPerformed
 
@@ -595,13 +606,14 @@ public class HorarioRotativo extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnAsignarActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
         if(FormularioUtil.dialogoConfirmar(this, accion)){
             Horario horario = this.horarioControlador.getSeleccionado();
             horario.setCodigo(this.txtCodigo.getText());
             horario.setDocumento(this.txtDocumento.getText());
             horario.setNombre(this.txtNombre.getText());
+            
             
             if(this.horarioControlador.accion(accion)){
                 FormularioUtil.mensajeExito(this, accion);
@@ -610,7 +622,7 @@ public class HorarioRotativo extends javax.swing.JInternalFrame {
                 this.actualizarTabla();
             }
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnAsignar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsignar1ActionPerformed
         // TODO add your handling code here:
@@ -634,27 +646,57 @@ public class HorarioRotativo extends javax.swing.JInternalFrame {
         rp.generarReporte(fileReporte, parametros, JOptionPane.getRootFrame());
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void btnCncelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCncelarActionPerformed
+        // TODO add your handling code here:
+//        FormularioUtil.activarComponente(pnlAsignadoA, false);
+//        FormularioUtil.activarComponente(pnlJornadas, false);
+//        FormularioUtil.activarComponente(txtCodigo, false);
+//        FormularioUtil.activarComponente(txtNombre, false);
+//        FormularioUtil.activarComponente(txtDocumento, false);
+        
+//        FormularioUtil.activarComponente(this.tblAsignacion, true);
+        
+        FormularioUtil.activarComponente(this.pnlListado, true);
+        
+        FormularioUtil.activarComponente(btnGuardar, false);
+        FormularioUtil.activarComponente(btnCncelar, false);
+        
+        
+        FormularioUtil.activarComponente(this.pnlDatosHorario, false);
+        
+        FormularioUtil.limpiarComponente(pnlDatosHorario);
+        
+//        FormularioUtil.activarComponente(this.tblHorario, true);
+//        FormularioUtil.activarComponente(this.txtBusqueda, true);
+        detalleHorarioList.clear();
+        asignacionHorarioList.clear();
+    }//GEN-LAST:event_btnCncelarActionPerformed
+
+    private void btnAsignar3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsignar3ActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_btnAsignar3ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAsignar;
     private javax.swing.JButton btnAsignar1;
     private javax.swing.JButton btnAsignar2;
     private javax.swing.JButton btnAsignar3;
+    private javax.swing.JButton btnCncelar;
     private javax.swing.JButton btnDialogo;
     private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JComboBox cboTipoFiltro;
     private javax.swing.JCheckBox chkFiltrar;
     private javax.swing.ButtonGroup grpOpcion;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -667,6 +709,7 @@ public class HorarioRotativo extends javax.swing.JInternalFrame {
     private javax.swing.JPanel pnlAsignadoA;
     private javax.swing.JPanel pnlBotones;
     private javax.swing.JPanel pnlDatos;
+    private javax.swing.JPanel pnlDatosHorario;
     private javax.swing.JPanel pnlDetalle;
     private javax.swing.JPanel pnlJornadas;
     private javax.swing.JPanel pnlListado;
@@ -714,6 +757,10 @@ public class HorarioRotativo extends javax.swing.JInternalFrame {
         FormularioUtil.activarComponente(this.tblAsignacion, true);
         FormularioUtil.activarComponente(this.tblDetalleHorario, true);
         FormularioUtil.activarComponente(this.txtBusqueda, false);
+        if(accion == Controlador.NUEVO){
+            asignacionHorarioList.clear();
+            detalleHorarioList.clear();
+        }
 
         if (accion != Controlador.MODIFICAR) {
             FormularioUtil.limpiarComponente(this.pnlDatos);
