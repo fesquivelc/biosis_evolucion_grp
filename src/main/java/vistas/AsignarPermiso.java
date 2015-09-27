@@ -79,6 +79,7 @@ public class AsignarPermiso extends javax.swing.JInternalFrame {
         jPanel3 = new javax.swing.JPanel();
         btnNuevo = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblTabla = new org.jdesktop.swingx.JXTable();
@@ -164,6 +165,14 @@ public class AsignarPermiso extends javax.swing.JInternalFrame {
             }
         });
         jPanel3.add(btnModificar);
+
+        jButton3.setText("Eliminar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jButton3);
 
         jButton2.setText("Imprimir boleta");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -868,6 +877,33 @@ public class AsignarPermiso extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTipoPermisoActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+
+        int fila = tblTabla.getSelectedRow();
+        if (fila != -1) {
+            if (JOptionPane.showConfirmDialog(null, "¿Desea Eliminar el Item?", "Mensaje del Sistema", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                this.accion = Controlador.ELIMINAR;
+                List<AsignacionPermiso> listaAsig = this.listado.get(fila).getPermiso().getAsignacionPermisoList();
+
+                for (AsignacionPermiso listaAsignados : listaAsig) {
+                    ac.setSeleccionado(listaAsignados);
+                    ac.accion(accion);
+                }
+                controlador.setSeleccionado(this.listado.get(fila).getPermiso());
+                AsignacionPermiso asignacion = listado.get(fila);
+                listado.remove(asignacion);
+                controlador.accion(accion);
+                actualizarTabla();
+            }else {
+                    JOptionPane.showMessageDialog(null, "Item no eliminado", "Mensaje del Sistema", JOptionPane.ERROR_MESSAGE);
+                }
+
+        }else{
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un Item", "Mensaje del Sistema", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
@@ -887,6 +923,7 @@ public class AsignarPermiso extends javax.swing.JInternalFrame {
     private com.toedter.calendar.JDateChooser dcFechaInicio;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -1204,25 +1241,26 @@ public class AsignarPermiso extends javax.swing.JInternalFrame {
                 if (lista.isEmpty()) {
 
                 } else if (accion != Controlador.MODIFICAR) {
-                        errores++;
-                        mensaje = "El empleado " + asignacion.getEmpleado() + " tiene conflicto con un permiso añadido anteriormente \n Ingrese otro rango de fechas \n";
-                        break;
-                    }
+                    errores++;
+                    mensaje = "El empleado " + asignacion.getEmpleado() + " tiene conflicto con un permiso añadido anteriormente \n Ingrese otro rango de fechas \n";
+                    break;
                 }
             }
-        
-            //Traemos los permisos por dni
-        
+        }
+
+        //Traemos los permisos por dni
         if (radHora.isSelected()) {
             Date horaInicio = (Date) spHoraInicio.getValue();
             Date horaFin = (Date) spHoraFin.getValue();
+            
+            Date fecha = (Date) dcFechaInicio.getDate();
             if (horaInicio.compareTo(horaFin) > 0) {
                 errores++;
                 mensaje = ">La hora de inicio debe ser menor que la hora de fin \n";
             }
             Permiso paraComprobar = this.controlador.getSeleccionado();
             for (AsignacionPermiso asignacion : paraComprobar.getAsignacionPermisoList()) {
-                List<AsignacionPermiso> lista = ac.buscarXHora(asignacion.getEmpleado(), horaInicio);
+                List<AsignacionPermiso> lista = ac.buscarXHoraxFecha(asignacion.getEmpleado(), horaInicio, fecha);
                 if (lista.isEmpty()) {
 
                 } else {

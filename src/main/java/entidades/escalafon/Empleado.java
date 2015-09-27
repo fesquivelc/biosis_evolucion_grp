@@ -49,7 +49,7 @@ public class Empleado implements Serializable {
     private FichaLaboral fichaLaboral;
     @OneToOne(fetch = FetchType.LAZY, targetEntity = FichaGeneral.class, mappedBy = "empleado",cascade = CascadeType.ALL)
     private FichaGeneral fichaGeneral;
-    @OneToMany(targetEntity = Contrato.class,mappedBy = "empleado",cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, targetEntity = Contrato.class,mappedBy = "empleado",cascade = CascadeType.ALL)
     private List<Contrato> contratoList;
     @Column(name = "fecha_nacimiento")
     @Temporal(TemporalType.DATE)

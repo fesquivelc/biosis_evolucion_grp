@@ -76,6 +76,8 @@ public class RenderIndicadorAsistencia extends DefaultTableCellRenderer implemen
                     this.label.setBackground(VACACION_COLOR);
                 } else if(valor.equals("SP")){
                     this.label.setBackground(PERMISO_COLOR);
+                } else if(valor.equals("H")){
+                    this.label.setBackground(PERMISO_COLOR);
                 }
 
             } else {

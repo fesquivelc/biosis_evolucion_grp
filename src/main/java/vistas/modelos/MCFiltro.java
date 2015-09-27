@@ -16,6 +16,7 @@ import javax.swing.ComboBoxModel;
 public class MCFiltro<TipoFiltro> extends AbstractListModel implements ComboBoxModel{
 
     TipoFiltro seleccionado = TipoFiltro.POR_EMPLEADO;
+    
     @Override
     public int getSize() {
         return 3;

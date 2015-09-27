@@ -5,9 +5,12 @@
  */
 package controladores;
 
+import com.personal.utiles.FechaUtil;
+import com.personal.utiles.FormularioUtil;
 import entidades.Periodo;
 import entidades.Vacacion;
 import entidades.escalafon.Empleado;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -66,8 +69,8 @@ public class VacacionControlador extends Controlador<Vacacion> {
     }
 
     public Vacacion buscarXDia(Empleado empleado, Date dia) {
-        String jpql =  "SELECT v FROM Vacacion v"
-                + " WHERE v.empleado = :dni ";
+//        String jpql =  "SELECT v FROM Vacacion v"
+//                + " WHERE v.empleado = :dni "
 //                + " AND ( "
 //                + "(v.fechaInterrupcion IS NULL AND :dia BETWEEN v.fechaInicio AND v.fechaFin) OR "
 //                + "(v.fechaInterrupcion IS NOT NULL AND :dia >= v.fechaInicio AND :dia < v.fechaInterrupcion)"
@@ -76,15 +79,54 @@ public class VacacionControlador extends Controlador<Vacacion> {
 //                + "((:dia >= v.fechaInicio AND :dia < v.interrupcionVacacion.fechaInicio) OR (:dia > v.interrupcionVacacion.fechaFin AND :dia <= v.fechaFin))"
 //                + ")"
 //                + ")";
+
+        //CONSULTA PROVISIONAL
+        String jpql = "SELECT v FROM Vacacion v"
+                + " WHERE v.empleado = :dni ";
         Map<String, Object> mapa = new HashMap<>();
         mapa.put("dni", empleado);
-//        mapa.put("dia", dia);
-        List<Vacacion> vacacion = this.getDao().buscar(jpql, mapa, -1, 1);
-        System.out.println("TAMAÑO: "+vacacion.size());
-        if (vacacion.isEmpty()) {
+
+        List<Vacacion> listaVacaciones = this.getDao().buscar(jpql, mapa);
+        System.out.println("VACACIONES: " + listaVacaciones.size());
+
+        //NUEVO ALGORITMO
+        List<Vacacion> vacacionFinal = null;
+        
+        for (Vacacion vac : listaVacaciones) {
+
+            String jpql2 = "SELECT v FROM Vacacion v"
+                    + " WHERE v.empleado=:dni "
+                    + " AND :dia BETWEEN :fechaInicio AND :fechaFin";
+
+            Map<String, Object> mapa2 = new HashMap<>();
+            mapa2.put("dni", empleado);
+            mapa2.put("dia", FechaUtil.soloFecha(dia));
+            mapa2.put("fechaInicio", vac.getFechaInicio());
+            mapa2.put("fechaFin", vac.getFechaFin());
+            
+            System.out.println( "DIA:"+ FechaUtil.soloFecha(dia)+", FECHA FIN:" +vac.getFechaFin());
+            
+            List<Vacacion> vacacionEncontrada = this.getDao().buscar(jpql2, mapa2);
+            
+            
+            
+            if(!vacacionEncontrada.isEmpty()){
+                System.out.println("Encontro Vacacion: "+ FechaUtil.soloFecha(dia));
+                vacacionFinal = vacacionEncontrada;
+                break;
+            }
+
+        }
+//        mapa2.put("dni", empleado);
+//        mapa2.put("dia", dia);
+//        List<Vacacion> vacacion = this.getDao().buscar(jpql, mapa, -1, 1);
+//        List<Vacacion> vacacion = this.getDao().buscar(jpql, mapa);
+
+//        System.out.println("TAMAÑO: " + vacacion.size());
+        if (vacacionFinal== null) {
             return null;
         } else {
-            return vacacion.get(0);
+            return vacacionFinal.get(0);
         }
     }
 

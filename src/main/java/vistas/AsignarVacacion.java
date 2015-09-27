@@ -90,6 +90,7 @@ public class AsignarVacacion extends javax.swing.JInternalFrame {
         jPanel3 = new javax.swing.JPanel();
         btnNuevo = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
@@ -173,6 +174,15 @@ public class AsignarVacacion extends javax.swing.JInternalFrame {
             }
         });
         jPanel3.add(btnModificar);
+
+        jButton6.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jButton6.setText("Eliminar");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jButton6);
 
         jButton3.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jButton3.setText("Imprimir boleta");
@@ -569,7 +579,7 @@ public class AsignarVacacion extends javax.swing.JInternalFrame {
         jPanel4.add(pnlVacacionesPedidas, gridBagConstraints);
 
         jLabel11.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        jLabel11.setText("Saldo:");
+        jLabel11.setText("Saldo Vacacional:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 12;
@@ -695,16 +705,16 @@ public class AsignarVacacion extends javax.swing.JInternalFrame {
             seleccionada.setPeriodo(periodoList.get(cboPeriodo.getSelectedIndex()));
 
             if (controlador.accion(accion)) {
-//                List<String> dni = new ArrayList<>();
-//                dni.add(seleccionada.getEmpleado().getNroDocumento());
-//                retrocederTiempo(dni, seleccionada.getFechaInicio());
-//                SaldoVacacional sv = buscarCrear(empleadoSeleccionado, seleccionada.getPeriodo());
-//                int[] saldos = obtenerSaldos(empleadoSeleccionado,seleccionada.getPeriodo());
-//                sv.setDiasRestantes(30 - (saldos[0] + saldos[1] + saldos[2]));
-//                sv.setLunesViernes(saldos[0]);
-//                sv.setSabado(saldos[1]);
-//                sv.setDomingo(saldos[2]);
-//                svc.modificar(sv);
+                List<String> dni = new ArrayList<>();
+                dni.add(seleccionada.getEmpleado().getNroDocumento());
+                retrocederTiempo(dni, seleccionada.getFechaInicio());
+                SaldoVacacional sv = buscarCrear(empleadoSeleccionado, seleccionada.getPeriodo());
+                int[] saldos = obtenerSaldos(empleadoSeleccionado,seleccionada.getPeriodo());
+                sv.setDiasRestantes(30 - (saldos[0] + saldos[1] + saldos[2]));
+                sv.setLunesViernes(saldos[0]);
+                sv.setSabado(saldos[1]);
+                sv.setDomingo(saldos[2]);
+                svc.modificar(sv);
 
                 FormularioUtil.mensajeExito(this, accion);
                 System.out.println("SELECCION: " + seleccionada.getId());
@@ -855,6 +865,27 @@ public class AsignarVacacion extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jButton5ActionPerformed
 
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        int fila = tblTabla.getSelectedRow();
+        if (fila != -1) {
+            if (JOptionPane.showConfirmDialog(null, "¿Desea Eliminar el Item?", "Mensaje del Sistema", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                this.accion = Controlador.ELIMINAR;
+                
+                controlador.setSeleccionado(this.listado.get(fila));
+                Vacacion vacacion = this.listado.get(fila);
+                listado.remove(vacacion);
+                controlador.accion(accion);
+                actualizarTabla();
+            }else {
+                    JOptionPane.showMessageDialog(null, "Item no eliminado", "Mensaje del Sistema", JOptionPane.ERROR_MESSAGE);
+                }
+
+        }else{
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un Item", "Mensaje del Sistema", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton6ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAnterior;
@@ -878,6 +909,7 @@ public class AsignarVacacion extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1137,34 +1169,35 @@ public class AsignarVacacion extends javax.swing.JInternalFrame {
 
     private final Calendar calendar = Calendar.getInstance();
 
-//    public SaldoVacacional buscarCrear(Empleado empleado, Periodo periodo) {
-//        SaldoVacacional sv = svc.buscarXPeriodo(empleado, periodo);
-//        Date fechaContrato = empleado.getFichaLaboral().getFechaInicio();
-//        calendar.setTime(fechaContrato);
-//        if (sv == null && periodo.getAnio() > calendar.get(Calendar.YEAR)) {
-//            //CREAMOS
-//            sv = new SaldoVacacional();
-//            //OBTENEMOS SI LE CORRESPONDEN VACACIONES ACORDE A LEY
-//
-//            if (calendar.get(Calendar.YEAR) < periodo.getAnio()) {
-//                sv.setDiasRestantes(30);
-//            } else {
-//                sv.setDiasRestantes(0);
-//            }
-//            calendar.set(Calendar.YEAR, periodo.getAnio());
-//            sv.setFechaDesde(calendar.getTime());
-//            calendar.add(Calendar.YEAR, 1);
-//            sv.setFechaHasta(calendar.getTime());
-//            sv.setEmpleado(empleado);
-//            sv.setLunesViernes(0);
-//            sv.setSabado(0);
-//            sv.setDomingo(0);
-//            sv.setPeriodo(periodo);
-//            svc.modificar(sv);
-//        }
-//        sv = svc.buscarXPeriodo(empleado, periodo);
-//        return sv;
-//    }
+    public SaldoVacacional buscarCrear(Empleado empleado, Periodo periodo) {
+        SaldoVacacional sv = svc.buscarXPeriodo(empleado, periodo);
+        Date fechaContrato = empleado.getContratoList().get(0).getFechaInicio();
+        calendar.setTime(fechaContrato);
+        if (sv == null && periodo.getAnio() > calendar.get(Calendar.YEAR)) {
+            //CREAMOS
+            sv = new SaldoVacacional();
+            //OBTENEMOS SI LE CORRESPONDEN VACACIONES ACORDE A LEY
+
+            if (calendar.get(Calendar.YEAR) < periodo.getAnio()) {
+                sv.setDiasRestantes(30);
+            } else {
+                sv.setDiasRestantes(0);
+            }
+            calendar.set(Calendar.YEAR, periodo.getAnio());
+            sv.setFechaDesde(calendar.getTime());
+            calendar.add(Calendar.YEAR, 1);
+            sv.setFechaHasta(calendar.getTime());
+            sv.setEmpleado(empleado);
+            sv.setLunesViernes(0);
+            sv.setSabado(0);
+            sv.setDomingo(0);
+            sv.setPeriodo(periodo);
+            svc.modificar(sv);
+        }
+        sv = svc.buscarXPeriodo(empleado, periodo);
+        return sv;
+    }
+    
     private boolean erroresFormulario() {
         int errores = 0;
         Date fechaInicio = dcFechaInicio.getDate();
@@ -1245,10 +1278,10 @@ public class AsignarVacacion extends javax.swing.JInternalFrame {
         int sab = 0;
         int dom = 0;
         int saldo = 30;
-        List<CompraVacacion> compras = cmpvacc.buscarXEmpleadoXPeriodo(empleado, periodo);
-        for (CompraVacacion compra : compras) {
-            saldo -= compra.getDiasCompra();
-        }
+//        List<CompraVacacion> compras = cmpvacc.buscarXEmpleadoXPeriodo(empleado, periodo);
+//        for (CompraVacacion compra : compras) {
+//            saldo -= compra.getDiasCompra();
+//        }
         for (Vacacion vacacion : vacaciones) {
             iterador.setTime(vacacion.getFechaInicio());
             InterrupcionVacacion interrupcion = vacacion.getInterrupcionVacacion();

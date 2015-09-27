@@ -193,10 +193,17 @@ public class AnalisisAsistenciaCaliente {
         return asistenciaDetalladaList;
     }
 
-    private List<RptAsistenciaDetallado> analizarAsignacion(Empleado empleado, Contrato contrato, AsignacionHorario asignacionHorario, Date fechaInicio, Date fechaFin) {
+    private List<RptAsistenciaDetallado> analizarAsignacion(Empleado empleado, Contrato contrato, AsignacionHorario asignacionHorario, Date fechaInicio, Date fechaFins) {
         List<RptAsistenciaDetallado> asistenciaDetalladaList = new ArrayList<>();
         Calendar iterador = Calendar.getInstance();
         iterador.setTime(fechaInicio);
+
+        Calendar fechaFinal = Calendar.getInstance();
+        fechaFinal.setTime(fechaFins);
+        fechaFinal.set(Calendar.HOUR, 23);
+        fechaFinal.set(Calendar.MINUTE, 59);
+        fechaFinal.set(Calendar.SECOND, 59);
+        Date fechaFin = fechaFinal.getTime();
 
         while (iterador.getTime().compareTo(fechaFin) <= 0) {
             Date fecha = iterador.getTime();
@@ -208,6 +215,8 @@ public class AnalisisAsistenciaCaliente {
                 }
             }
             iterador.add(Calendar.DATE, 1);
+//            System.out.println("ULTIMA FECHA: "+iterador.getTime());
+//            System.out.println("RESULTADO: "+iterador.getTime().compareTo(fechaFin));
         }
 
         return asistenciaDetalladaList;
@@ -248,6 +257,7 @@ public class AnalisisAsistenciaCaliente {
 
             } else {
                 if (isDiaLaboral(fecha, turno)) {
+//                    System.out.println("LLEGO a DIAS LABORAL");
                     Permiso permisoXFecha = permc.buscarXEmpleadoXFecha(empleado, fecha);
                     if (permisoXFecha != null) {
                         asistenciaDetalle = new RptAsistenciaDetallado();
@@ -262,8 +272,8 @@ public class AnalisisAsistenciaCaliente {
                         asistenciaDetalladoList.add(asistenciaDetalle);
                         return asistenciaDetalladoList;
                     } else {
-//                        Boleta boleta = bolc.permisoXFechaXEmpleado(empleado, fecha);
 
+//                        Boleta boleta = bolc.permisoXFechaXEmpleado(empleado, fecha);
 //                        if (boleta != null) {
 //
 //                            asistenciaDetalle = new RptAsistenciaDetallado();
@@ -278,30 +288,32 @@ public class AnalisisAsistenciaCaliente {
 //                            asistenciaDetalladoList.add(asistenciaDetalle);
 //                            return asistenciaDetalladoList;
 //                        } else {
-                            List<DetalleJornada> detalleJornadaList = dtjornc.buscarXJornada(turno.getJornada());
+                        List<DetalleJornada> detalleJornadaList = dtjornc.buscarXJornada(turno.getJornada());
+//                        System.out.println("TAMAÑO DEL DETALLE: " + detalleJornadaList.size());
 
-                            char asistenciaResultado = 'R';
-                            int tardanzaTotal = 0;
-                            int extraTotal = 0;
-                            int conteo = 1;
-                            for (DetalleJornada detalle : detalleJornadaList) {
+                        char asistenciaResultado = 'R';
+                        int tardanzaTotal = 0;
+                        int extraTotal = 0;
+                        int conteo = 1;
+                        for (DetalleJornada detalle : detalleJornadaList) {
+//                            System.out.println("LLEGO A DETALLE JORNADA");
 //                            System.out.println("FECHA ENTRADA SALIDA " + fecha + " " + detalle.getEntrada() + " " + detalle.getSalida());
-//                                List<Permiso> permisoList = permc.buscarXEmpleadoXFechaEntreHora(empleado, fecha, detalle.getEntradaDesde(), detalle.getSalida());
-                                //PERMISOS X HORAS
-                                
-//                                System.out.println("DATOS BOLETA: " + empleado.getNombreCompleto() + " - " + fecha + " - " + detalle.getEntradaDesde() + "--" + detalle.getSalida());
+                            List<Permiso> permisoList = permc.buscarXEmpleadoXFechaEntreHora(empleado, fecha, detalle.getEntradaDesde(), detalle.getSalida());
+//                                PERMISOS X HORAS
+
+//                            System.out.println("DATOS BOLETA: " + empleado.getNombreCompleto() + " - " + fecha + " - " + detalle.getEntradaDesde() + "--" + detalle.getSalida());
 //                                List<Boleta> boletaList = bolc.permisoXHoraXFecha(empleado, fecha, detalle.getEntradaDesde(), detalle.getSalida());
-//                                System.out.println("PERMISOS: " + permisoList.size());
+//                            System.out.println("PERMISOS: " + permisoList.size());
 //                                System.out.println("PERMISOS BOLETA: " + boletaList.size());
-//                                for (Permiso permiso : permisoList) {
-//                                    if (permiso.getHoraInicio().compareTo(detalle.getEntradaDesde()) >= 0 && permiso.getHoraFin().compareTo(detalle.getSalidaHasta()) <= 0) {
-////                                    System.out.println("PERMISO LIST");
-//                                        RptAsistenciaDetallado asistenciaPermiso = analizarPermiso(empleado, contrato, permiso, detalle, fecha);
-//                                        asistenciaPermiso.setAsignacionHorario(asignacionHorario);
-//                                        asistenciaPermiso.setContrato(contrato);
-//                                        asistenciaDetalladoList.add(asistenciaPermiso);
-//                                    }
-//                                }
+                            for (Permiso permiso : permisoList) {
+                                if (permiso.getHoraInicio().compareTo(detalle.getEntradaDesde()) >= 0 && permiso.getHoraFin().compareTo(detalle.getSalidaHasta()) <= 0) {
+//                                    System.out.println("PERMISO LIST");
+                                    RptAsistenciaDetallado asistenciaPermiso = analizarPermiso(empleado, contrato, permiso, detalle, fecha);
+                                    asistenciaPermiso.setAsignacionHorario(asignacionHorario);
+                                    asistenciaPermiso.setContrato(contrato);
+                                    asistenciaDetalladoList.add(asistenciaPermiso);
+                                }
+                            }
 
 //                                for (Boleta bol : boletaList) {
 //                                    asistenciaDetalle = new RptAsistenciaDetallado();
@@ -321,30 +333,63 @@ public class AnalisisAsistenciaCaliente {
 //                                    asistenciaDetalladoList.add(asistenciaDetalle);
 ////                                    return asistenciaDetalladoList;
 //                                }
+                            RptAsistenciaDetallado asistencia = analizarDetalle(empleado, contrato, detalle, fecha);
+                            asistencia.setAsignacionHorario(asignacionHorario);
+                            asistencia.setArea(areaEmpleado == null ? null : areaEmpleado.getDepartamento());
+                            asistencia.setRegimenLaboral(null);
+                            asistenciaDetalladoList.add(asistencia);
 
-                                RptAsistenciaDetallado asistencia = analizarDetalle(empleado, contrato, detalle, fecha);
-                                asistencia.setAsignacionHorario(asignacionHorario);
-                                asistencia.setArea(areaEmpleado == null ? null : areaEmpleado.getDepartamento());
-                                asistencia.setRegimenLaboral(null);
-                                asistenciaDetalladoList.add(asistencia);
+                            char detalleResultado = asistencia.getTipoAsistencia().charAt(0);
+                            if (asistenciaResultado == 'R' && detalleResultado == 'R') {
+                                asistenciaResultado = 'R';
+                            } else if (asistenciaResultado == 'F' || detalleResultado == 'F') {
+                                asistenciaResultado = 'F';
+                            } else if (asistenciaResultado == 'T' || detalleResultado == 'T') {
+                                asistenciaResultado = 'T';
+                            }
 
-                                char detalleResultado = asistencia.getTipoAsistencia().charAt(0);
-                                if (asistenciaResultado == 'R' && detalleResultado == 'R') {
-                                    asistenciaResultado = 'R';
-                                } else if (asistenciaResultado == 'F' || detalleResultado == 'F') {
-                                    asistenciaResultado = 'F';
-                                } else if (asistenciaResultado == 'T' || detalleResultado == 'T') {
-                                    asistenciaResultado = 'T';
-                                }
+                            if (!asistencia.getTipoAsistencia().equals("F")) {
+                                tardanzaTotal += asistencia.getMinutosTardanza();
+                                extraTotal += asistencia.getMinutosExtra();
+                            }
 
-                                if (!asistencia.getTipoAsistencia().equals("F")) {
-                                    tardanzaTotal += asistencia.getMinutosTardanza();
-                                    extraTotal += asistencia.getMinutosExtra();
-                                }
+                        }//FIN DEL FOR
+//                        if (turno.getJornada().getTipo() == 'C') {
+//                            Calendar cal = Calendar.getInstance();
+//                            cal.set(Calendar.HOUR, 0);
+//                            cal.set(Calendar.MINUTE, 0);
+//                            cal.set(Calendar.SECOND, 0);
+//                            Date entradaDesde = cal.getTime();
+//                            Date salidaDesde = cal.getTime();
+//
+//                            Calendar cal2 = Calendar.getInstance();
+//                            cal2.set(Calendar.HOUR, 23);
+//                            cal2.set(Calendar.MINUTE, 59);
+//                            cal2.set(Calendar.SECOND, 59);
+//                            Date entradaHasta = cal2.getTime();
+//                            Date salidaHasta = cal2.getTime();
+//
+//                            Marcacion entradaMarcacion = marcc.buscarXFechaXhora(empleado, fecha, fecha, entradaDesde, entradaHasta);
+//                            Marcacion salidaMarcacion = marcc.buscarXFechaXhora(empleado, fecha, fecha, salidaDesde, salidaHasta);
+//
+//                            RptAsistenciaDetallado asistencia = new RptAsistenciaDetallado();
+//
+//                            asistencia.setAsignacionHorario(asignacionHorario);
+//                            asistencia.setArea(areaEmpleado == null ? null : areaEmpleado.getDepartamento());
+//                            asistencia.setRegimenLaboral(null);
+//                            asistencia.setAsignacionHorario(asignacionHorario);
+//                            asistencia.setArea(areaEmpleado == null ? null : areaEmpleado.getDepartamento());
+//                            asistencia.setRegimenLaboral(null);
+//                            asistencia.setInicio(entradaMarcacion.getFechaHora() != null ? entradaMarcacion.getFechaHora() : null);
+//                            asistencia.setFin(salidaMarcacion.getFechaHora() != null ? salidaMarcacion.getFechaHora() : null);
+//                            asistencia.setDetalleJornada(null);
+//                            asistencia.setTipoAsistencia('R'+"");
+//                            asistencia.setMinutosExtra(null);
+//                            asistencia.setMinutosTardanza(null);
+//                            asistenciaDetalladoList.add(asistencia);
+//                        }
 
-                            }//FIN DEL FOR
-
-                            return asistenciaDetalladoList;
+                        return asistenciaDetalladoList;
 //                        }
                     }
 
@@ -397,6 +442,7 @@ public class AnalisisAsistenciaCaliente {
     }
 
     private RptAsistenciaDetallado analizarDetalle(Empleado empleado, Contrato contrato, DetalleJornada detalle, Date fecha) {
+        System.out.println("ENTRO AL ANALISIS DETALLE");
         RptAsistenciaDetallado asistenciaDetalle = new RptAsistenciaDetallado();
 
         char entradaResultado;
@@ -405,8 +451,13 @@ public class AnalisisAsistenciaCaliente {
         int entradaTardanza = 0;
         int salidaExtra = 0;
 
-        Marcacion entradaMarcacion = marcc.buscarXFechaXhora(empleado, fecha, fecha, detalle.getEntradaDesde(), detalle.getEntradaHasta());
-        Marcacion salidaMarcacion = marcc.buscarXFechaXhora(empleado, fecha, fecha, detalle.getSalidaDesde(), detalle.getSalidaHasta());
+        Date entradaDesde = detalle.getEntradaDesde();
+        Date entradaHasta = detalle.getEntradaHasta();
+        Date salidaDesde = detalle.getSalidaDesde();
+        Date salidaHasta = detalle.getSalidaHasta();
+
+        Marcacion entradaMarcacion = marcc.buscarXFechaXhora(empleado, fecha, fecha, entradaDesde, entradaHasta);
+        Marcacion salidaMarcacion = marcc.buscarXFechaXhora(empleado, fecha, fecha, salidaDesde, salidaHasta);
 
         if (entradaMarcacion == null) {
 //            System.out.println("ENTRADA NULL");
@@ -437,10 +488,13 @@ public class AnalisisAsistenciaCaliente {
             detalleResultado = 'T';
         } else if (entradaResultado == 'F' && salidaResultado == 'F') {
             detalleResultado = 'F';
-        }else if (entradaResultado == 'R' && salidaResultado == 'F') {
+        } else if (entradaResultado == 'R' && salidaResultado == 'F') {
             detalleResultado = 'F';
-        }else if (entradaResultado == 'F' && salidaResultado == 'R') {
+        } else if (entradaResultado == 'F' && salidaResultado == 'R') {
             detalleResultado = 'F';
+        }
+        if (detalle.getJornada().getTipo() == 'C') {
+            detalleResultado = 'R';
         }
 
         asistenciaDetalle.setInicio(entradaResultado != 'F' ? entradaMarcacion.getFechaHora() : null);
@@ -482,8 +536,8 @@ public class AnalisisAsistenciaCaliente {
 
         asistenciaPermiso.setInicio(permisoInicio == null ? null : permisoInicio.getFechaHora());
         asistenciaPermiso.setFin(permisoFin == null ? null : permisoFin.getFechaHora());
-        asistenciaPermiso.setTipoDetalle("P");
-        asistenciaPermiso.setTipoAsistencia("P");
+        asistenciaPermiso.setTipoDetalle("H");
+        asistenciaPermiso.setTipoAsistencia("H");
         asistenciaPermiso.setEmpleado(empleado);
         asistenciaPermiso.setFecha(fecha);
         asistenciaPermiso.setPermiso(permiso);

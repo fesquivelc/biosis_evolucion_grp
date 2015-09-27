@@ -41,10 +41,10 @@ public class Contrato implements Serializable{
     @ManyToOne(targetEntity = RegimenLaboral.class,optional = true)
     @JoinColumn(name = "reglab_codigo")
     private RegimenLaboral regimenLaboral;
-    @ManyToOne(targetEntity = TipoContrato.class, optional = true)
+    @ManyToOne(fetch = FetchType.EAGER,targetEntity = TipoContrato.class, optional = true)
     @JoinColumn(name = "tcon_codigo",referencedColumnName = "codigo")
     private TipoContrato tipoContrato;
-    @ManyToOne(targetEntity = Empleado.class, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, targetEntity = Empleado.class, optional = false)
     @JoinColumn(name = "pers_nro_documento", referencedColumnName = "nro_documento")
     private Empleado empleado;
 

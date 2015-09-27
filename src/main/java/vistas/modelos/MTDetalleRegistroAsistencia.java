@@ -71,21 +71,21 @@ public class MTDetalleRegistroAsistencia extends ModeloTabla<RptAsistenciaDetall
                 }
 
             case 8:
-                if(detalle.getTipoAsistencia().equals("SP")){
+                if (detalle.getTipoAsistencia().equals("SP")) {
                     return detalle.getBoleta().getSalidaFechaHora() == null ? null : dfHora.format(detalle.getBoleta().getSalidaFechaHora());
-                }else{
+                } else {
                     return detalle.getInicio() == null ? null : dfHora.format(detalle.getInicio());
                 }
-                
+
             case 9:
                 return detalle.getMinutosTardanza();
             case 10:
-                if(detalle.getTipoAsistencia().equals("SP")){
-                    return detalle.getBoleta().getRetornoFechaHora()== null ? null : dfHora.format(detalle.getBoleta().getRetornoFechaHora());
-                }else{
+                if (detalle.getTipoAsistencia().equals("SP")) {
+                    return detalle.getBoleta().getRetornoFechaHora() == null ? null : dfHora.format(detalle.getBoleta().getRetornoFechaHora());
+                } else {
                     return detalle.getFin() == null ? null : dfHora.format(detalle.getFin());
                 }
-                
+
             case 11:
                 return detalle.getMinutosExtra();
             default:
@@ -125,7 +125,9 @@ public class MTDetalleRegistroAsistencia extends ModeloTabla<RptAsistenciaDetall
             case 'S':
                 return "SISGEDO - SALIDA";
             case 'P':
-                return "PERMISO BIOSIS";
+                return "PERMISO POR FECHA";
+            case 'H':
+                return "PERMISO POR HORAS";
             case 'U':
                 return "SUSPENSION";
             case 'E':
