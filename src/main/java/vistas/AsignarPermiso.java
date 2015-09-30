@@ -31,6 +31,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
 import javax.swing.SpinnerNumberModel;
 import org.jdesktop.observablecollections.ObservableCollections;
@@ -58,10 +59,13 @@ public class AsignarPermiso extends javax.swing.JInternalFrame {
 
     public AsignarPermiso() {
         initComponents();
+        this.dcFechaInicioBusqueda.setDate(new Date());
+        this.dcFechaFinBusqueda.setDate(new Date());
         inicializar();
         bindeoSalvaje();
         reporteador = new ReporteUtil();
         this.radLote.setVisible(false);
+
     }
 
     /**
@@ -87,9 +91,7 @@ public class AsignarPermiso extends javax.swing.JInternalFrame {
         txtEmpleado = new javax.swing.JTextField();
         jButton4 = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
-        spFechaInicio1 = new javax.swing.JSpinner();
         jLabel9 = new javax.swing.JLabel();
-        spFechaFin1 = new javax.swing.JSpinner();
         btnBuscar = new javax.swing.JButton();
         pnlNavegacion = new javax.swing.JPanel();
         btnPrimero = new javax.swing.JButton();
@@ -99,6 +101,8 @@ public class AsignarPermiso extends javax.swing.JInternalFrame {
         btnSiguiente = new javax.swing.JButton();
         btnUltimo = new javax.swing.JButton();
         cboTamanio = new javax.swing.JComboBox();
+        dcFechaInicioBusqueda = new com.toedter.calendar.JDateChooser();
+        dcFechaFinBusqueda = new com.toedter.calendar.JDateChooser();
         pnlDatos = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -130,6 +134,7 @@ public class AsignarPermiso extends javax.swing.JInternalFrame {
         jPanel5 = new javax.swing.JPanel();
         btnGuardar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
         opciones.add(radFecha);
         opciones.add(radHora);
         opciones.add(radLote);
@@ -188,6 +193,7 @@ public class AsignarPermiso extends javax.swing.JInternalFrame {
         gridBagConstraints.gridwidth = 15;
         pnlListado.add(jPanel3, gridBagConstraints);
 
+        tblTabla.setHorizontalScrollEnabled(true);
         tblTabla.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 tblTablaMouseReleased(evt);
@@ -253,26 +259,12 @@ public class AsignarPermiso extends javax.swing.JInternalFrame {
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         pnlListado.add(btnLimpiar, gridBagConstraints);
 
-        spFechaInicio1.setModel(new javax.swing.SpinnerDateModel());
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 8;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        pnlListado.add(spFechaInicio1, gridBagConstraints);
-
         jLabel9.setText("-");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 10;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         pnlListado.add(jLabel9, gridBagConstraints);
-
-        spFechaFin1.setModel(new javax.swing.SpinnerDateModel());
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 12;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        pnlListado.add(spFechaFin1, gridBagConstraints);
 
         btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -351,6 +343,14 @@ public class AsignarPermiso extends javax.swing.JInternalFrame {
         gridBagConstraints.gridy = 4;
         gridBagConstraints.gridwidth = 15;
         pnlListado.add(pnlNavegacion, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridy = 0;
+        pnlListado.add(dcFechaInicioBusqueda, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 12;
+        gridBagConstraints.gridy = 0;
+        pnlListado.add(dcFechaFinBusqueda, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -625,6 +625,7 @@ public class AsignarPermiso extends javax.swing.JInternalFrame {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         pnlDatos.add(jPanel5, gridBagConstraints);
+        pnlDatos.add(jDateChooser1, new java.awt.GridBagConstraints());
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
@@ -879,28 +880,21 @@ public class AsignarPermiso extends javax.swing.JInternalFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+        int fila;
 
-        int fila = tblTabla.getSelectedRow();
-        if (fila != -1) {
-            if (JOptionPane.showConfirmDialog(null, "¿Desea Eliminar el Item?", "Mensaje del Sistema", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-                this.accion = Controlador.ELIMINAR;
-                List<AsignacionPermiso> listaAsig = this.listado.get(fila).getPermiso().getAsignacionPermisoList();
-
-                for (AsignacionPermiso listaAsignados : listaAsig) {
-                    ac.setSeleccionado(listaAsignados);
-                    ac.accion(accion);
-                }
+        if ((fila = tblTabla.getSelectedRow()) != -1) {
+            accion = Controlador.ELIMINAR;
+            if (FormularioUtil.dialogoConfirmar(this, accion)) {
                 controlador.setSeleccionado(this.listado.get(fila).getPermiso());
-                AsignacionPermiso asignacion = listado.get(fila);
-                listado.remove(asignacion);
-                controlador.accion(accion);
-                actualizarTabla();
-            }else {
-                    JOptionPane.showMessageDialog(null, "Item no eliminado", "Mensaje del Sistema", JOptionPane.ERROR_MESSAGE);
+                if (controlador.accion(accion)) {
+                    FormularioUtil.mensajeExito(this, accion);
+                    accion = 0;
+                    this.integrantes.clear();
+                    this.controles(accion);
+                    this.actualizarTabla();
                 }
 
-        }else{
-            JOptionPane.showMessageDialog(null, "Debe seleccionar un Item", "Mensaje del Sistema", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -920,11 +914,14 @@ public class AsignarPermiso extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnUltimo;
     private javax.swing.JComboBox cboTamanio;
     private com.toedter.calendar.JDateChooser dcFechaFin;
+    private com.toedter.calendar.JDateChooser dcFechaFinBusqueda;
     private com.toedter.calendar.JDateChooser dcFechaInicio;
+    private com.toedter.calendar.JDateChooser dcFechaInicioBusqueda;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -950,8 +947,6 @@ public class AsignarPermiso extends javax.swing.JInternalFrame {
     private javax.swing.JRadioButton radFecha;
     private javax.swing.JRadioButton radHora;
     private javax.swing.JRadioButton radLote;
-    private javax.swing.JSpinner spFechaFin1;
-    private javax.swing.JSpinner spFechaInicio1;
     private javax.swing.JSpinner spHoraFin;
     private javax.swing.JSpinner spHoraInicio;
     private javax.swing.JSpinner spPagina;
@@ -1033,8 +1028,6 @@ public class AsignarPermiso extends javax.swing.JInternalFrame {
 //        FormularioUtil.modeloSpinnerFechaHora(spFechaFin, "dd/MM/yyyy");
         FormularioUtil.modeloSpinnerFechaHora(spHoraInicio, "HH:mm");
         FormularioUtil.modeloSpinnerFechaHora(spHoraFin, "HH:mm");
-        FormularioUtil.modeloSpinnerFechaHora(spFechaInicio1, "dd/MM/yyyy");
-        FormularioUtil.modeloSpinnerFechaHora(spFechaFin1, "dd/MM/yyyy");
         this.controles(accion);
     }
 
@@ -1084,8 +1077,8 @@ public class AsignarPermiso extends javax.swing.JInternalFrame {
         String busqueda = txtEmpleado.getText();
         tamanioPagina = Integer.parseInt(cboTamanio.getSelectedItem().toString());
 
-        Date fechaInicio = (Date) spFechaInicio1.getValue();
-        Date fechaFin = (Date) spFechaFin1.getValue();
+        Date fechaInicio = dcFechaInicioBusqueda.getDate();
+        Date fechaFin = dcFechaFinBusqueda.getDate();
         listado.clear();
         List<AsignacionPermiso> lista = this.listar(empleadoSeleccionado, fechaInicio, fechaFin, paginaActual, tamanioPagina);
         System.out.println("LISTA: " + lista.size());
@@ -1223,13 +1216,13 @@ public class AsignarPermiso extends javax.swing.JInternalFrame {
         String mensaje = "";
         if (integrantes.isEmpty()) {
             errores++;
-            mensaje = ">Debe seleccionar uno o mas empleados\n";
+            mensaje += ">Debe seleccionar uno o mas empleados\n";
         }
         if (radFecha.isSelected()) {
             Date fechaFin = dcFechaFin.getDate();
             if (fechaInicio.compareTo(fechaFin) > 0) {
                 errores++;
-                mensaje = ">La fecha de inicio debe ser menor que la fecha de fin\n";
+                mensaje += ">La fecha de inicio debe ser menor que la fecha de fin\n";
             }
             //Traemos los dnis de los empleados
             Permiso paraComprobar = this.controlador.getSeleccionado();
@@ -1242,30 +1235,30 @@ public class AsignarPermiso extends javax.swing.JInternalFrame {
 
                 } else if (accion != Controlador.MODIFICAR) {
                     errores++;
-                    mensaje = "El empleado " + asignacion.getEmpleado() + " tiene conflicto con un permiso añadido anteriormente \n Ingrese otro rango de fechas \n";
+                    mensaje += "El empleado " + asignacion.getEmpleado() + " tiene conflicto con un permiso añadido anteriormente \n Ingrese otro rango de fechas \n";
                     break;
                 }
             }
         }
 
-        //Traemos los permisos por dni
+            //Traemos los permisos por dni
         if (radHora.isSelected()) {
             Date horaInicio = (Date) spHoraInicio.getValue();
             Date horaFin = (Date) spHoraFin.getValue();
-            
-            Date fecha = (Date) dcFechaInicio.getDate();
             if (horaInicio.compareTo(horaFin) > 0) {
                 errores++;
-                mensaje = ">La hora de inicio debe ser menor que la hora de fin \n";
+                mensaje += ">La hora de inicio debe ser menor que la hora de fin \n";
             }
             Permiso paraComprobar = this.controlador.getSeleccionado();
             for (AsignacionPermiso asignacion : paraComprobar.getAsignacionPermisoList()) {
-                List<AsignacionPermiso> lista = ac.buscarXHoraxFecha(asignacion.getEmpleado(), horaInicio, fecha);
+                List<AsignacionPermiso> lista = ac.buscarXHora(asignacion.getEmpleado(), fechaInicio);
+                lista = lista.stream().filter(perm -> (horaInicio.compareTo(perm.getPermiso().getHoraInicio()) <= 0 && horaFin.compareTo(perm.getPermiso().getHoraInicio()) >= 0)
+                        || (perm.getPermiso().getHoraInicio().compareTo(horaInicio) <= 0 && perm.getPermiso().getHoraFin().compareTo(horaInicio) >= 0)).collect(Collectors.toList());
                 if (lista.isEmpty()) {
 
                 } else {
                     errores++;
-                    mensaje = "El empleado " + asignacion.getEmpleado() + " tiene conflicto con un permiso añadido anteriormente \n Ingrese otro rango de horas\n";
+                    mensaje += ">El empleado " + asignacion.getEmpleado() + " tiene conflicto con un permiso añadido anteriormente \n Ingrese otro rango de horas\n";
                     break;
                 }
             }

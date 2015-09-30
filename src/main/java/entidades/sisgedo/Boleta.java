@@ -8,8 +8,8 @@ package entidades.sisgedo;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -21,42 +21,37 @@ import javax.persistence.TemporalType;
  * @author RyuujiMD
  */
 
-@Table(name = "SPa_boleta")
+@Table(name = "tb_spa_papeletas")
 @Entity
 public class Boleta implements Serializable {
-    @EmbeddedId
-    private BoletaPK boletaPK;
+    @Id
+    @Column(name = "idPapeleta")
+    private Long id;
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "fecapr")
+    @Column(name = "fechaAutoriza")
     private Date aprobacionFechaHora;
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "horasal")
-    private Date salidaFechaHora;
+    @Column(name = "fechaSalidaDel")
+    private Date inicioFechaHora;
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "horaret")
+    @Column(name = "fechaSalidaAl")
+    private Date finFechaHora;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "fechaRetorno")
     private Date retornoFechaHora;
-    @Column(name = "descrip")
-    private String descripcion;
-    @Column(name = "observacion")
-    private String observacion;
     @ManyToOne(targetEntity = Motivo.class,optional = false)
-    @JoinColumn(name = "idmotivo", referencedColumnName = "idmotivo",insertable = false,updatable = false)
+    @JoinColumn(name = "idMotivo", referencedColumnName = "idmotivo")
     private Motivo motivo;
+    @ManyToOne(targetEntity = UsuarioSISGEDO.class, optional = true)
+    @JoinColumn(name = "loginUsuario", referencedColumnName = "idUsuario")
+    private UsuarioSISGEDO usuario;
 
-    public Motivo getMotivo() {
-        return motivo;
+    public Long getId() {
+        return id;
     }
 
-    public void setMotivo(Motivo motivo) {
-        this.motivo = motivo;
-    }
-
-    public BoletaPK getBoletaPK() {
-        return boletaPK;
-    }
-
-    public void setBoletaPK(BoletaPK boletaPK) {
-        this.boletaPK = boletaPK;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Date getAprobacionFechaHora() {
@@ -67,12 +62,20 @@ public class Boleta implements Serializable {
         this.aprobacionFechaHora = aprobacionFechaHora;
     }
 
-    public Date getSalidaFechaHora() {
-        return salidaFechaHora;
+    public Date getInicioFechaHora() {
+        return inicioFechaHora;
     }
 
-    public void setSalidaFechaHora(Date salidaFechaHora) {
-        this.salidaFechaHora = salidaFechaHora;
+    public void setInicioFechaHora(Date inicioFechaHora) {
+        this.inicioFechaHora = inicioFechaHora;
+    }
+
+    public Date getFinFechaHora() {
+        return finFechaHora;
+    }
+
+    public void setFinFechaHora(Date finFechaHora) {
+        this.finFechaHora = finFechaHora;
     }
 
     public Date getRetornoFechaHora() {
@@ -83,27 +86,21 @@ public class Boleta implements Serializable {
         this.retornoFechaHora = retornoFechaHora;
     }
 
-    public String getDescripcion() {
-        return descripcion;
+    public Motivo getMotivo() {
+        return motivo;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public void setMotivo(Motivo motivo) {
+        this.motivo = motivo;
     }
 
-    public String getObservacion() {
-        return observacion;
+    public UsuarioSISGEDO getUsuario() {
+        return usuario;
     }
 
-    public void setObservacion(String observacion) {
-        this.observacion = observacion;
+    public void setUsuario(UsuarioSISGEDO usuario) {
+        this.usuario = usuario;
     }
-
-//    public UsuarioSISGEDO getUsuarioSISGEDO() {
-//        return usuarioSISGEDO;
-//    }
-//
-//    public void setUsuarioSISGEDO(UsuarioSISGEDO usuarioSISGEDO) {
-//        this.usuarioSISGEDO = usuarioSISGEDO;
-//    }
+    
+    
 }

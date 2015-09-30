@@ -147,4 +147,17 @@ public class VacacionControlador extends Controlador<Vacacion> {
         List<Vacacion> vacacion = this.getDao().buscar(jpql, mapa);
         return vacacion;
     }
+    
+    public List<Vacacion> buscarXEmpleadoEntreFecha(Empleado empleado, Date fechaInicio, Date fechaFin){
+        String jpql = "SELECT v FROM Vacacion v "
+                + "WHERE "
+                + "v.empleado = :empleado AND "
+                + "((v.fechaInicio <= :fechaInicio AND v.fechaFin >= :fechaInicio) OR (v.fechaInicio BETWEEN :fechaInicio AND :fechaFin)) "
+                + "ORDER BY v.fechaInicio";
+        Map<String, Object> mapa = new HashMap<>();
+        mapa.put("empleado", empleado);
+        mapa.put("fechaInicio", fechaInicio);
+        mapa.put("fechaFin", fechaFin);
+        return this.getDao().buscar(jpql, mapa);
+    }
 }

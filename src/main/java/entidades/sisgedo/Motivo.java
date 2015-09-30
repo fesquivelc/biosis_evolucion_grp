@@ -16,21 +16,23 @@ import javax.persistence.Table;
  * @author RyuujiMD
  */
 @Entity
-@Table(name = "SPa_motivo")
+@Table(name = "tb_spa_motivos")
 public class Motivo implements Serializable {
     @Column(name = "idmotivo")
     @Id
-    private String id;
+    private Long id;
     @Column(name = "descmotivo")
     private String descripcion;
-    @Column(name = "dcto")
-    private boolean descuento;    
+    @Column(name = "tipopapeleta")
+    private int tipoPapeleta;    
+    @Column(name = "activo")
+    private boolean activo;    
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -42,11 +44,20 @@ public class Motivo implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public boolean isDescuento() {
-        return descuento;
+    public int getTipoPapeleta() {
+        return tipoPapeleta;
     }
 
-    public void setDescuento(boolean descuento) {
-        this.descuento = descuento;
+    public void setTipoPapeleta(int tipoPapeleta) {
+        this.tipoPapeleta = tipoPapeleta;
     }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
+    }
+    
 }
