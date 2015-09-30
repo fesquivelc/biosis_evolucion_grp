@@ -5,15 +5,17 @@
  */
 package algoritmo;
 
+import controladores.AsignacionHorarioControlador;
+import controladores.ContratoControlador;
 import controladores.FeriadoControlador;
 import controladores.PermisoControlador;
 import controladores.VacacionControlador;
 import controladores.sisgedo.BoletaControlador;
+import entidades.AsignacionHorario;
 import entidades.Feriado;
 import entidades.Marcacion;
-import entidades.Permiso;
-import entidades.Vacacion;
 import entidades.asistencia.Asistencia;
+import entidades.escalafon.Contrato;
 import entidades.escalafon.Empleado;
 import entidades.sisgedo.Boleta;
 import java.util.ArrayList;
@@ -49,7 +51,9 @@ public class AnalizadorAsistencia {
     /*
     CONTROLADORES
     */
+    private final AsignacionHorarioControlador asghorc = new AsignacionHorarioControlador();
     private final BoletaControlador bolc = BoletaControlador.getInstance();
+    private final ContratoControlador contc = ContratoControlador.getInstance();
     private final FeriadoControlador ferc = new FeriadoControlador();
     private final PermisoControlador permc = new PermisoControlador();
     private final VacacionControlador vacc = new VacacionControlador();
@@ -59,7 +63,16 @@ public class AnalizadorAsistencia {
         cargarFeriados(fechaInicio, fechaFin);
         empleadoList.stream().forEach(empleado -> {
             cargarSalidas(empleado, fechaInicio, fechaFin);
+            List<Contrato> contratos = contc.obtenerContratosXFechas(empleado, fechaInicio, fechaFin);
+            Date desde1 = fechaInicio;
+            Date hasta1 = fechaFin;
             
+            List<AsignacionHorario> asignaciones = asghorc.buscarXEmpleado(empleado, desde1, hasta1);
+            
+            asignaciones.stream().forEach(asignacion -> {
+                Date desde2 = desde1.before(asignacion.getFechaInicio()) ? asignacion.getFechaInicio() : desde1;
+                Date hasta2 = hasta1.before(asignacion.getFechaFin()) ? hasta1 : asignacion.getFechaFin();
+            });
         });
         
         return asistenciaList;
