@@ -31,10 +31,14 @@ public class AnalizadorAsistencia {
      VALORES PARA COMPARAR EN LA ASISTENCIA
      */
 
+    int NINGUNO = 0;
     int PERMISO_FECHA = 1;
     int FERIADO = 2;
     int VACACION = 3;
     int PERMISO_HORA = 4;
+    /*
+    RESULTADOS DE ASISTENCIA
+    */
     int REGULAR = 0;
     int TARDANZA = -1;
     int FALTA = -2;
@@ -61,6 +65,8 @@ public class AnalizadorAsistencia {
     private List<Asistencia> analizarAsistencia(List<Empleado> empleadoList, Date fechaInicio, Date fechaFin) {
         List<Asistencia> asistenciaList = new ArrayList<>();
         cargarFeriados(fechaInicio, fechaFin);
+        Object objetoPermiso;
+        int tipoPermiso;
         empleadoList.stream().forEach(empleado -> {
             cargarSalidas(empleado, fechaInicio, fechaFin);
             List<Contrato> contratos = contc.obtenerContratosXFechas(empleado, fechaInicio, fechaFin);
