@@ -5,8 +5,10 @@
  */
 package entidades.asistencia;
 
+import entidades.Feriado;
+import entidades.Permiso;
+import entidades.Vacacion;
 import entidades.escalafon.Empleado;
-import entidades.sisgedo.Boleta;
 import java.util.Date;
 import java.util.List;
 
@@ -15,12 +17,39 @@ import java.util.List;
  * @author Francis
  */
 public class Asistencia {
+
     private Empleado empleado;
     private List<DetalleAsistencia> detalleAsistenciaList;
     private Date fecha;
-    private Boleta permiso1;
-    private Boleta permiso2;
+    private List<DetalleAsistencia> permisoList;
     private int resultado;
+    private Permiso permiso;
+    private Vacacion vacacion;
+    private Feriado feriado;
+
+    public Feriado getFeriado() {
+        return feriado;
+    }
+
+    public void setFeriado(Feriado feriado) {
+        this.feriado = feriado;
+    }
+
+    public Permiso getPermiso() {
+        return permiso;
+    }
+
+    public void setPermiso(Permiso permiso) {
+        this.permiso = permiso;
+    }
+
+    public Vacacion getVacacion() {
+        return vacacion;
+    }
+
+    public void setVacacion(Vacacion vacacion) {
+        this.vacacion = vacacion;
+    }
 
     public Empleado getEmpleado() {
         return empleado;
@@ -46,20 +75,12 @@ public class Asistencia {
         this.fecha = fecha;
     }
 
-    public Boleta getPermiso1() {
-        return permiso1;
+    public List<DetalleAsistencia> getPermisoList() {
+        return permisoList;
     }
 
-    public void setPermiso1(Boleta permiso1) {
-        this.permiso1 = permiso1;
-    }
-
-    public Boleta getPermiso2() {
-        return permiso2;
-    }
-
-    public void setPermiso2(Boleta permiso2) {
-        this.permiso2 = permiso2;
+    public void setPermisoList(List<DetalleAsistencia> permisoList) {
+        this.permisoList = permisoList;
     }
 
     public int getResultado() {
@@ -69,6 +90,5 @@ public class Asistencia {
     public void setResultado(int resultado) {
         this.resultado = resultado;
     }
-    
-    
+
 }

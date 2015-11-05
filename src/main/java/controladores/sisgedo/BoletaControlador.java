@@ -32,8 +32,8 @@ public class BoletaControlador extends Controlador<Boleta>{
     
     public List<Boleta> permisoXFechaXEmpleadoEntreFecha(Empleado empleado, Date fechaInicio, Date fechaFin){
         String jpql = "SELECT b FROM Boleta b WHERE "
-                + "b.finFechaHora >= :fechaHoraInicio AND "
-                + "(b.inicioFechaHora <= :fechaHoraInicio OR (b.inicioFechaHora >= :fechaHoraInicio AND b.inicioFechaHora <= :fechaHoraFin)) AND"
+                + "b.retornoFechaHora >= :fechaHoraInicio AND "
+                + "(b.inicioFechaHora <= :fechaHoraInicio OR (b.inicioFechaHora >= :fechaHoraInicio AND b.inicioFechaHora <= :fechaHoraFin)) AND "
                 + "b.usuario.numeroDocumento = :empleado";
         Map<String,Object> parametros = new HashMap<>();
         parametros.put("empleado", empleado.getNroDocumento());

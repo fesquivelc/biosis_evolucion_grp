@@ -16,7 +16,7 @@ import javax.persistence.Table;
  * @author Francis
  */
 @Entity
-@Table(name = "tb_spa_usuarios")
+@Table(name = "usuario")
 public class UsuarioSISGEDO implements Serializable{
     @Id
     @Column(name = "idUsuario")

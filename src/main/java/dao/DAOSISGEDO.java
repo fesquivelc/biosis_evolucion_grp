@@ -46,7 +46,7 @@ public class DAOSISGEDO<T> extends DAOBiosis<T>{
 
             Map<String, String> properties = new HashMap<>();
             properties.put("javax.persistence.jdbc.user", usuario);
-            properties.put("javax.persistence.jdbc.password", Encriptador.decrypt(password));
+            properties.put("javax.persistence.jdbc.password", password);
             properties.put("javax.persistence.jdbc.driver", driver);
             properties.put("javax.persistence.jdbc.url", url);
 //            properties.put("hibernate.show_sql", "true");

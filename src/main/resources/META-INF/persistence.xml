@@ -78,6 +78,4 @@
       <property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider"/>
     </properties>
   </persistence-unit>
-
-  --&gt;
 </persistence>

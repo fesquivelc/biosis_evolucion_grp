@@ -65,4 +65,30 @@ public class PermisoControlador extends Controlador<Permiso>{
         return permisos.isEmpty() ? null : permisos.get(0);
     }
     
+    public List<Permiso> buscarXEmpleadoXHoraEntreFecha(Empleado empleado, Date fechaInicio, Date fechaFin){
+        String jpql = "SELECT ap.permiso FROM AsignacionPermiso ap WHERE "
+                + "ap.empleado = :empleado AND "
+                + "((ap.permiso.fechaInicio <= :fechaInicio AND ap.permiso.fechaFin >= :fechaInicio) OR (ap.permiso.fechaInicio BETWEEN :fechaInicio AND :fechaFin)) AND "
+                + "ap.permiso.opcion = 'H' "
+                + "ORDER BY ap.permiso.fechaInicio, ap.permiso.horaInicio";
+        Map<String, Object> variables = new HashMap();
+        variables.put("empleado", empleado);
+        variables.put("fechaInicio", fechaInicio);
+        variables.put("fechaFin", fechaFin);
+        return this.getDao().buscar(jpql, variables);
+    }
+    
+    public List<Permiso> buscarXEmpleadoXFechaEntreFecha(Empleado empleado, Date fechaInicio, Date fechaFin){
+        String jpql = "SELECT ap.permiso FROM AsignacionPermiso ap WHERE "
+                + "ap.empleado = :empleado AND "
+                + "((ap.permiso.fechaInicio <= :fechaInicio AND ap.permiso.fechaFin >= :fechaInicio) OR (ap.permiso.fechaInicio BETWEEN :fechaInicio AND :fechaFin)) AND "
+                + "ap.permiso.opcion = 'F' "
+                + "ORDER BY ap.permiso.fechaInicio, ap.permiso.horaInicio";
+        Map<String, Object> variables = new HashMap();
+        variables.put("empleado", empleado);
+        variables.put("fechaInicio", fechaInicio);
+        variables.put("fechaFin", fechaFin);
+        return this.getDao().buscar(jpql, variables);
+    }
+    
 }

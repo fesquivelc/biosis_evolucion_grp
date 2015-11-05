@@ -230,4 +230,15 @@ public class MarcacionControlador extends Controlador<Marcacion> {
         return this.getDao().contar(jpql, mapa);
     }
 
+    public List<Marcacion> buscarXEmpleadoEntreFecha(Empleado empleado, Date inicio, Date fin) {
+        String jpql = "SELECT m FROM Marcacion m WHERE "
+                + "m.fechaHora >= :inicio AND m.fechaHora <= :fin AND m.empleado = :empleado"
+                + "ORDER BY m.fechaHora";
+        Map<String, Object> mapa = new HashMap<>();
+        mapa.put("empleado", empleado);
+        mapa.put("inicio", FechaUtil.soloFecha(inicio));
+        mapa.put("fin", FechaUtil.unirFechaHora(fin, horaFinal));
+        return this.getDao().buscar(jpql, mapa);
+    }
+
 }

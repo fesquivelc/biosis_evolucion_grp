@@ -5,7 +5,6 @@
  */
 package utiles;
 
-import entidades.escalafon.Contrato;
 import entidades.escalafon.RegimenLaboral;
 import entidades.reportes.RptAsistenciaDetallado;
 import java.util.Comparator;
@@ -31,6 +30,8 @@ public class DetalleReporteAsistenciaComparator implements Comparator<RptAsisten
             if (comparacionEmpleado == 0) {
                 int comparacionFecha = primero.getFecha().compareTo(segundo.getFecha());
                 if (comparacionFecha == 0) {
+                    System.out.println("PRIMERO: "+primero.getFecha()+" DETALLE: "+primero.getDetalleJornada());
+                    System.out.println("SEGUNDO: "+segundo.getFecha()+" DETALLE: "+segundo.getDetalleJornada());
                     int comparacionDetalle = primero.getDetalleJornada().getEntrada().compareTo(segundo.getDetalleJornada().getEntrada());
                     if (comparacionDetalle == 0) {
                         Date comparacionI = primero.getTipoAsistencia().equals("P") ? primero.getPermiso().getHoraInicio() : primero.getDetalleJornada().getEntrada();
