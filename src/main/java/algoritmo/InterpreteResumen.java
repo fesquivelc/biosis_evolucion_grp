@@ -65,6 +65,7 @@ public class InterpreteResumen implements Interprete<RptAsistenciaResumen> {
                     numeroDiasPermisoSinGoce = 0;
                     numeroDiasVacaciones = 0;
                     numeroDiasFeriados = 0;
+                    asistenciaResumen.setEmpleado(empleado);
                 }
                 if (asistencia.getResultado() == AnalizadorAsistencia.ASISTENCIA) {
                     Long marcacionesMaximas = asistencia.getDetalleAsistenciaList().stream().filter(d -> d.getHoraReferencia() != null).count();
