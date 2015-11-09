@@ -68,7 +68,7 @@ public class DlgAsignarHorario extends javax.swing.JDialog {
         setTitle("ASIGNAR HORARIO");
 
         java.awt.GridBagLayout jPanel1Layout = new java.awt.GridBagLayout();
-        jPanel1Layout.columnWidths = new int[] {0, 8, 0, 8, 0};
+        jPanel1Layout.columnWidths = new int[] {0, 8, 0, 8, 0, 8, 0};
         jPanel1Layout.rowHeights = new int[] {0, 8, 0, 8, 0, 8, 0, 8, 0};
         jPanel1.setLayout(jPanel1Layout);
 
@@ -132,22 +132,20 @@ public class DlgAsignarHorario extends javax.swing.JDialog {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         jPanel1.add(cboGrupoHorario, gridBagConstraints);
 
-        dcFechaInicio.setDateFormatString("dd/MM/yyyy");
         dcFechaInicio.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 4;
-        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridwidth = 5;
         gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jPanel1.add(dcFechaInicio, gridBagConstraints);
 
-        dcFechaFin.setDateFormatString("dd/MM/yyyy");
         dcFechaFin.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 6;
-        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridwidth = 5;
         gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jPanel1.add(dcFechaFin, gridBagConstraints);
@@ -282,6 +280,25 @@ public class DlgAsignarHorario extends javax.swing.JDialog {
     public AsignacionHorario getSeleccion(){
         this.setVisible(true);
         return this.asignacionHorarioSeleccionado;
+    }
+    
+    public void setSeleccion(AsignacionHorario asignacion) {
+        if (asignacion != null) {
+            this.asignacionHorarioSeleccionado = asignacion;
+
+            if(asignacion.getGrupoHorario() == null){
+                this.empleadoSeleccionado = asignacion.getEmpleado();
+                this.txtEmpleado.setText(this.empleadoSeleccionado.getNombreCompleto());
+                this.radEmpleado.setSelected(true);
+            }else if(asignacion.getEmpleado() == null){
+                this.grupoHorarioSeleccionado = asignacion.getGrupoHorario();
+                this.radGrupo.setSelected(true);
+                this.cboGrupoHorario.setEnabled(true);
+            }
+            
+            this.dcFechaInicio.setDate(asignacion.getFechaInicio());
+            this.dcFechaFin.setDate(asignacion.getFechaFin());
+        }
     }
 
     private void inicializar() {
