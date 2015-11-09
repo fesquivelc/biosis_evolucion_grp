@@ -108,7 +108,7 @@ public class AnalizadorAsistencia {
 //                    if(objetoPermiso == null){
                     vacacion = this.buscarVacacion(iteradorDia.getTime());
                     if (vacacion == null) {
-                        permisoXFecha = this.buscarPermisoXFecha(iteradorDia.getTime());
+                        permisoXFecha = this.buscarPermisoXFecha(iteradorDia.getTime());                        
                         if (permisoXFecha == null) {
                             if (isDiaLaboral(iteradorDia.getTime(), turnos)) {
                                 Feriado feriado = this.buscarFeriado(iteradorDia.getTime());
@@ -122,7 +122,9 @@ public class AnalizadorAsistencia {
                                 }
                             }
                         } else {
-                            asistenciaList.add(this.generarAsistencia(empleado, iteradorDia.getTime(), permisoXFecha));
+                            Asistencia asistencia = this.generarAsistencia(empleado, iteradorDia.getTime(), permisoXFecha);
+                            asistencia.setPermisoConGoce(permisoXFecha.getTipoPermiso().getTipoDescuento() == 'C');
+                            asistenciaList.add(asistencia);
 
                         }
                     } else {
@@ -181,6 +183,7 @@ public class AnalizadorAsistencia {
             cal.add(Calendar.MINUTE, 40); //VARIABLE
             detalleI.setHoraReferenciaHasta(cal.getTime());
             detalleI.setTipo('P');
+            detalleI.setPermisoConGoce(perm.getTipoPermiso().getTipoDescuento() == 'C');
             
             DetalleAsistencia detalleF = new DetalleAsistencia();
             detalleF.setBandera(false);
@@ -189,6 +192,7 @@ public class AnalizadorAsistencia {
             cal.add(Calendar.SECOND, 1);
             detalleF.setHoraReferenciaDesde(cal.getTime());
             detalleF.setMotivo(perm.getTipoPermiso().getNombre());
+            detalleF.setPermisoConGoce(perm.getTipoPermiso().getTipoDescuento() == 'C');
             
             desglose.add(detalleI);
             desglose.add(detalleF);

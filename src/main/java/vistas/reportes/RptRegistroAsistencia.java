@@ -2,7 +2,7 @@ package vistas.reportes;
 
 import algoritmo.AnalizadorAsistencia;
 import algoritmo.Interprete;
-import algoritmo.InterpreteGenerico;
+import algoritmo.InterpreteDetalle;
 import controladores.DetalleGrupoControlador;
 import controladores.EmpleadoControlador;
 import controladores.GrupoHorarioControlador;
@@ -64,9 +64,9 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
     private final ReporteUtil reporteador;
     private final DateFormat dfFecha;
     private final EmpleadoControlador ec;
-    private final File archivo = new File("reportes/registro_asistencia.jasper");
+    private final File archivo = new File("reportes/reporte_registro_asistencia_caliente.jasper");
     private final Font fuente;
-    private final Interprete interprete = new InterpreteGenerico();
+    private final Interprete interprete = new InterpreteDetalle();
     
 
     public RptRegistroAsistencia() {

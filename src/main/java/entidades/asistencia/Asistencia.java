@@ -26,6 +26,15 @@ public class Asistencia {
     private Permiso permiso;
     private Vacacion vacacion;
     private Feriado feriado;
+    private boolean permisoConGoce;
+
+    public boolean isPermisoConGoce() {
+        return permisoConGoce;
+    }
+
+    public void setPermisoConGoce(boolean permisoConGoce) {
+        this.permisoConGoce = permisoConGoce;
+    }
 
     public Feriado getFeriado() {
         return feriado;

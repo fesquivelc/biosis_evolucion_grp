@@ -24,6 +24,15 @@ public class DetalleAsistencia {
     private boolean diaSiguiente;
     private char tipo;
     private String motivo;
+    private boolean permisoConGoce;
+
+    public boolean isPermisoConGoce() {
+        return permisoConGoce;
+    }
+
+    public void setPermisoConGoce(boolean permisoConGoce) {
+        this.permisoConGoce = permisoConGoce;
+    }
 
     public String getMotivo() {
         return motivo;

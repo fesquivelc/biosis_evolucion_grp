@@ -18,7 +18,7 @@ import utiles.HerramientaGeneral;
  *
  * @author Francis
  */
-public class InterpreteGenerico implements Interprete<RptAsistenciaDetallado> {
+public class InterpreteDetalle implements Interprete<RptAsistenciaDetallado> {
 
     /*
      EN ESTE INTÉRPRETE SE TOMA COMO FALTA CON EL SÓLO HECHO QUE EL EMPLEADO NO HAYA
@@ -38,7 +38,6 @@ public class InterpreteGenerico implements Interprete<RptAsistenciaDetallado> {
 
             if (asistencia.getResultado() == AnalizadorAsistencia.ASISTENCIA) {
                 Long marcacionesMaximas = asistencia.getDetalleAsistenciaList().stream().filter(d -> d.getHoraReferencia() != null).count();
-//                System.out.println("MARCACIONES MAXIMAS: "+marcacionesMaximas);
                 int tipo = this.obtenerTipo(asistencia.getDetalleAsistenciaList(), marcacionesMaximas.intValue());
                 int contador = 0;
                 int marcacionContador = 0;
@@ -167,6 +166,5 @@ public class InterpreteGenerico implements Interprete<RptAsistenciaDetallado> {
         }else{
             return 0.0;
         }
-        
     }
 }

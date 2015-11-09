@@ -7,7 +7,7 @@ package pruebas;
 
 import algoritmo.AnalizadorAsistencia;
 import algoritmo.Interprete;
-import algoritmo.InterpreteGenerico;
+import algoritmo.InterpreteDetalle;
 import com.personal.utiles.FechaUtil;
 import controladores.EmpleadoControlador;
 import entidades.asistencia.Asistencia;
@@ -28,7 +28,7 @@ import utiles.HerramientaGeneral;
 public class PruebaEvolucion {
 
     public static void probarInterprete(List<Asistencia> asistenciaList) {
-        final Interprete interprete = new InterpreteGenerico();
+        final Interprete interprete = new InterpreteDetalle();
         List<RptAsistenciaDetallado> asistenciaDetalleList = interprete.interpretar(asistenciaList);
         System.out.println("TERMINANDO DE INTERPRETAR, LISTADO: "+asistenciaDetalleList.size());
         for (RptAsistenciaDetallado detalle : asistenciaDetalleList) {
