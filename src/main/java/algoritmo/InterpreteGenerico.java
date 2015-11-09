@@ -33,7 +33,7 @@ public class InterpreteGenerico implements Interprete<RptAsistenciaDetallado> {
         List<RptAsistenciaDetallado> registro = new ArrayList<>();
 
         for (Asistencia asistencia : registroAsistencia) {
-                       
+
             RptAsistenciaDetallado detalleAsistencia = null;
 
             if (asistencia.getResultado() == AnalizadorAsistencia.ASISTENCIA) {
@@ -42,9 +42,9 @@ public class InterpreteGenerico implements Interprete<RptAsistenciaDetallado> {
                 int tipo = this.obtenerTipo(asistencia.getDetalleAsistenciaList(), marcacionesMaximas.intValue());
                 int contador = 0;
                 int marcacionContador = 0;
-                for(DetalleAsistencia detalle : asistencia.getDetalleAsistenciaList()){
+                for (DetalleAsistencia detalle : asistencia.getDetalleAsistenciaList()) {
                     marcacionContador++;
-                    if(contador == 0){
+                    if (contador == 0) {
                         detalleAsistencia = new RptAsistenciaDetallado();
                         detalleAsistencia.setEmpleado(asistencia.getEmpleado());
                         detalleAsistencia.setFecha(asistencia.getFecha());
@@ -52,7 +52,7 @@ public class InterpreteGenerico implements Interprete<RptAsistenciaDetallado> {
                         detalleAsistencia.setPermisos(this.traducirPermisos(asistencia.getPermisoList()));
                         detalleAsistencia.setReferencias(this.traducirReferencias(asistencia.getDetalleAsistenciaList()));
                     }
-                    
+
                     detalleAsistencia.getEnPermiso()[contador] = detalle.isPermiso();
                     detalleAsistencia.getHoraReferencia()[contador] = detalle.getHoraReferencia();
                     detalleAsistencia.getHoraTolerancia()[contador] = detalle.getHoraReferenciaTolerancia();
@@ -61,8 +61,8 @@ public class InterpreteGenerico implements Interprete<RptAsistenciaDetallado> {
 
                     contador++;
                     detalleAsistencia.setDetalleFinal(marcacionContador == marcacionesMaximas.intValue());
-                    if(contador == 4 || contador == marcacionesMaximas.intValue()){
-                        
+                    if (contador == 4 || contador == marcacionesMaximas.intValue()) {
+
                         registro.add(detalleAsistencia);
 //                        detalleAsistencia = null;
                         contador = 0;
@@ -76,8 +76,6 @@ public class InterpreteGenerico implements Interprete<RptAsistenciaDetallado> {
                 detalleAsistencia.setPermisos(obtenerMotivo(asistencia.getResultado(), asistencia));
                 registro.add(detalleAsistencia);
             }
-
-            
 
         }
 
@@ -122,29 +120,31 @@ public class InterpreteGenerico implements Interprete<RptAsistenciaDetallado> {
     }
 
     private int obtenerTipo(List<DetalleAsistencia> detalleAsistenciaList, int conteo) {
-        
+
 //        System.out.println("CONTEO: "+conteo.intValue());
-        
         int marcacionesPendientes = 0;
         boolean hayTardanza = false;
-        for(int i = 0; i < conteo; i++){
+        for (int i = 0; i < conteo; i++) {
             DetalleAsistencia detalle = detalleAsistenciaList.get(i);
-            
+
             if (detalle.getHoraEvento() == null) {
                 if (!detalle.isPermiso()) {
                     marcacionesPendientes++;
                 }
             } else {
-                hayTardanza = hayTardanza || detalle.isBandera() && FechaUtil.soloHora(detalle.getHoraEvento()).after(FechaUtil.soloHora(detalle.getHoraReferenciaTolerancia()));
+                hayTardanza
+                        = hayTardanza
+                        || detalle.isBandera() && tardanzaMin(FechaUtil.soloHora(detalle.getHoraEvento()),FechaUtil.soloHora(detalle.getHoraReferenciaTolerancia())) > 1;
             }
         }
-        
-        if(marcacionesPendientes > 0)
+
+        if (marcacionesPendientes > 0) {
             return AnalizadorAsistencia.FALTA;
-        else if(hayTardanza)
+        } else if (hayTardanza) {
             return AnalizadorAsistencia.TARDANZA;
-        else
+        } else {
             return AnalizadorAsistencia.REGULAR;
+        }
     }
 
     private String obtenerMotivo(int tipo, Asistencia asistencia) {
@@ -158,5 +158,15 @@ public class InterpreteGenerico implements Interprete<RptAsistenciaDetallado> {
             default:
                 return "";
         }
+    }
+
+    private double tardanzaMin(Date evento, Date tolerancia) {
+        if(tolerancia.before(evento)){
+            double tardanza = (evento.getTime() - tolerancia.getTime()) / (60*1000);
+            return tardanza;
+        }else{
+            return 0.0;
+        }
+        
     }
 }
