@@ -3,6 +3,7 @@ package vistas.reportes;
 import algoritmo.AnalizadorAsistencia;
 import algoritmo.Interprete;
 import algoritmo.InterpreteDetalle;
+import algoritmo.InterpreteResumen;
 import controladores.DetalleGrupoControlador;
 import controladores.EmpleadoControlador;
 import controladores.GrupoHorarioControlador;
@@ -126,6 +127,7 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         cboExportarFormato = new javax.swing.JComboBox();
         btnImprimir = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         tblAsistenciaDetallado = new org.jdesktop.swingx.JXTable();
         pnlCerrarTab = new javax.swing.JPanel();
@@ -402,6 +404,14 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
         });
         pnlExportar.add(btnImprimir);
 
+        jButton3.setText("Imprimir Resumen");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        pnlExportar.add(jButton3);
+
         tabDetallado.add(pnlExportar, java.awt.BorderLayout.PAGE_END);
 
         tblAsistenciaDetallado.setModel(new javax.swing.table.DefaultTableModel(
@@ -536,6 +546,11 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
         this.cerrarTabActivo();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        imprimirResumen();
+    }//GEN-LAST:event_jButton3ActionPerformed
+
     private Departamento oficinaSeleccionada;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -554,6 +569,7 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
     private javax.swing.ButtonGroup grpSeleccion;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane4;
@@ -775,10 +791,13 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
         reporteador.exportarReporte(archivo, parametros, formato, ruta);
     }
 
+    private List<Asistencia> asistenciaList;
+    private Interprete interpreteResumen = new InterpreteResumen();
+    
     private void generarReporte() {
         List<Empleado> empleados = obtenerDNI();
         Date[] fechasLimite = this.obtenerFechasLimite();
-        List<Asistencia> asistenciaList = analisis.analizarAsistencia(empleados, fechasLimite[0], fechasLimite[1]);
+        asistenciaList = analisis.analizarAsistencia(empleados, fechasLimite[0], fechasLimite[1]);
         System.out.println("ASISTENCIA LISt: "+asistenciaList.size());
         List<RptAsistenciaDetallado> asistenciaDetallado = interprete.interpretar(asistenciaList);
         System.out.println("LUEGO DE INTERPRETAR: "+asistenciaDetallado.size());
@@ -846,5 +865,15 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
             this.pnlTab.remove(tabIndex);
         }
         
+    }
+
+    private void imprimirResumen() {
+        File resumenFile = new File("reportes/reporte_resumen.jasper");
+        
+        Map<String, Object> parametros = this.obtenerParametros();
+        Component report = reporteador.obtenerReporte(interpreteResumen.interpretar(asistenciaList), resumenFile, parametros);
+//        pnlTab.removeTabAt(0);
+        pnlTab.add("Resumen "+pnlTab.getTabCount(), report);
+        pnlTab.setSelectedIndex(pnlTab.getTabCount()-1);
     }
 }
