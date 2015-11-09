@@ -714,6 +714,7 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
         parametros.put("reporte_ruc", Main.REPORTE_RUC);
         parametros.put("reporte_logo", Main.REPORTE_LOGO);
         parametros.put("reporte_institucion", Main.REPORTE_INSTITUCION);
+        parametros.put("reporte_usuario", UsuarioActivo.getUsuario().getLogin());
 //        parametros.put("mostrar_he", chkHFH.isSelected());
 
         return parametros;
