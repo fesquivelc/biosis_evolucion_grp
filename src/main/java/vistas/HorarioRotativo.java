@@ -97,6 +97,7 @@ public class HorarioRotativo extends javax.swing.JInternalFrame {
         tblAsignacion = new org.jdesktop.swingx.JXTable();
         pnlAccionAsignado = new javax.swing.JPanel();
         btnAsignar = new javax.swing.JButton();
+        btnAsignar4 = new javax.swing.JButton();
         btnAsignar1 = new javax.swing.JButton();
         pnlJornadas = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -272,6 +273,15 @@ public class HorarioRotativo extends javax.swing.JInternalFrame {
             }
         });
         pnlAccionAsignado.add(btnAsignar);
+
+        btnAsignar4.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        btnAsignar4.setText("Modificar asignacón");
+        btnAsignar4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAsignar4ActionPerformed(evt);
+            }
+        });
+        pnlAccionAsignado.add(btnAsignar4);
 
         btnAsignar1.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         btnAsignar1.setText("Eliminar asignación");
@@ -553,12 +563,12 @@ public class HorarioRotativo extends javax.swing.JInternalFrame {
             TipoFiltro filtro = (TipoFiltro) mcFiltro.getSelectedItem();
             switch (filtro) {
                 case POR_EMPLEADO:
-                    if(empleadoSeleccionado != null ){
+                    if (empleadoSeleccionado != null) {
                         listado = horarioControlador.buscarXEmpleado(empleadoSeleccionado);
-                    }                    
+                    }
                     break;
                 case POR_OFICINA:
-                    if(departamentoSeleccionado != null){
+                    if (departamentoSeleccionado != null) {
                         listado = horarioControlador.buscarXDepartamento(departamentoSeleccionado);
                     }
                     break;
@@ -568,7 +578,7 @@ public class HorarioRotativo extends javax.swing.JInternalFrame {
         } else {
             listado = horarioControlador.buscarTodos();
         }
-        
+
         actualizarTabla(listado);
 
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -585,12 +595,12 @@ public class HorarioRotativo extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         DlgTurno turnos = new DlgTurno(this);
         Turno turno = turnos.getSeleccionado();
-        if(turno != null){
+        if (turno != null) {
             turno.setHorario(this.horarioSeleccionado);
             turno.setHorario(this.horarioControlador.getSeleccionado());
             this.detalleHorarioList.add(turno);
             this.horarioControlador.getSeleccionado().getTurnoList().add(turno);
-            
+
         }
     }//GEN-LAST:event_btnAsignar2ActionPerformed
 
@@ -599,7 +609,7 @@ public class HorarioRotativo extends javax.swing.JInternalFrame {
 //        DlgAsignacionHorario empleadoGrupo = new DlgAsignacionHorario(this);
         DlgAsignarHorario asignar = new DlgAsignarHorario(this, true);
         AsignacionHorario asignacion = asignar.getSeleccion();
-        if(asignacion != null){
+        if (asignacion != null) {
             asignacion.setHorario(this.horarioControlador.getSeleccionado());
             this.horarioControlador.getSeleccionado().getAsignacionHorarioList().add(asignacion);
             this.asignacionHorarioList.add(asignacion);
@@ -608,14 +618,13 @@ public class HorarioRotativo extends javax.swing.JInternalFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
-        if(FormularioUtil.dialogoConfirmar(this, accion)){
+        if (FormularioUtil.dialogoConfirmar(this, accion)) {
             Horario horario = this.horarioControlador.getSeleccionado();
             horario.setCodigo(this.txtCodigo.getText());
             horario.setDocumento(this.txtDocumento.getText());
             horario.setNombre(this.txtNombre.getText());
-            
-            
-            if(this.horarioControlador.accion(accion)){
+
+            if (this.horarioControlador.accion(accion)) {
                 FormularioUtil.mensajeExito(this, accion);
                 this.accion = 0;
                 this.controles(accion);
@@ -627,7 +636,7 @@ public class HorarioRotativo extends javax.swing.JInternalFrame {
     private void btnAsignar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsignar1ActionPerformed
         // TODO add your handling code here:
         int fila = tblAsignacion.getSelectedRow();
-        if(fila != -1){
+        if (fila != -1) {
             AsignacionHorario asignacion = this.asignacionHorarioList.get(fila);
             this.horarioControlador.getSeleccionado().getAsignacionHorarioList().remove(asignacion);
             this.asignacionHorarioList.remove(asignacion);
@@ -653,19 +662,17 @@ public class HorarioRotativo extends javax.swing.JInternalFrame {
 //        FormularioUtil.activarComponente(txtCodigo, false);
 //        FormularioUtil.activarComponente(txtNombre, false);
 //        FormularioUtil.activarComponente(txtDocumento, false);
-        
+
 //        FormularioUtil.activarComponente(this.tblAsignacion, true);
-        
         FormularioUtil.activarComponente(this.pnlListado, true);
-        
+
         FormularioUtil.activarComponente(btnGuardar, false);
         FormularioUtil.activarComponente(btnCncelar, false);
-        
-        
+
         FormularioUtil.activarComponente(this.pnlDatosHorario, false);
-        
+
         FormularioUtil.limpiarComponente(pnlDatosHorario);
-        
+
 //        FormularioUtil.activarComponente(this.tblHorario, true);
 //        FormularioUtil.activarComponente(this.txtBusqueda, true);
         detalleHorarioList.clear();
@@ -674,8 +681,28 @@ public class HorarioRotativo extends javax.swing.JInternalFrame {
 
     private void btnAsignar3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsignar3ActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_btnAsignar3ActionPerformed
+
+    private void btnAsignar4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsignar4ActionPerformed
+        // TODO add your handling code here:
+        DlgAsignarHorario asignar = new DlgAsignarHorario(this, true);
+
+        int fila = tblAsignacion.getSelectedRow();
+        if (fila != -1) {
+            asignar.setSeleccion(asignacionHorarioList.get(fila));
+            AsignacionHorario asignacion = asignar.getSeleccion();
+            if (asignacion != null) {
+                asignacion.setHorario(this.horarioControlador.getSeleccionado());
+                this.horarioControlador.getSeleccionado().getAsignacionHorarioList().remove(fila);
+                this.horarioControlador.getSeleccionado().getAsignacionHorarioList().add(asignacion);
+                this.asignacionHorarioList.remove(fila);
+                this.asignacionHorarioList.add(asignacion);
+            }
+        }
+
+
+    }//GEN-LAST:event_btnAsignar4ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -683,6 +710,7 @@ public class HorarioRotativo extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnAsignar1;
     private javax.swing.JButton btnAsignar2;
     private javax.swing.JButton btnAsignar3;
+    private javax.swing.JButton btnAsignar4;
     private javax.swing.JButton btnCncelar;
     private javax.swing.JButton btnDialogo;
     private javax.swing.JButton btnEliminar;
@@ -757,7 +785,7 @@ public class HorarioRotativo extends javax.swing.JInternalFrame {
         FormularioUtil.activarComponente(this.tblAsignacion, true);
         FormularioUtil.activarComponente(this.tblDetalleHorario, true);
         FormularioUtil.activarComponente(this.txtBusqueda, false);
-        if(accion == Controlador.NUEVO){
+        if (accion == Controlador.NUEVO) {
             asignacionHorarioList.clear();
             detalleHorarioList.clear();
         }
@@ -813,10 +841,11 @@ public class HorarioRotativo extends javax.swing.JInternalFrame {
     }
 
     private void actualizarTabla() {
-        horarioList.clear();        
+        horarioList.clear();
         horarioList.addAll(horarioControlador.buscarTodos());
         tblHorario.packAll();
     }
+
     private void actualizarTabla(List<Horario> horarios) {
         horarioList.clear();
         this.asignacionHorarioList.clear();
