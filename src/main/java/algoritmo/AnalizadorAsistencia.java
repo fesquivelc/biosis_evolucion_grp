@@ -102,6 +102,8 @@ public class AnalizadorAsistencia {
                 Permiso permisoXFecha = null;
                 Vacacion vacacion = null;
                 List<Turno> turnos = asignacion.getHorario().getTurnoList();
+                System.out.println("EMPLEADO: "+empleado.getNombreCompleto()+" TURNOS: ");
+                turnos.stream().forEach(t -> System.out.println(String.format("ID: %s JORNADA: %s",t.getId(), t.getJornada().getNombre())));
                 while (iteradorDia.getTime().compareTo(hasta2) <= 0) {
 //                    if(objetoPermiso == null){
                     vacacion = this.buscarVacacion(iteradorDia.getTime());
@@ -331,7 +333,7 @@ public class AnalizadorAsistencia {
          Debemos realizar un análisis por turno buscando los permisos de cada uno
          */
         List<Asistencia> asistenciaList = new ArrayList<>();
-
+        
         turnos.stream().forEach(turno -> {
             Asistencia asistencia = new Asistencia();
             asistencia.setPermisoList(this.desglosar(this.buscarPermisoXHora(empleado,dia)));

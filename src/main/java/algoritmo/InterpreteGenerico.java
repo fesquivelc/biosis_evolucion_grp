@@ -61,7 +61,7 @@ public class InterpreteGenerico implements Interprete<RptAsistenciaDetallado> {
 
                     contador++;
                     detalleAsistencia.setDetalleFinal(marcacionContador == marcacionesMaximas.intValue());
-                    if(contador == 4){
+                    if(contador == 4 || contador == marcacionesMaximas.intValue()){
                         
                         registro.add(detalleAsistencia);
 //                        detalleAsistencia = null;

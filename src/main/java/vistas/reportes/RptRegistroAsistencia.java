@@ -779,7 +779,9 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
         List<Empleado> empleados = obtenerDNI();
         Date[] fechasLimite = this.obtenerFechasLimite();
         List<Asistencia> asistenciaList = analisis.analizarAsistencia(empleados, fechasLimite[0], fechasLimite[1]);
+        System.out.println("ASISTENCIA LISt: "+asistenciaList.size());
         List<RptAsistenciaDetallado> asistenciaDetallado = interprete.interpretar(asistenciaList);
+        System.out.println("LUEGO DE INTERPRETAR: "+asistenciaDetallado.size());
         this.asistenciaDetalleList.clear();
         this.asistenciaDetalleList.addAll(asistenciaDetallado);
         this.tblAsistenciaDetallado.packAll();
