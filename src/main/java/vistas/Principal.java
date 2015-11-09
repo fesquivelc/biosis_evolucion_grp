@@ -671,7 +671,8 @@ public class Principal extends javax.swing.JFrame {
     }
 
     private void registroAsistencia() {
-        FrmReporteAsistencia registroAsistencia = new FrmReporteAsistencia();
+        RptRegistroAsistencia registroAsistencia = new RptRegistroAsistencia();
+//        FrmReporteAsistencia registroAsistencia = new FrmReporteAsistencia();
         agregarAPanel(registroAsistencia, true);
     }
 

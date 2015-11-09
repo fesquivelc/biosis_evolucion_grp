@@ -91,4 +91,17 @@ public class PermisoControlador extends Controlador<Permiso>{
         return this.getDao().buscar(jpql, variables);
     }
     
+    public List<Permiso> buscarPermisosPorHoraEnFecha(Empleado empleado, Date fecha){
+        String jpql = "SELECT ap.permiso FROM AsignacionPermiso ap WHERE "
+                + "ap.empleado = :empleado AND "
+                + "ap.permiso.fechaInicio = :fecha AND "
+                + "ap.permiso.opcion = 'H' "
+                + "ORDER BY ap.permiso.fechaInicio,ap.permiso.horaInicio";
+        Map<String, Object> variables = new HashMap();
+        variables.put("empleado", empleado);
+        variables.put("fecha", fecha);
+        
+        return this.getDao().buscar(jpql, variables);
+    }
+    
 }

@@ -9,6 +9,7 @@ import com.personal.utiles.PropertiesUtil;
 import java.util.Properties;
 import vistas.dialogos.DlgLogin;
 import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  *
@@ -21,6 +22,8 @@ public class Main {
     public static String LOGIN_SUBTITULO = "";
     public static String LOGIN_IMAGEN = "";
     public static String REPORTE_INSTITUCION = "";
+    public static String REPORTE_RUC = "";
+    public static String REPORTE_LOGO = "";
     
     public static void main(String[] args) {
         // TODO code application logic here
@@ -31,7 +34,7 @@ public class Main {
                     break;
                 }
             }
-        } catch (Exception e) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
 
         }
         Properties props = PropertiesUtil.cargarProperties("config/interfaz.properties");
@@ -41,6 +44,8 @@ public class Main {
         LOGIN_IMAGEN = props.getProperty("login_imagen");
         APLICACION_FONDO = props.getProperty("aplicacion_fondo");
         REPORTE_INSTITUCION = props.getProperty("reporte_institucion");
+        REPORTE_LOGO = props.getProperty("reporte_logo");
+        REPORTE_RUC = props.getProperty("reporte_ruc");
         DlgLogin principal = new DlgLogin(null, true);
         principal.setVisible(true);
         

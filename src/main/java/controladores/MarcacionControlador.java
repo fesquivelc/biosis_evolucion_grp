@@ -232,7 +232,7 @@ public class MarcacionControlador extends Controlador<Marcacion> {
 
     public List<Marcacion> buscarXEmpleadoEntreFecha(Empleado empleado, Date inicio, Date fin) {
         String jpql = "SELECT m FROM Marcacion m WHERE "
-                + "m.fechaHora >= :inicio AND m.fechaHora <= :fin AND m.empleado = :empleado"
+                + "m.fechaHora >= :inicio AND m.fechaHora <= :fin AND m.empleado = :empleado "
                 + "ORDER BY m.fechaHora";
         Map<String, Object> mapa = new HashMap<>();
         mapa.put("empleado", empleado);

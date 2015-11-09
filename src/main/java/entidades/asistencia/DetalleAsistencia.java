@@ -23,6 +23,15 @@ public class DetalleAsistencia {
     private boolean bandera;
     private boolean diaSiguiente;
     private char tipo;
+    private String motivo;
+
+    public String getMotivo() {
+        return motivo;
+    }
+
+    public void setMotivo(String motivo) {
+        this.motivo = motivo;
+    }
 
     public boolean isDiaSiguiente() {
         return diaSiguiente;

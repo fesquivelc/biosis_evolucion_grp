@@ -7,6 +7,7 @@ package algoritmo;
 
 import com.personal.utiles.FechaUtil;
 import entidades.Marcacion;
+import entidades.Permiso;
 import entidades.asistencia.Asistencia;
 import entidades.asistencia.DetalleAsistencia;
 import java.util.Calendar;
@@ -26,7 +27,7 @@ public class AnalizadorDiario {
     private List<DetalleAsistencia> permisos;
     private final int INICIO = 0;
     private int FIN;
-    private Calendar calendar;
+    private Calendar calendar = Calendar.getInstance();
 
     public List<DetalleAsistencia> getPermisos() {
         return permisos;
@@ -69,7 +70,11 @@ public class AnalizadorDiario {
          Buscamos las marcaciones referentes a la asistencia
          */
         this.getAsistencia().getDetalleAsistenciaList().stream().forEach((detalle) -> {
-            Marcacion marcacion = this.buscarMarcacion(detalle.isDiaSiguiente() ? diaSiguiente : diaInicio, detalle.getHoraReferenciaDesde(), diaInicio, detalle.getHoraReferencia());
+            Marcacion marcacion
+                    = this.buscarMarcacion(
+                            detalle.isDiaSiguiente() ? diaSiguiente : diaInicio, detalle.getHoraReferenciaDesde(),
+                            detalle.isDiaSiguiente() ? diaSiguiente : diaInicio, detalle.getHoraReferenciaHasta()
+                    );
             if (marcacion != null) {
                 detalle.setHoraEvento(marcacion.getFechaHora());
                 this.removerMarcacionesDuplicadas(marcacion.getFechaHora());
@@ -78,46 +83,83 @@ public class AnalizadorDiario {
 
         /*
          Se compara con los permisos y se sobrepone en la asistencia, debe tenerse en cuenta que los permisos pueden ser 
-        en varias fechas, o en una sola fecha
+         en varias fechas, o en una sola fecha
          */
-        this.getPermisos().stream().forEach((permiso) -> {
-            /*
-            Debemos buscar las marcaciones para los permisos, sin olvidar eliminar los posibles duplicados de marcacion, suponiendo que las marcaciones eliminadaas corresponden
-            para ello arbitriaramente definimos un espacio para la marcacion de inicio y la marcación final vendrá dada por la 
-            */
-            
-            permiso.isBandera();
-            
-        });
+        if (this.getPermisos() != null) {
+            DetalleAsistencia permisoI = null;
+            DetalleAsistencia permisoF = null;
+            for (DetalleAsistencia permiso : this.getAsistencia().getPermisoList()) {
+                if (permiso.isBandera()) {
+                    permisoI = permiso;
+                } else {
+                    permisoF = permiso;
+                    System.out.println("PERMISO I: " + permisoI.getHoraReferencia());
+                    System.out.println("PERMISO F: " + permisoF.getHoraReferencia());
+                    /*
+                     Se buscan los detalles que coinciden con los permisos
+                     */
+                    for (DetalleAsistencia detalle : this.getAsistencia().getDetalleAsistenciaList()) {
 
-        this.posicion = this.INICIO;
-
-        switch (detalleActual().getTipo()) {
-            case 'P':
-                estadoPermiso();
-                break;
-            case 'A':
-                estadoAsistencia();
-                break;
-        }
-    }
-
-    private void estadoAsistencia() {
-    }
-
-    private void estadoPermiso() {
-        if (this.posicion == this.INICIO) {
-            if (this.detalleActual().isBandera()) {
-                //AQUÍ DEBE OBTENERSE
-                this.detalleActual().setPermiso(true);
-            } else {
-
+                        if (permisoI.getHoraReferencia().compareTo(detalle.getHoraReferencia()) <= 0
+                                && permisoF.getHoraReferencia().compareTo(detalle.getHoraReferencia()) >= 0) {
+                            detalle.setPermiso(true);
+                        }
+                    }
+                }
             }
-            this.posicion++;
-
+//            this.getPermisos().stream().sorted((p1, p2) -> p1.getHoraReferencia().compareTo(p2.getHoraReferencia())).forEach((permiso) -> {
+//                /*
+//                 Debemos buscar las marcaciones para los permisos, sin olvidar eliminar los posibles duplicados de marcacion, suponiendo que las marcaciones eliminadaas corresponden
+//                 para ello arbitriaramente definimos un espacio para la marcacion de inicio y la marcación final vendrá dada por la 
+//                 */
+//
+//                if (permiso.isBandera()) {
+//                    permisoI = permiso;
+//                } else {
+//                    permisoF = permiso;
+//
+//                    /*
+//                     Se buscan los detalles que coinciden con los permisos
+//                     */
+//                    for (DetalleAsistencia detalle : this.getAsistencia().getDetalleAsistenciaList()) {
+//                        System.out.println("PERMISO I: " + permisoI.getHoraReferencia());
+//                        System.out.println("PERMISO F: " + permisoF.getHoraReferencia());
+//                        if (permisoI.getHoraReferencia().compareTo(detalle.getHoraReferencia()) <= 0
+//                                && permisoF.getHoraReferencia().compareTo(detalle.getHoraReferencia()) >= 0) {
+//                            detalle.setPermiso(true);
+//                        }
+//                    }
+//                }
+//            });
         }
+
+//        this.posicion = this.INICIO;
+//
+//        switch (detalleActual().getTipo()) {
+//            case 'P':
+//                estadoPermiso();
+//                break;
+//            case 'A':
+//                estadoAsistencia();
+//                break;
+//        }
     }
 
+//    private void estadoAsistencia() {
+//    }
+//
+//    private void estadoPermiso() {
+//        if (this.posicion == this.INICIO) {
+//            if (this.detalleActual().isBandera()) {
+//                //AQUÍ DEBE OBTENERSE
+//                this.detalleActual().setPermiso(true);
+//            } else {
+//
+//            }
+//            this.posicion++;
+//
+//        }
+//    }
     private DetalleAsistencia detalleActual() {
         DetalleAsistencia detalle = this.asistencia.getDetalleAsistenciaList().get(this.posicion);
         return detalle;
@@ -126,6 +168,8 @@ public class AnalizadorDiario {
     private Marcacion buscarMarcacion(Date fechaInicio, Date horaInicio, Date fechaFin, Date horaFin) {
         Date fechaHoraInicio = FechaUtil.unirFechaHora(fechaInicio, horaInicio);
         Date fechaHoraFin = FechaUtil.unirFechaHora(fechaFin, horaFin);
+        System.out.println("FECHA HORA INICIO: " + fechaHoraInicio);
+        System.out.println("FECHA HORA FIN: " + fechaHoraFin);
         try {
             return this.marcaciones
                     .stream()
@@ -147,5 +191,18 @@ public class AnalizadorDiario {
         cal.setTime(fechaHora);
         cal.add(Calendar.MINUTE, 3);
         this.marcaciones.removeIf(m -> fechaHora.compareTo(m.getFechaHora()) <= 0 && cal.getTime().compareTo(m.getFechaHora()) >= 0);
+    }
+
+    private DetalleAsistencia buscarDetalleAsistencia(Date horaReferencia) {
+        try {
+            return this.getAsistencia().getDetalleAsistenciaList()
+                    .stream()
+                    .filter(detalle -> detalle.getHoraReferencia().equals(horaReferencia))
+                    .findFirst()
+                    .get();
+        } catch (NoSuchElementException e) {
+            return null;
+        }
+
     }
 }

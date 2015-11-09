@@ -5,16 +5,7 @@
  */
 package entidades.reportes;
 
-import entidades.AsignacionHorario;
-import entidades.Autorizacion;
-import entidades.DetalleJornada;
-import entidades.Feriado;
-import entidades.Permiso;
-import entidades.Vacacion;
-import entidades.escalafon.Contrato;
-import entidades.escalafon.Departamento;
 import entidades.escalafon.Empleado;
-import entidades.sisgedo.Boleta;
 //import entidades.sisgedo.Salida;
 import java.util.Date;
 
@@ -22,110 +13,42 @@ import java.util.Date;
  *
  * @author RyuujiMD
  */
-public class RptAsistenciaDetallado{
-    private String motivo;
-    private String tipoAsistencia;
-    private String tipoDetalle;
-    private Date inicio;
-    private Date fin;
-    private String regimenLaboral;
-    private String categoriaRemunerativa;
-    private Integer minutosTardanza;
-    private Integer minutosExtra;
-    private DetalleJornada detalleJornada;
-    private boolean minutosExtraAutorizado;
-    private Autorizacion autorizacionExtra;
-    private Date fecha;
-    private Departamento area;
-    private Contrato contrato;
-    private Boleta boleta;
+public class RptAsistenciaDetallado {
 
-    public Boleta getBoleta() {
-        return boleta;
-    }
-
-    public void setBoleta(Boleta boleta) {
-        this.boleta = boleta;
-    }
-
-    public Contrato getContrato() {
-        return contrato;
-    }
-
-    public void setContrato(Contrato contrato) {
-        this.contrato = contrato;
-    }
-    
-
-    public Departamento getArea() {
-        return area;
-    }
-
-    public void setArea(Departamento area) {
-        this.area = area;
-    }
-
-    public Integer getMinutosTardanza() {
-        return minutosTardanza;
-    }
-
-    public void setMinutosTardanza(Integer minutosTardanza) {
-        this.minutosTardanza = minutosTardanza;
-    }
-
-    public Integer getMinutosExtra() {
-        return minutosExtra;
-    }
-
-    public void setMinutosExtra(Integer minutosExtra) {
-        this.minutosExtra = minutosExtra;
-    }
-
-    public Autorizacion getAutorizacionExtra() {
-        return autorizacionExtra;
-    }
-
-    public void setAutorizacionExtra(Autorizacion autorizacionExtra) {
-        this.autorizacionExtra = autorizacionExtra;
-    }
-
-    public DetalleJornada getDetalleJornada() {
-        return detalleJornada;
-    }
-
-    public void setDetalleJornada(DetalleJornada detalleJornada) {
-        this.detalleJornada = detalleJornada;
-    }
-
-    public boolean isMinutosExtraAutorizado() {
-        return minutosExtraAutorizado;
-    }
-
-    public void setMinutosExtraAutorizado(boolean minutosExtraAutorizado) {
-        this.minutosExtraAutorizado = minutosExtraAutorizado;
-    }
-
-    public String getTipoDetalle() {
-        return tipoDetalle;
-    }
-
-    public void setTipoDetalle(String tipoDetalle) {
-        this.tipoDetalle = tipoDetalle;
-    }
-    
     private Empleado empleado;
-    private AsignacionHorario asignacionHorario;
-    private Feriado feriado;
-    private Permiso permiso;
-    private Vacacion vacacion;
-//    private Salida salida;
+    private Date[] horaReferencia;
+    private Date[] horaTolerancia;
+    private Date[] horaEvento;
+    private boolean[] enPermiso;
+    private int tipo;
+    private String permisos;
+    private Date fecha;
+    private String regimenLaboral;
+    private String referencias;
+    private int marcacionesTotales;
+    private boolean detalleFinal;
 
-    public Vacacion getVacacion() {
-        return vacacion;
+    public boolean isDetalleFinal() {
+        return detalleFinal;
     }
 
-    public void setVacacion(Vacacion vacacion) {
-        this.vacacion = vacacion;
+    public void setDetalleFinal(boolean detalleFinal) {
+        this.detalleFinal = detalleFinal;
+    }
+
+    public int getMarcacionesTotales() {
+        return marcacionesTotales;
+    }
+
+    public void setMarcacionesTotales(int marcacionesTotales) {
+        this.marcacionesTotales = marcacionesTotales;
+    }
+
+    public RptAsistenciaDetallado() {
+        horaReferencia = new Date[4];
+        horaTolerancia = new Date[4];
+        horaEvento = new Date[4];
+        enPermiso = new boolean[4];
     }
 
     public Empleado getEmpleado() {
@@ -135,75 +58,61 @@ public class RptAsistenciaDetallado{
     public void setEmpleado(Empleado empleado) {
         this.empleado = empleado;
     }
-    
-    public AsignacionHorario getAsignacionHorario() {
-        return asignacionHorario;
+
+    public Date[] getHoraReferencia() {
+        return horaReferencia;
     }
 
-    public void setAsignacionHorario(AsignacionHorario asignacionHorario) {
-        this.asignacionHorario = asignacionHorario;
+    public void setHoraReferencia(Date[] horaReferencia) {
+        this.horaReferencia = horaReferencia;
     }
 
-    public Feriado getFeriado() {
-        return feriado;
+    public Date[] getHoraTolerancia() {
+        return horaTolerancia;
     }
 
-    public void setFeriado(Feriado feriado) {
-        this.feriado = feriado;
+    public void setHoraTolerancia(Date[] horaTolerancia) {
+        this.horaTolerancia = horaTolerancia;
     }
 
-    public Permiso getPermiso() {
-        return permiso;
+    public Date[] getHoraEvento() {
+        return horaEvento;
     }
 
-    public void setPermiso(Permiso permiso) {
-        this.permiso = permiso;
+    public void setHoraEvento(Date[] horaEvento) {
+        this.horaEvento = horaEvento;
     }
 
-//    public Salida getSalida() {
-//        return salida;
-//    }
-//
-//    public void setSalida(Salida salida) {
-//        this.salida = salida;
-//    }
+    public boolean[] getEnPermiso() {
+        return enPermiso;
+    }
+
+    public void setEnPermiso(boolean[] enPermiso) {
+        this.enPermiso = enPermiso;
+    }
+
+    public int getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(int tipo) {
+        this.tipo = tipo;
+    }
+
+    public String getPermisos() {
+        return permisos;
+    }
+
+    public void setPermisos(String permisos) {
+        this.permisos = permisos;
+    }
+
     public Date getFecha() {
         return fecha;
     }
 
     public void setFecha(Date fecha) {
         this.fecha = fecha;
-    }
-    public String getMotivo() {
-        return motivo;
-    }
-
-    public void setMotivo(String motivo) {
-        this.motivo = motivo;
-    }
-
-    public String getTipoAsistencia() {
-        return tipoAsistencia;
-    }
-
-    public void setTipoAsistencia(String tipoAsistencia) {
-        this.tipoAsistencia = tipoAsistencia;
-    }
-
-    public Date getInicio() {
-        return inicio;
-    }
-
-    public void setInicio(Date inicio) {
-        this.inicio = inicio;
-    }
-
-    public Date getFin() {
-        return fin;
-    }
-
-    public void setFin(Date fin) {
-        this.fin = fin;
     }
 
     public String getRegimenLaboral() {
@@ -214,26 +123,12 @@ public class RptAsistenciaDetallado{
         this.regimenLaboral = regimenLaboral;
     }
 
-    public String getCategoriaRemunerativa() {
-        return categoriaRemunerativa;
+    public String getReferencias() {
+        return referencias;
     }
 
-    public void setCategoriaRemunerativa(String categoriaRemunerativa) {
-        this.categoriaRemunerativa = categoriaRemunerativa;
+    public void setReferencias(String referencias) {
+        this.referencias = referencias;
     }
 
-    public void setMinutosTardanza(int minutosTardanza) {
-        this.minutosTardanza = minutosTardanza;
-    }
-
-    public void setMinutosExtra(int minutosExtra) {
-        this.minutosExtra = minutosExtra;
-    }
-
-    @Override
-    public String toString() {
-        return "RptAsistenciaDetallado{" + "tipoAsistencia=" + tipoAsistencia + ", tipoDetalle=" + tipoDetalle + ", inicio=" + inicio + ", fin=" + fin + ", detalleJornada=" + detalleJornada + ", fecha=" + fecha + '}';
-    }
-
-    
 }

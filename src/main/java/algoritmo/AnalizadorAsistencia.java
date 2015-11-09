@@ -14,6 +14,7 @@ import controladores.PermisoControlador;
 import controladores.VacacionControlador;
 import controladores.sisgedo.BoletaControlador;
 import entidades.AsignacionHorario;
+import entidades.DetalleJornada;
 import entidades.Feriado;
 import entidades.Marcacion;
 import entidades.Permiso;
@@ -40,16 +41,17 @@ public class AnalizadorAsistencia {
      */
 
     static final int NINGUNO = 0;
-    static final int PERMISO_FECHA = 1;
-    static final int FERIADO = 2;
-    static final int VACACION = 3;
+    public static final int PERMISO_FECHA = 1;
+    public static final int FERIADO = 2;
+    public static final int VACACION = 3;
     static final int PERMISO_HORA = 4;
+    static final int ASISTENCIA = 5;
     /*
      RESULTADOS DE ASISTENCIA
      */
-    static final int REGULAR = 0;
-    static final int TARDANZA = -1;
-    static final int FALTA = -2;
+    public static final int REGULAR = 0;
+    public static final int TARDANZA = -1;
+    public static final int FALTA = -2;
     /*
      LISTADOS QUE CONTIENEN LA INFORMACION TANTO DE FERIADOS, PERMISOS Y VACACIONES PARA EL EMPLEADO
      */
@@ -184,11 +186,12 @@ public class AnalizadorAsistencia {
             detalleF.setHoraReferencia(perm.getHoraFin());
             cal.add(Calendar.SECOND, 1);
             detalleF.setHoraReferenciaDesde(cal.getTime());
+            detalleF.setMotivo(perm.getTipoPermiso().getNombre());
             
             desglose.add(detalleI);
             desglose.add(detalleF);
         });
-        return null;
+        return desglose;
     }
 
     private void cargarVacaciones(Empleado empleado, Date fechaInicio, Date fechaFin) {
@@ -331,10 +334,12 @@ public class AnalizadorAsistencia {
 
         turnos.stream().forEach(turno -> {
             Asistencia asistencia = new Asistencia();
-            asistencia.setPermisoList(this.desglosar(this.buscarPermisoXHora(empleado,dia,turno)));
+            asistencia.setPermisoList(this.desglosar(this.buscarPermisoXHora(empleado,dia)));
             asistencia.setFecha(dia);
             asistencia.setDetalleAsistenciaList(this.desglosar(turno));
             asistencia.setEmpleado(empleado);
+            asistencia.setResultado(ASISTENCIA);
+            analizadorDiario.setPermisos(asistencia.getPermisoList());
             analizadorDiario.setAsistencia(asistencia);
             analizadorDiario.iniciar();
             asistenciaList.add(asistencia);
@@ -351,7 +356,7 @@ public class AnalizadorAsistencia {
         this.marcacionList = this.marc.buscarXEmpleadoEntreFecha(empleado, desde1, cal.getTime());
     }
 
-    private List<Permiso> buscarPermisoXHora(Empleado empleado, Date dia, Turno turno) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private List<Permiso> buscarPermisoXHora(Empleado empleado, Date dia) {
+        return this.permc.buscarPermisosPorHoraEnFecha(empleado, dia);
     }
 }

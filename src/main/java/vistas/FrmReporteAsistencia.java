@@ -5,7 +5,6 @@
  */
 package vistas;
 
-import algoritmo.AnalisisAsistenciaCaliente;
 import com.personal.utiles.FormularioUtil;
 import com.personal.utiles.ReporteUtil;
 import controladores.EmpleadoControlador;
@@ -34,7 +33,6 @@ import java.util.Map;
 import javax.swing.SwingWorker;
 import org.jdesktop.observablecollections.ObservableCollections;
 import principal.Main;
-import utiles.DetalleReporteAsistenciaComparator;
 import utiles.UsuarioActivo;
 import vistas.dialogos.DlgEmpleado;
 import vistas.dialogos.DlgOficina;
@@ -497,7 +495,7 @@ public class FrmReporteAsistencia extends javax.swing.JInternalFrame {
         if (fila != -1) {
             RptAsistenciaDetallado asistencia = this.asistenciaDetalladoList.get(fila);
 
-            mostrarHorario(asistencia.getAsignacionHorario());
+//            mostrarHorario(asistencia.getAsignacionHorario());
             mostrarMarcacion(asistencia.getEmpleado(), asistencia.getFecha());
             //PERMISOS X HORAS
 //            mostrarPermisosXHoras(asistencia);
@@ -514,7 +512,7 @@ public class FrmReporteAsistencia extends javax.swing.JInternalFrame {
     private Empleado empleadoSeleccionado;
     private Departamento departamentoSeleccionado;
     private MCFiltro mcFiltro = new MCFiltro();
-    private final AnalisisAsistenciaCaliente analisis = new AnalisisAsistenciaCaliente();
+//    private final AnalisisAsistenciaCaliente analisis = new AnalisisAsistenciaCaliente();
     private List<RptAsistenciaDetallado> asistenciaDetalladoList;
     private List<Turno> turnoList;
     private List<Marcacion> marcacionList;
@@ -566,7 +564,7 @@ public class FrmReporteAsistencia extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtBusqueda;
     // End of variables declaration//GEN-END:variables
 
-    private final DetalleReporteAsistenciaComparator comparador = new DetalleReporteAsistenciaComparator();
+//    private final DetalleReporteAsistenciaComparator comparador = new DetalleReporteAsistenciaComparator();
 
     private void inicializar() {
         //PARA SAN MARCOS
@@ -602,64 +600,64 @@ public class FrmReporteAsistencia extends javax.swing.JInternalFrame {
         List<RptAsistenciaDetallado> filtroList = new ArrayList<>();
 //        char tipoAsistencia;
 //        tipoAsistencia = tipo.charAt(0);
-        for (RptAsistenciaDetallado registro : listado) {
-            switch (cboTipoAsistencia.getSelectedIndex()) {
-                case 1:
-//                    registro.getTipoDetalle().equals("J") &&
-                    if (registro.getTipoAsistencia().equals("R")) {
-                        filtroList.add(registro);
-                    }
-                    break;
-                case 2:
-                    if (registro.getMinutosExtra() != null) {
-                        if (registro.getMinutosExtra() > 0 && registro.isMinutosExtraAutorizado()) {
-                            filtroList.add(registro);
-                        }
-                    }
-                    break;
-                case 3:
-                    if (registro.getMinutosExtra() != null) {
-                        if (registro.getMinutosExtra() > 0 && !registro.isMinutosExtraAutorizado()) {
-                            filtroList.add(registro);
-                        }
-                    }
-
-                    break;
-                case 4:
-                    if (registro.getTipoAsistencia().equals("F")) {
-                        filtroList.add(registro);
-                    }
-                    break;
-                case 5:
-                    if (registro.getTipoAsistencia().equals("P") || registro.getTipoAsistencia().equals("H")) {
-                        if (registro.getPermiso().getTipoPermiso().getTipoDescuento() == 'C') {
-                            filtroList.add(registro);
-                        }
-                    }
-                    break;
-                case 6:
-                    if (registro.getTipoAsistencia().equals("P") || registro.getTipoAsistencia().equals("H")) {
-                        if (registro.getPermiso().getTipoPermiso().getTipoDescuento() == 'S') {
-                            filtroList.add(registro);
-                        }
-                    }
-                    break;
-
-                case 7:
-                    if (registro.getTipoAsistencia().equals("P")) {
-                        if (registro.getPermiso().getTipoPermiso().getClase() == 'S') {
-                            filtroList.add(registro);
-                        }
-                    }
-                    break;
-                case 8:
-                    if (registro.getTipoAsistencia().equals("V")) {
-                        filtroList.add(registro);
-                    }
-                    break;
-
-            }
-        }
+//        for (RptAsistenciaDetallado registro : listado) {
+//            switch (cboTipoAsistencia.getSelectedIndex()) {
+//                case 1:
+////                    registro.getTipoDetalle().equals("J") &&
+//                    if (registro.getTipoAsistencia().equals("R")) {
+//                        filtroList.add(registro);
+//                    }
+//                    break;
+//                case 2:
+//                    if (registro.getMinutosExtra() != null) {
+//                        if (registro.getMinutosExtra() > 0 && registro.isMinutosExtraAutorizado()) {
+//                            filtroList.add(registro);
+//                        }
+//                    }
+//                    break;
+//                case 3:
+//                    if (registro.getMinutosExtra() != null) {
+//                        if (registro.getMinutosExtra() > 0 && !registro.isMinutosExtraAutorizado()) {
+//                            filtroList.add(registro);
+//                        }
+//                    }
+//
+//                    break;
+//                case 4:
+//                    if (registro.getTipoAsistencia().equals("F")) {
+//                        filtroList.add(registro);
+//                    }
+//                    break;
+//                case 5:
+//                    if (registro.getTipoAsistencia().equals("P") || registro.getTipoAsistencia().equals("H")) {
+//                        if (registro.getPermiso().getTipoPermiso().getTipoDescuento() == 'C') {
+//                            filtroList.add(registro);
+//                        }
+//                    }
+//                    break;
+//                case 6:
+//                    if (registro.getTipoAsistencia().equals("P") || registro.getTipoAsistencia().equals("H")) {
+//                        if (registro.getPermiso().getTipoPermiso().getTipoDescuento() == 'S') {
+//                            filtroList.add(registro);
+//                        }
+//                    }
+//                    break;
+//
+//                case 7:
+//                    if (registro.getTipoAsistencia().equals("P")) {
+//                        if (registro.getPermiso().getTipoPermiso().getClase() == 'S') {
+//                            filtroList.add(registro);
+//                        }
+//                    }
+//                    break;
+//                case 8:
+//                    if (registro.getTipoAsistencia().equals("V")) {
+//                        filtroList.add(registro);
+//                    }
+//                    break;
+//
+//            }
+//        }
         return filtroList;
     }
 
@@ -705,9 +703,9 @@ public class FrmReporteAsistencia extends javax.swing.JInternalFrame {
 //    }
     private void generarReporteResumen() {
         for (RptAsistenciaDetallado detalle : asistenciaDetalladoList) {
-            if (detalle.getTipoAsistencia().equals("R")) {
-
-            }
+//            if (detalle.getTipoAsistencia().equals("R")) {
+//
+//            }
         }
     }
 
@@ -737,7 +735,7 @@ public class FrmReporteAsistencia extends javax.swing.JInternalFrame {
             }
             asistenciaDetalladoList.clear();
             if (!empleadosAnalisis.isEmpty()) {
-                reporte = analisis.iniciarAnalisis(dcFechaInicio.getDate(), dcFechaFin.getDate(), empleadosAnalisis);
+//                reporte = analisis.iniciarAnalisis(dcFechaInicio.getDate(), dcFechaFin.getDate(), empleadosAnalisis);
                 System.out.println("REPORTE TAMANIO AL GENERAR: " + reporte.size());
 
             }
@@ -753,7 +751,7 @@ public class FrmReporteAsistencia extends javax.swing.JInternalFrame {
                     System.out.println("REPORTE TAMANIO DESPUES DE FILTRAR: " + reporte.size());
                 }
 
-                Collections.sort(reporte, comparador);
+//                Collections.sort(reporte, comparador);
                 System.out.println("REPORTE TAMANIO ANTES DE AÑADIR A LA LISTA: " + reporte.size());
                 asistenciaDetalladoList.addAll(reporte);
                 tblDetalle.packAll();

@@ -30,64 +30,6 @@ public class MTDetalleRegistroAsistencia extends ModeloTabla<RptAsistenciaDetall
         RptAsistenciaDetallado detalle = this.datos.get(rowIndex);
         switch (columnIndex) {
             case 0:
-                return detalle.getTipoAsistencia();
-            case 1:
-                return detalle.getEmpleado().getNroDocumento();
-            case 2:
-                return detalle.getEmpleado().getNombreCompleto();
-            case 3:
-                if (detalle.getArea() == null) {
-                    return null;
-                } else {
-                    return detalle.getArea().getNombre();
-                }
-
-            case 4:
-                return dfFecha.format(detalle.getFecha());
-            case 5:
-                if (detalle.getTipoAsistencia().equals("P")) {
-                    if (detalle.getPermiso().getTipoPermiso().getCodigo().equals("SUS")) {
-                        return this.resultado("U");
-                    } else {
-                        return this.resultado(detalle.getTipoAsistencia());
-                    }
-                } else {
-                    return this.resultado(detalle.getTipoAsistencia());
-                }
-
-            case 6:
-                if (detalle.getTipoAsistencia().equals("P")) {
-                    return detalle.getPermiso().getTipoPermiso().getCodigo() + " - " + detalle.getPermiso().getMotivo();
-                } else if (detalle.getTipoAsistencia().equals("E")) {
-                    return detalle.getFeriado().getNombre();
-                } else {
-                    return null;
-                }
-            case 7:
-                if (detalle.getDetalleJornada() != null) {
-                    return String.format("%s - %s", dfHora.format(detalle.getDetalleJornada().getEntrada()), dfHora.format(detalle.getDetalleJornada().getSalida()));
-                } else {
-                    return null;
-                }
-
-            case 8:
-                if (detalle.getTipoAsistencia().equals("SP")) {
-                    return detalle.getBoleta().getInicioFechaHora()== null ? null : dfHora.format(detalle.getBoleta().getFinFechaHora());
-                } else {
-                    return detalle.getInicio() == null ? null : dfHora.format(detalle.getInicio());
-                }
-
-            case 9:
-                return detalle.getMinutosTardanza();
-            case 10:
-                if (detalle.getTipoAsistencia().equals("SP")) {
-                    return detalle.getBoleta().getRetornoFechaHora() == null ? null : dfHora.format(detalle.getBoleta().getRetornoFechaHora());
-                } else {
-                    return detalle.getFin() == null ? null : dfHora.format(detalle.getFin());
-                }
-
-            case 11:
-                return detalle.getMinutosExtra();
             default:
                 return "";
 
