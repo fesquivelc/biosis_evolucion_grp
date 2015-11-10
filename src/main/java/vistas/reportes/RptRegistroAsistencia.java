@@ -36,6 +36,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
@@ -810,7 +811,17 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
         List<RptAsistenciaDetallado> asistenciaDetallado = interprete.interpretar(asistenciaList);
         System.out.println("LUEGO DE INTERPRETAR: "+asistenciaDetallado.size());
         this.asistenciaDetalleList.clear();
-        this.asistenciaDetalleList.addAll(asistenciaDetallado);
+        this.asistenciaDetalleList.addAll(asistenciaDetallado.stream().sorted((a1,a2) ->
+        {            
+            int comparacion = a1.getRegimenLaboral().compareTo(a2.getRegimenLaboral());
+            if(comparacion == 0){
+                comparacion = a1.getEmpleado().getNombreCompleto().compareTo(a2.getEmpleado().getNombreCompleto());
+                if(comparacion == 0){
+                    comparacion = a1.getFecha().compareTo(a2.getFecha());
+                }
+            }
+            return comparacion;
+        }).collect(Collectors.toList()));
         this.tblAsistenciaDetallado.packAll();
     }
 

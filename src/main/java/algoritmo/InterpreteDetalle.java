@@ -8,6 +8,7 @@ package algoritmo;
 import com.personal.utiles.FechaUtil;
 import entidades.asistencia.Asistencia;
 import entidades.asistencia.DetalleAsistencia;
+import entidades.escalafon.RegimenLaboral;
 import entidades.reportes.RptAsistenciaDetallado;
 import java.util.ArrayList;
 import java.util.Date;
@@ -35,13 +36,15 @@ public class InterpreteDetalle implements Interprete<RptAsistenciaDetallado> {
         for (Asistencia asistencia : registroAsistencia) {
 
             RptAsistenciaDetallado detalleAsistencia = null;
-
+            RegimenLaboral regLab = asistencia.getEmpleado().getContratoList().get(0).getRegimenLaboral();
+            String regimenLaboral = regLab == null ? "" : regLab.getNombre();
             if (asistencia.getResultado() == AnalizadorAsistencia.ASISTENCIA) {
                 Long marcacionesMaximas = asistencia.getDetalleAsistenciaList().stream().filter(d -> d.getHoraReferencia() != null).count();
                 int tipo = this.obtenerTipo(asistencia.getDetalleAsistenciaList(), marcacionesMaximas.intValue());
                 int contador = 0;
                 int marcacionContador = 0;
                 double minutosTardanza = 0;
+                
                 for (DetalleAsistencia detalle : asistencia.getDetalleAsistenciaList()) {
                     marcacionContador++;
                     if (contador == 0) {
@@ -51,6 +54,7 @@ public class InterpreteDetalle implements Interprete<RptAsistenciaDetallado> {
                         detalleAsistencia.setTipo(tipo);
                         detalleAsistencia.setPermisos(this.traducirPermisos(asistencia.getPermisoList()));
                         detalleAsistencia.setReferencias(this.traducirReferencias(asistencia.getDetalleAsistenciaList()));
+                        detalleAsistencia.setRegimenLaboral(regimenLaboral);
                     }
 
                     if (tipo == AnalizadorAsistencia.TARDANZA) {
@@ -115,6 +119,7 @@ public class InterpreteDetalle implements Interprete<RptAsistenciaDetallado> {
                 detalleAsistencia.setFecha(asistencia.getFecha());
                 detalleAsistencia.setPermisos(obtenerMotivo(asistencia.getResultado(), asistencia));
                 registro.add(detalleAsistencia);
+                detalleAsistencia.setRegimenLaboral(regimenLaboral);
             }
 
         }
