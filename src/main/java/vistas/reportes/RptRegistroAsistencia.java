@@ -16,8 +16,10 @@ import vistas.modelos.MTEmpleado;
 import com.personal.utiles.FormularioUtil;
 import com.personal.utiles.ReporteUtil;
 import com.personal.utiles.ReporteUtil.Formato;
+import controladores.AreaEmpleadoControlador;
 import controladores.MarcacionControlador;
 import entidades.asistencia.Asistencia;
+import entidades.escalafon.AreaEmpleado;
 import entidades.escalafon.Departamento;
 import entidades.escalafon.Empleado;
 import entidades.escalafon.FichaLaboral;
@@ -46,8 +48,6 @@ import org.jdesktop.swingbinding.SwingBindings;
 import utiles.UsuarioActivo;
 import vistas.dialogos.DlgOficina;
 import javax.swing.JPanel;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableCellRenderer;
 import org.jdesktop.swingbinding.JTableBinding;
 import principal.Main;
 import utiles.HerramientaGeneral;
@@ -65,9 +65,10 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
     private final ReporteUtil reporteador;
     private final DateFormat dfFecha;
     private final EmpleadoControlador ec;
-    private final File archivo = new File("reportes/reporte_registro_asistencia_caliente.jasper");
+    private final File archivo = new File("reportes/reporte_asistencia_detallado.jasper");
     private final Font fuente;
     private final Interprete interprete = new InterpreteDetalle();
+    private final AreaEmpleadoControlador aempc = new AreaEmpleadoControlador();
     
 
     public RptRegistroAsistencia() {
@@ -715,6 +716,7 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
         parametros.put("reporte_logo", Main.REPORTE_LOGO);
         parametros.put("reporte_institucion", Main.REPORTE_INSTITUCION);
         parametros.put("reporte_usuario", UsuarioActivo.getUsuario().getLogin());
+        parametros.put("rangoValor", String.format("%s - %s", HerramientaGeneral.formatoFecha.format(fechas[0]),HerramientaGeneral.formatoFecha.format(fechas[1])));
 //        parametros.put("mostrar_he", chkHFH.isSelected());
 
         return parametros;
@@ -725,6 +727,7 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
     private List<Empleado> obtenerDNI() {
 
         List<Empleado> lista = new ArrayList<>();
+        Date fechas[] = this.obtenerFechasLimite();
         if(radTodos.isSelected()){
             lista = this.ec.buscarTodos();
         }else if (radGrupo.isSelected()) {
@@ -737,11 +740,15 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
             for (Empleado empleado : empleadoList) {
                 lista.add(empleado);
             }
-        } else if (radOficina.isSelected()) {
-            List<FichaLaboral> fichas = oficinaSeleccionada.getFichaLaboralList();
-            for (FichaLaboral f : fichas) {
-                lista.add(f.getEmpleado());
+        } else if (radOficina.isSelected()) {   
+            List<AreaEmpleado> areaEmpleadoList = aempc.buscarXEmpleadoXFecha(oficinaSeleccionada, fechas[0], fechas[1]);
+            for(AreaEmpleado areaEmpleado : areaEmpleadoList){
+                lista.add(areaEmpleado.getEmpleado());
             }
+//            List<FichaLaboral> fichas = oficinaSeleccionada.getFichaLaboralList();
+//            for (FichaLaboral f : fichas) {
+//                lista.add(f.getEmpleado());
+//            }
         }
 
         return lista;
@@ -869,7 +876,7 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
     }
 
     private void imprimirResumen() {
-        File resumenFile = new File("reportes/reporte_resumen.jasper");
+        File resumenFile = new File("reportes/reporte_asistencia_resumen.jasper");
         
         Map<String, Object> parametros = this.obtenerParametros();
         Component report = reporteador.obtenerReporte(interpreteResumen.interpretar(asistenciaList), resumenFile, parametros);

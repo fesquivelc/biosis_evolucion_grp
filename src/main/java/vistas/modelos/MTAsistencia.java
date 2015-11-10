@@ -44,31 +44,31 @@ public class MTAsistencia extends ModeloTabla<RptAsistenciaDetallado> {
                 case 2:
                     return HerramientaGeneral.formatoNombreDiaFecha.format(asistencia.getFecha()).toUpperCase();
                 case 3:
-                    return asistencia.getReferencias();
+                    return asistencia.getReferencias().trim();
                 case 4:
                     return this.obtenerTipo(asistencia.getTipo());
                 case 5:
-                    return this.obtenerEvento(asistencia.getEnPermiso()[0], asistencia.getHoraEvento()[0]);
+                    return this.obtenerEvento(asistencia.isEnPermiso1(), asistencia.getHoraEvento1());
                 case 6:
-                    return this.obtenerEvento(asistencia.getEnPermiso()[1], asistencia.getHoraEvento()[1]);
+                    return this.obtenerEvento(asistencia.isEnPermiso2(), asistencia.getHoraEvento2());
                 case 7:
                     if (asistencia.getMarcacionesTotales() > 2) {
-                        return this.obtenerEvento(asistencia.getEnPermiso()[2], asistencia.getHoraEvento()[2]);
+                        return this.obtenerEvento(asistencia.isEnPermiso3(), asistencia.getHoraEvento3());
                     } else {
                         return null;
                     }
                 case 8:
                     if (asistencia.getMarcacionesTotales() > 2) {
-                        return this.obtenerEvento(asistencia.getEnPermiso()[3], asistencia.getHoraEvento()[3]);
+                        return this.obtenerEvento(asistencia.isEnPermiso4(), asistencia.getHoraEvento4());
                     } else {
                         return null;
                     }
                 case 9:
-                    return asistencia.getPermisos();
+                    return asistencia.getPermisos().trim();
                 case 10:
                     if (asistencia.getTipo() == AnalizadorAsistencia.TARDANZA) {
-                        return tardanza(asistencia.getHoraTolerancia()[0], asistencia.getHoraEvento()[0])
-                                + asistencia.getMarcacionesTotales() > 2 ? tardanza(asistencia.getHoraTolerancia()[2], asistencia.getHoraEvento()[2]) : 0;
+                        return tardanza(asistencia.getHoraTolerancia1(), asistencia.getHoraEvento2())
+                                + asistencia.getMarcacionesTotales() > 2 ? tardanza(asistencia.getHoraTolerancia2(), asistencia.getHoraEvento2()) : 0;
                     }
 
                 default:

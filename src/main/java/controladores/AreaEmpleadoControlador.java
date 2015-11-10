@@ -7,6 +7,7 @@ package controladores;
 
 import entidades.escalafon.Empleado;
 import entidades.escalafon.AreaEmpleado;
+import entidades.escalafon.Departamento;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -58,5 +59,16 @@ public class AreaEmpleadoControlador extends Controlador<AreaEmpleado> {
             return areaEmpleadoList.get(0);
         }
 
+    }
+    
+    public List<AreaEmpleado> buscarXEmpleadoXFecha(Departamento departamento, Date fechaInicio, Date fechaFin){
+        String jpql = "SELECT ae AreaEmpleado ae WHERE "
+                + "ae.departamento = :departamento AND "
+                + "((ae.fechaInicio <= :fechaInicio AND ae.fechaFin >= :fechaInicio) OR (ae.fechaInicio >= :fechaInicio AND ae.fechaFin >= :fechaInicio))";
+        Map<String, Object> param = new HashMap<>();
+        param.put("departamento", departamento);
+        param.put("fechaInicio", fechaInicio);
+        param.put("fechaFin", fechaFin);
+        return this.getDao().buscar(jpql, param);
     }
 }

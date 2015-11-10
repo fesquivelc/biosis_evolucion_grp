@@ -41,6 +41,7 @@ public class InterpreteDetalle implements Interprete<RptAsistenciaDetallado> {
                 int tipo = this.obtenerTipo(asistencia.getDetalleAsistenciaList(), marcacionesMaximas.intValue());
                 int contador = 0;
                 int marcacionContador = 0;
+                double minutosTardanza = 0;
                 for (DetalleAsistencia detalle : asistencia.getDetalleAsistenciaList()) {
                     marcacionContador++;
                     if (contador == 0) {
@@ -52,19 +53,56 @@ public class InterpreteDetalle implements Interprete<RptAsistenciaDetallado> {
                         detalleAsistencia.setReferencias(this.traducirReferencias(asistencia.getDetalleAsistenciaList()));
                     }
 
-                    detalleAsistencia.getEnPermiso()[contador] = detalle.isPermiso();
-                    detalleAsistencia.getHoraReferencia()[contador] = detalle.getHoraReferencia();
-                    detalleAsistencia.getHoraTolerancia()[contador] = detalle.getHoraReferenciaTolerancia();
-                    detalleAsistencia.getHoraEvento()[contador] = detalle.getHoraEvento();
+                    if (tipo == AnalizadorAsistencia.TARDANZA) {
+                        if(detalle.isBandera()){
+                            minutosTardanza = minutosTardanza + this.tardanzaMin(detalle.getHoraEvento(), detalle.getHoraReferenciaTolerancia());
+                        }
+                    }
+
+                    switch (contador) {
+                        case 0:
+                            detalleAsistencia.setEnPermiso1(detalle.isPermiso());
+                            detalleAsistencia.setHoraReferencia1(detalle.getHoraReferencia());
+                            detalleAsistencia.setHoraTolerancia1(detalle.getHoraReferenciaTolerancia());
+                            detalleAsistencia.setHoraEvento1(detalle.getHoraEvento());
+
+                            break;
+                        case 1:
+                            detalleAsistencia.setEnPermiso2(detalle.isPermiso());
+                            detalleAsistencia.setHoraReferencia2(detalle.getHoraReferencia());
+                            detalleAsistencia.setHoraTolerancia2(detalle.getHoraReferenciaTolerancia());
+                            detalleAsistencia.setHoraEvento2(detalle.getHoraEvento());
+                            break;
+                        case 2:
+                            detalleAsistencia.setEnPermiso3(detalle.isPermiso());
+                            detalleAsistencia.setHoraReferencia3(detalle.getHoraReferencia());
+                            detalleAsistencia.setHoraTolerancia3(detalle.getHoraReferenciaTolerancia());
+                            detalleAsistencia.setHoraEvento3(detalle.getHoraEvento());
+                            break;
+                        case 3:
+                            detalleAsistencia.setEnPermiso4(detalle.isPermiso());
+                            detalleAsistencia.setHoraReferencia4(detalle.getHoraReferencia());
+                            detalleAsistencia.setHoraTolerancia4(detalle.getHoraReferenciaTolerancia());
+                            detalleAsistencia.setHoraEvento4(detalle.getHoraEvento());
+                            break;
+                    }
+//                    detalleAsistencia.getEnPermiso()[contador] = detalle.isPermiso();
+//                    detalleAsistencia.getHoraReferencia()[contador] = detalle.getHoraReferencia();
+//                    detalleAsistencia.getHoraTolerancia()[contador] = detalle.getHoraReferenciaTolerancia();
+//                    detalleAsistencia.getHoraEvento()[contador] = detalle.getHoraEvento();
                     detalleAsistencia.setMarcacionesTotales(marcacionesMaximas.intValue());
 
                     contador++;
                     detalleAsistencia.setDetalleFinal(marcacionContador == marcacionesMaximas.intValue());
+                    if(contador == marcacionesMaximas.intValue()){
+                        detalleAsistencia.setMinutosExtra(this.tardanzaMin(detalle.getHoraEvento(), detalle.getHoraReferenciaTolerancia()));
+                    }
                     if (contador == 4 || contador == marcacionesMaximas.intValue()) {
-
+                        detalleAsistencia.setMinutosTardanza(minutosTardanza);
                         registro.add(detalleAsistencia);
 //                        detalleAsistencia = null;
                         contador = 0;
+                        minutosTardanza = 0;
                     }
                 }
             } else {
@@ -133,7 +171,7 @@ public class InterpreteDetalle implements Interprete<RptAsistenciaDetallado> {
             } else {
                 hayTardanza
                         = hayTardanza
-                        || detalle.isBandera() && tardanzaMin(FechaUtil.soloHora(detalle.getHoraEvento()),FechaUtil.soloHora(detalle.getHoraReferenciaTolerancia())) > 1;
+                        || detalle.isBandera() && tardanzaMin(FechaUtil.soloHora(detalle.getHoraEvento()), FechaUtil.soloHora(detalle.getHoraReferenciaTolerancia())) > 1;
             }
         }
 
@@ -160,10 +198,15 @@ public class InterpreteDetalle implements Interprete<RptAsistenciaDetallado> {
     }
 
     private double tardanzaMin(Date evento, Date tolerancia) {
-        if(tolerancia.before(evento)){
-            double tardanza = (evento.getTime() - tolerancia.getTime()) / (60*1000);
-            return tardanza;
-        }else{
+        if (tolerancia.before(evento)) {
+            double tardanza = (evento.getTime() - tolerancia.getTime()) / (60 * 1000);
+            if(tardanza > 1){
+                return tardanza;
+            }else{
+                return 0.0;
+            }
+            
+        } else {
             return 0.0;
         }
     }

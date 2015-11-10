@@ -102,13 +102,13 @@ public class AnalizadorAsistencia {
                 Permiso permisoXFecha = null;
                 Vacacion vacacion = null;
                 List<Turno> turnos = asignacion.getHorario().getTurnoList();
-                System.out.println("EMPLEADO: "+empleado.getNombreCompleto()+" TURNOS: ");
-                turnos.stream().forEach(t -> System.out.println(String.format("ID: %s JORNADA: %s",t.getId(), t.getJornada().getNombre())));
+                System.out.println("EMPLEADO: " + empleado.getNombreCompleto() + " TURNOS: ");
+                turnos.stream().forEach(t -> System.out.println(String.format("ID: %s JORNADA: %s", t.getId(), t.getJornada().getNombre())));
                 while (iteradorDia.getTime().compareTo(hasta2) <= 0) {
 //                    if(objetoPermiso == null){
                     vacacion = this.buscarVacacion(iteradorDia.getTime());
                     if (vacacion == null) {
-                        permisoXFecha = this.buscarPermisoXFecha(iteradorDia.getTime());                        
+                        permisoXFecha = this.buscarPermisoXFecha(iteradorDia.getTime());
                         if (permisoXFecha == null) {
                             if (isDiaLaboral(iteradorDia.getTime(), turnos)) {
                                 Feriado feriado = this.buscarFeriado(iteradorDia.getTime());
@@ -143,7 +143,7 @@ public class AnalizadorAsistencia {
     private List<DetalleAsistencia> desglosar(Turno turno) {
         List<DetalleAsistencia> desglose = new ArrayList<>();
         turno.getJornada().getDetalleJornadaList().forEach(detJorn -> {
-            
+
             DetalleAsistencia detalle1 = new DetalleAsistencia();
             detalle1.setBandera(true);
             detalle1.setDiaSiguiente(false);
@@ -168,12 +168,13 @@ public class AnalizadorAsistencia {
     }
     /*
     
-    */
+     */
+
     private List<DetalleAsistencia> desglosar(List<Permiso> permisoList) {
         List<DetalleAsistencia> desglose = new ArrayList<>();
         Calendar cal = Calendar.getInstance();
         permisoList.stream().forEach(perm -> {
-            
+
             DetalleAsistencia detalleI = new DetalleAsistencia();
             detalleI.setBandera(true);
             detalleI.setDiaSiguiente(false); //POR REVISAR
@@ -184,7 +185,7 @@ public class AnalizadorAsistencia {
             detalleI.setHoraReferenciaHasta(cal.getTime());
             detalleI.setTipo('P');
             detalleI.setPermisoConGoce(perm.getTipoPermiso().getTipoDescuento() == 'C');
-            
+
             DetalleAsistencia detalleF = new DetalleAsistencia();
             detalleF.setBandera(false);
             detalleF.setDiaSiguiente(false); //POR REVISAR
@@ -193,7 +194,7 @@ public class AnalizadorAsistencia {
             detalleF.setHoraReferenciaDesde(cal.getTime());
             detalleF.setMotivo(perm.getTipoPermiso().getNombre());
             detalleF.setPermisoConGoce(perm.getTipoPermiso().getTipoDescuento() == 'C');
-            
+
             desglose.add(detalleI);
             desglose.add(detalleF);
         });
@@ -231,7 +232,23 @@ public class AnalizadorAsistencia {
             Date soloFechaComparacion = FechaUtil.soloFecha(dia);
             Vacacion vacacion = this.vacacionList
                     .stream()
-                    .filter(vac -> vac.getFechaInicio().compareTo(soloFechaComparacion) <= 0 && vac.getFechaFin().compareTo(soloFechaComparacion) >= 0)
+                    .filter(vac
+                            -> {
+                        if (vac.getFechaInicio().compareTo(soloFechaComparacion) <= 0
+                        && vac.getFechaFin().compareTo(soloFechaComparacion) >= 0) {
+                            if (vac.isHayReprogramacion()) {
+                                return dia.compareTo(vac.getFechaInterrupcion()) < 0;
+                            } else if (vac.isHayInterrupcion()) {
+                                return dia.compareTo(vac.getInterrupcionVacacion().getFechaInicio()) < 0
+                                || dia.compareTo(vac.getInterrupcionVacacion().getFechaFin()) > 0;
+                            } else {
+                                return true;
+                            }
+
+                        } else {
+                            return false;
+                        }
+                    })
                     .findFirst()
                     .get();
             return vacacion;
@@ -337,10 +354,10 @@ public class AnalizadorAsistencia {
          Debemos realizar un análisis por turno buscando los permisos de cada uno
          */
         List<Asistencia> asistenciaList = new ArrayList<>();
-        
+
         turnos.stream().forEach(turno -> {
             Asistencia asistencia = new Asistencia();
-            asistencia.setPermisoList(this.desglosar(this.buscarPermisoXHora(empleado,dia)));
+            asistencia.setPermisoList(this.desglosar(this.buscarPermisoXHora(empleado, dia)));
             asistencia.setFecha(dia);
             asistencia.setDetalleAsistenciaList(this.desglosar(turno));
             asistencia.setEmpleado(empleado);
