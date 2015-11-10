@@ -54,7 +54,9 @@ public class InterpreteDetalle implements Interprete<RptAsistenciaDetallado> {
                     }
 
                     if (tipo == AnalizadorAsistencia.TARDANZA) {
-                        if(detalle.isBandera()){
+                        
+                        if(detalle.isBandera() && detalle.getHoraReferenciaTolerancia() != null){
+                            System.out.println("BANDERA: "+detalle.getHoraReferencia());
                             minutosTardanza = minutosTardanza + this.tardanzaMin(detalle.getHoraEvento(), detalle.getHoraReferenciaTolerancia());
                         }
                     }
@@ -95,7 +97,7 @@ public class InterpreteDetalle implements Interprete<RptAsistenciaDetallado> {
                     contador++;
                     detalleAsistencia.setDetalleFinal(marcacionContador == marcacionesMaximas.intValue());
                     if(contador == marcacionesMaximas.intValue()){
-                        detalleAsistencia.setMinutosExtra(this.tardanzaMin(detalle.getHoraEvento(), detalle.getHoraReferenciaTolerancia()));
+                        detalleAsistencia.setMinutosExtra(this.tardanzaMin(detalle.getHoraEvento(), detalle.getHoraReferencia()));
                     }
                     if (contador == 4 || contador == marcacionesMaximas.intValue()) {
                         detalleAsistencia.setMinutosTardanza(minutosTardanza);
@@ -198,6 +200,7 @@ public class InterpreteDetalle implements Interprete<RptAsistenciaDetallado> {
     }
 
     private double tardanzaMin(Date evento, Date tolerancia) {
+        System.out.println("HORA EVENTO: "+evento+" TOLERANCIA: "+tolerancia);
         if (tolerancia.before(evento)) {
             double tardanza = (evento.getTime() - tolerancia.getTime()) / (60 * 1000);
             if(tardanza > 1){

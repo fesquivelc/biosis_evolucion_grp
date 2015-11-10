@@ -87,6 +87,8 @@ public class MTAsistencia extends ModeloTabla<RptAsistenciaDetallado> {
                     return this.obtenerTipo(asistencia.getTipo());
                 case 9:
                     return asistencia.getPermisos();
+                case 10:
+                    return asistencia.getMinutosTardanza();
                 default:
                     return null;
             }
