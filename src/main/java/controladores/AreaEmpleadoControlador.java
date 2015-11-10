@@ -64,7 +64,7 @@ public class AreaEmpleadoControlador extends Controlador<AreaEmpleado> {
     public List<AreaEmpleado> buscarXEmpleadoXFecha(Departamento departamento, Date fechaInicio, Date fechaFin){
         String jpql = "SELECT ae FROM AreaEmpleado ae WHERE "
                 + "ae.departamento = :departamento AND "
-                + "((ae.fechaInicio <= :fechaInicio AND ae.fechaFin >= :fechaInicio) OR (ae.fechaInicio >= :fechaInicio AND ae.fechaFin >= :fechaInicio))";
+                + "((ae.fechaInicio <= :fechaInicio AND :fechaFin >= ae.fechaInicio) OR (ae.fechaInicio >= :fechaInicio AND ae.fechaFin >= :fechaInicio))";
         Map<String, Object> param = new HashMap<>();
         param.put("departamento", departamento);
         param.put("fechaInicio", fechaInicio);
