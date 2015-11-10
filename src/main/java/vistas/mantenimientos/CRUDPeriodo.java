@@ -31,7 +31,7 @@ public class CRUDPeriodo extends javax.swing.JInternalFrame {
     private PeriodoControlador controlador;
     private int accion;
     private List<Feriado> feriadoList;
-    
+
     public CRUDPeriodo() {
         initComponents();
         inicializar();
@@ -67,7 +67,6 @@ public class CRUDPeriodo extends javax.swing.JInternalFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         tblFeriado = new org.jdesktop.swingx.JXTable();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         btnGuardar = new javax.swing.JButton();
@@ -198,7 +197,7 @@ public class CRUDPeriodo extends javax.swing.JInternalFrame {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jPanel4.add(chkVigente, gridBagConstraints);
 
-        spPeriodo.setModel(new javax.swing.SpinnerNumberModel(2015, 2015, 3000, 1));
+        spPeriodo.setModel(new javax.swing.SpinnerNumberModel(2015, 2000, 3000, 1));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
@@ -242,13 +241,12 @@ public class CRUDPeriodo extends javax.swing.JInternalFrame {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         jPanel1.add(jButton1, gridBagConstraints);
 
-        jButton2.setText("Editar");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 2;
-        jPanel1.add(jButton2, gridBagConstraints);
-
         jButton3.setText("-");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
@@ -315,7 +313,7 @@ public class CRUDPeriodo extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         this.accion = 0;
         this.controles(accion);
-        FormularioUtil.limpiarComponente(this.pnlDatos);   
+        FormularioUtil.limpiarComponente(this.pnlDatos);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
@@ -329,7 +327,7 @@ public class CRUDPeriodo extends javax.swing.JInternalFrame {
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
         int fila = tblTabla.getSelectedRow();
-        if(fila != -1){                        
+        if (fila != -1) {
             this.accion = Controlador.MODIFICAR;
             controlador.setSeleccionado(this.periodoList.get(fila));
             this.controles(accion);
@@ -341,7 +339,7 @@ public class CRUDPeriodo extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         if (FormularioUtil.dialogoConfirmar(this, accion)) {
             Periodo seleccionada = this.controlador.getSeleccionado();
-            
+
             FormularioUtil.convertirMayusculas(this.pnlDatos);
 
             if (accion == Controlador.NUEVO) {
@@ -350,39 +348,39 @@ public class CRUDPeriodo extends javax.swing.JInternalFrame {
             seleccionada.setNombre(txtNombre.getText());
             seleccionada.setVigente(chkVigente.isSelected());
             Calendar cal;
-            for(Feriado feriado : seleccionada.getFeriadoList()){
+            for (Feriado feriado : seleccionada.getFeriadoList()) {
                 cal = Calendar.getInstance();
                 cal.setTime(feriado.getFechaInicio());
                 cal.set(Calendar.YEAR, seleccionada.getAnio());
-                
+
                 feriado.setFechaInicio(cal.getTime());
-                
+
                 cal = Calendar.getInstance();
                 cal.setTime(feriado.getFechaFin());
                 cal.set(Calendar.YEAR, seleccionada.getAnio());
-                
+
                 feriado.setFechaFin(cal.getTime());
-                
+
                 feriado.setPeriodo(seleccionada);
             }
-            
-            if(controlador.accion(accion)){
+
+            if (controlador.accion(accion)) {
                 FormularioUtil.mensajeExito(this, accion);
                 this.feriadoList.clear();
                 this.accion = 0;
                 this.controles(accion);
-                this.actualizarTabla();                
-            }else{
+                this.actualizarTabla();
+            } else {
                 FormularioUtil.mensajeError(this, accion);
-            }                        
-            
+            }
+
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void tblTablaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblTablaMouseReleased
         // TODO add your handling code here:
         int fila = tblTabla.getSelectedRow();
-        if(fila != -1){
+        if (fila != -1) {
             Periodo periodo = this.periodoList.get(fila);
             mostrar(periodo);
         }
@@ -390,13 +388,24 @@ public class CRUDPeriodo extends javax.swing.JInternalFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        DlgFeriado feriado = new DlgFeriado(this, Controlador.NUEVO);
-        if(controlador.getSeleccionado() == null){
-            System.out.println("ES RECONTRA NULL");
-        }
-        feriado.setPeriodo(controlador.getSeleccionado());
-        feriado.setVisible(true);
+        DlgFeriado dlgFeriado = new DlgFeriado(this, Controlador.NUEVO);
+        Feriado feriado = dlgFeriado.getFeriado();
+        feriado.setPeriodo(this.controlador.getSeleccionado());
+        feriadoList.add(feriado);
+        this.controlador.getSeleccionado().getFeriadoList().add(feriado);
+
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        int fila;
+
+        if ((fila = tblFeriado.getSelectedRow()) != -1) {
+            Feriado feriado = this.feriadoList.get(fila);
+            this.feriadoList.remove(feriado);
+            this.controlador.getSeleccionado().getFeriadoList().remove(feriado);
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -406,7 +415,6 @@ public class CRUDPeriodo extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnNuevo;
     private javax.swing.JCheckBox chkVigente;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -426,36 +434,38 @@ public class CRUDPeriodo extends javax.swing.JInternalFrame {
     private javax.swing.JTextArea txtNombre;
     // End of variables declaration//GEN-END:variables
 
-    private void mostrar(Periodo periodo){
+    private void mostrar(Periodo periodo) {
         spPeriodo.setValue(periodo.getAnio());
         txtNombre.setText(periodo.getNombre());
         chkVigente.setSelected(periodo.isVigente());
         feriadoList.clear();
-        if(!periodo.getFeriadoList().isEmpty()){
+        if (!periodo.getFeriadoList().isEmpty()) {
             System.out.println("ESTA VACIO");
             feriadoList.addAll(periodo.getFeriadoList());
         }
-        
-        
+
     }
+
+    private MTFeriado mtFeriado;
+
     private void bindeoSalvaje() {
         periodoList = new ArrayList<>();
         periodoList = ObservableCollections.observableList(periodoList);
-        
-        String[] columnas = {"Año","Nombre","Vigente"};
-        
+
+        String[] columnas = {"Año", "Nombre", "Vigente"};
+
         MTPeriodo mt = new MTPeriodo(periodoList, columnas);
         tblTabla.setModel(mt);
-        
-        MTFeriado mtFeriado = new MTFeriado(feriadoList);
+
+        mtFeriado = new MTFeriado(feriadoList);
         tblFeriado.setModel(mtFeriado);
-        
+
         actualizarTabla();
     }
 
     private void actualizarTabla() {
         periodoList.clear();
-        periodoList.addAll(controlador.buscarTodos());        
+        periodoList.addAll(controlador.buscarTodos());
     }
 
     private void inicializar() {
@@ -470,8 +480,8 @@ public class CRUDPeriodo extends javax.swing.JInternalFrame {
 
         FormularioUtil.activarComponente(this.pnlListado, !bandera);
         FormularioUtil.activarComponente(this.pnlDatos, bandera);
-        
-        if(accion != Controlador.MODIFICAR){
+
+        if (accion != Controlador.MODIFICAR) {
             FormularioUtil.limpiarComponente(this.pnlDatos);
         }
     }

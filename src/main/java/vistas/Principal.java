@@ -88,7 +88,6 @@ public class Principal extends javax.swing.JFrame {
         btnEmpleados = new javax.swing.JButton();
         btnMarcaciones = new javax.swing.JButton();
         btnAsignarPermiso = new javax.swing.JButton();
-        btnHorarios = new javax.swing.JButton();
         btnRegistroAsistencia = new javax.swing.JButton();
         lblJuvitec = new javax.swing.JLabel();
         lblUsuario = new javax.swing.JLabel();
@@ -182,18 +181,6 @@ public class Principal extends javax.swing.JFrame {
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 0;
         pnlBotnes.add(btnAsignarPermiso, gridBagConstraints);
-
-        btnHorarios.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        btnHorarios.setText("Horarios");
-        btnHorarios.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnHorariosActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 6;
-        gridBagConstraints.gridy = 0;
-        pnlBotnes.add(btnHorarios, gridBagConstraints);
 
         btnRegistroAsistencia.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         btnRegistroAsistencia.setText("Registro de asistencia");
@@ -517,11 +504,6 @@ public class Principal extends javax.swing.JFrame {
         permiso();
     }//GEN-LAST:event_btnAsignarPermisoActionPerformed
 
-    private void btnHorariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHorariosActionPerformed
-        // TODO add your handling code here:
-        horarios();
-    }//GEN-LAST:event_btnHorariosActionPerformed
-
     private void btnRegistroAsistenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistroAsistenciaActionPerformed
         // TODO add your handling code here:
         registroAsistencia();
@@ -581,7 +563,6 @@ public class Principal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAsignarPermiso;
     private javax.swing.JButton btnEmpleados;
-    private javax.swing.JButton btnHorarios;
     private javax.swing.JButton btnMarcaciones;
     private javax.swing.JButton btnRegistroAsistencia;
     private javax.swing.JDesktopPane desktopPane;
@@ -790,7 +771,6 @@ public class Principal extends javax.swing.JFrame {
         btnEmpleados.setEnabled(botonEmpleados);
         btnMarcaciones.setEnabled(botonMarcaciones);
         btnAsignarPermiso.setEnabled(botonAsignarPermiso);
-        btnHorarios.setEnabled(botonHorarios);
         btnRegistroAsistencia.setEnabled(botonRegistroAsistencia);
     }
 }
