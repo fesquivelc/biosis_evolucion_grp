@@ -96,7 +96,7 @@ public class InterpreteDetalle implements Interprete<RptAsistenciaDetallado> {
 
                     contador++;
                     detalleAsistencia.setDetalleFinal(marcacionContador == marcacionesMaximas.intValue());
-                    if(contador == marcacionesMaximas.intValue()){
+                    if(contador == marcacionesMaximas.intValue() && tipo != AnalizadorAsistencia.FALTA){
                         detalleAsistencia.setMinutosExtra(this.tardanzaMin(detalle.getHoraEvento(), detalle.getHoraReferencia()));
                     }
                     if (contador == 4 || contador == marcacionesMaximas.intValue()) {
