@@ -77,9 +77,11 @@ public class InterpreteResumen implements Interprete<RptAsistenciaResumen> {
                         tardanza += minutosTardanza(asistencia.getDetalleAsistenciaList(), marcacionesMaximas.intValue());
                     }
                     
-                    if(asistencia.getPermisoList() == null){
+                    if(asistencia.getPermisoList() != null){
                         minutosPermisoConGoce += this.minutosPermisos(asistencia.getPermisoList().stream().filter(perm -> perm.isPermisoConGoce()).collect(Collectors.toList()));
-                        minutosPermisoSinGoce += this.minutosPermisos(asistencia.getPermisoList().stream().filter(perm -> perm.isPermisoConGoce()).collect(Collectors.toList()));
+                        System.out.println("MINUTOS CON GOCE "+minutosPermisoConGoce);
+                        minutosPermisoSinGoce += this.minutosPermisos(asistencia.getPermisoList().stream().filter(perm -> !perm.isPermisoConGoce()).collect(Collectors.toList()));
+                        System.out.println("MINUTOS CON GOCE "+minutosPermisoSinGoce);
                     }
                     
                     if(tipo == AnalizadorAsistencia.TARDANZA || tipo == AnalizadorAsistencia.REGULAR){

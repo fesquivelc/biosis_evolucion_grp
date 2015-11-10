@@ -192,7 +192,7 @@ public class InterpreteDetalle implements Interprete<RptAsistenciaDetallado> {
             case AnalizadorAsistencia.FERIADO:
                 return asistencia.getFeriado().getNombre();
             case AnalizadorAsistencia.VACACION:
-                return "";
+                return asistencia.getVacacion().getDocumento();
             case AnalizadorAsistencia.PERMISO_FECHA:
                 return asistencia.getPermiso().getDocumento();
             default:
@@ -204,7 +204,7 @@ public class InterpreteDetalle implements Interprete<RptAsistenciaDetallado> {
         System.out.println("HORA EVENTO: "+evento+" TOLERANCIA: "+tolerancia);
         if (tolerancia.before(evento)) {
             double tardanza = (FechaUtil.soloHora(evento).getTime() - FechaUtil.soloHora(tolerancia).getTime()) / (60 * 1000);
-            if(tardanza > 1){
+            if(tardanza >= 1){
                 return tardanza;
             }else{
                 return 0.0;
