@@ -202,7 +202,7 @@ public class InterpreteDetalle implements Interprete<RptAsistenciaDetallado> {
     private double tardanzaMin(Date evento, Date tolerancia) {
         System.out.println("HORA EVENTO: "+evento+" TOLERANCIA: "+tolerancia);
         if (tolerancia.before(evento)) {
-            double tardanza = (evento.getTime() - tolerancia.getTime()) / (60 * 1000);
+            double tardanza = (FechaUtil.soloHora(evento).getTime() - FechaUtil.soloHora(tolerancia).getTime()) / (60 * 1000);
             if(tardanza > 1){
                 return tardanza;
             }else{

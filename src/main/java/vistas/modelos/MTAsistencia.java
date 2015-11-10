@@ -7,7 +7,6 @@ package vistas.modelos;
 
 import algoritmo.AnalizadorAsistencia;
 import com.personal.utiles.ModeloTabla;
-import entidades.asistencia.DetalleAsistencia;
 import entidades.reportes.RptAsistenciaDetallado;
 import java.text.DecimalFormat;
 import java.util.Date;
@@ -25,7 +24,7 @@ public class MTAsistencia extends ModeloTabla<RptAsistenciaDetallado> {
     public MTAsistencia(List<RptAsistenciaDetallado> datos) {
         super(datos);
         this.formatoDecimal = new DecimalFormat("#.00");
-        this.nombreColumnas = new String[]{"DNI", "Empleado", "Fecha", "Horario", "Asistencia", "Entrada", "Salida", "Entrada", "Salida", "Descripción", "Tardanza"};
+        this.nombreColumnas = new String[]{"DNI", "Empleado", "Fecha", "Horario", "Asistencia", "Entrada", "Salida", "Entrada", "Salida", "Descripción", "Tardanza", "Extra"};
     }
 
     @Override
@@ -66,10 +65,10 @@ public class MTAsistencia extends ModeloTabla<RptAsistenciaDetallado> {
                 case 9:
                     return asistencia.getPermisos().trim();
                 case 10:
-                    if (asistencia.getTipo() == AnalizadorAsistencia.TARDANZA) {
-                        return tardanza(asistencia.getHoraTolerancia1(), asistencia.getHoraEvento2())
-                                + asistencia.getMarcacionesTotales() > 2 ? tardanza(asistencia.getHoraTolerancia2(), asistencia.getHoraEvento2()) : 0;
-                    }
+                    return String.format("%.2f", asistencia.getMinutosTardanza());
+
+                case 11:
+                    return String.format("%.2f", asistencia.getMinutosExtra());
 
                 default:
                     return null;
