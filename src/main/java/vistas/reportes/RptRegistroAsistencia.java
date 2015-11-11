@@ -41,6 +41,7 @@ import javax.swing.BoxLayout;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import org.jdesktop.beansbinding.AutoBinding;
 import org.jdesktop.beansbinding.BindingGroup;
 import org.jdesktop.observablecollections.ObservableCollections;
@@ -52,6 +53,7 @@ import javax.swing.JPanel;
 import org.jdesktop.swingbinding.JTableBinding;
 import principal.Main;
 import utiles.HerramientaGeneral;
+import vistas.dialogos.DlgMarcacionesDiarias;
 import vistas.modelos.MTAsistencia;
 
 /**
@@ -125,9 +127,8 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
         pnlReporte = new javax.swing.JPanel();
         pnlTab = new javax.swing.JTabbedPane();
         tabDetallado = new javax.swing.JPanel();
-        pnlExportar = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        cboExportarFormato = new javax.swing.JComboBox();
+        pnlOpciones = new javax.swing.JPanel();
+        jButton4 = new javax.swing.JButton();
         btnImprimir = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
@@ -387,34 +388,35 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
 
         tabDetallado.setLayout(new java.awt.BorderLayout());
 
-        pnlExportar.setLayout(new javax.swing.BoxLayout(pnlExportar, javax.swing.BoxLayout.LINE_AXIS));
+        pnlOpciones.setLayout(new java.awt.GridLayout(1, 0, 5, 0));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel1.setText("Elegir formato:");
-        pnlExportar.add(jLabel1);
+        jButton4.setText("Ver marcaciones en el día");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+        pnlOpciones.add(jButton4);
 
-        cboExportarFormato.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        cboExportarFormato.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "PDF (*.pdf)", "Excel 2007 - 2013 (*.xlsx)", "Excel 97 - 2003 (*.xls)", "CSV (*.csv)", "DBF (*.dbf)" }));
-        pnlExportar.add(cboExportarFormato);
-
-        btnImprimir.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnImprimir.setFont(new java.awt.Font("SansSerif", 0, 13)); // NOI18N
         btnImprimir.setText("Imprimir");
         btnImprimir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnImprimirActionPerformed(evt);
             }
         });
-        pnlExportar.add(btnImprimir);
+        pnlOpciones.add(btnImprimir);
 
+        jButton3.setFont(new java.awt.Font("SansSerif", 0, 13)); // NOI18N
         jButton3.setText("Imprimir Resumen");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
             }
         });
-        pnlExportar.add(jButton3);
+        pnlOpciones.add(jButton3);
 
-        tabDetallado.add(pnlExportar, java.awt.BorderLayout.PAGE_END);
+        tabDetallado.add(pnlOpciones, java.awt.BorderLayout.PAGE_END);
 
         tblAsistenciaDetallado.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -531,7 +533,9 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
 
     private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
         // TODO add your handling code here:
-        imprimir();
+        if(!this.asistenciaDetalleList.isEmpty()){
+            imprimir();
+        }
 //        Formato formato = obtenerFormato();
 //        String ruta;
 //        ruta = FormularioUtil.guardarFichero(this, "Seleccione el destino donde guardará el resporte");
@@ -550,8 +554,22 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        imprimirResumen();
+        if(!this.asistenciaDetalleList.isEmpty()){
+            imprimirResumen();
+        }
+        
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        int fila = this.tblAsistenciaDetallado.getSelectedRow();
+        if(fila != -1){
+            RptAsistenciaDetallado detalle = this.asistenciaDetalleList.get(fila);
+            System.out.println(String.format("DETALLE: %s %s", detalle.getEmpleado(), detalle.getFecha()));
+            DlgMarcacionesDiarias marcaciones = new DlgMarcacionesDiarias(detalle.getEmpleado(), detalle.getFecha(), JOptionPane.getFrameForComponent(this));
+            marcaciones.setVisible(true);
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     private Departamento oficinaSeleccionada;
 
@@ -560,7 +578,6 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnImprimir;
     private javax.swing.JButton btnOficina;
     private javax.swing.JButton btnQuitar;
-    private javax.swing.JComboBox cboExportarFormato;
     private javax.swing.JComboBox cboGrupoHorario;
     private com.toedter.calendar.JMonthChooser cboMes;
     private javax.swing.JComboBox cboPeriodo;
@@ -572,13 +589,13 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton jButton4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JPanel pnlBotones;
     private javax.swing.JPanel pnlCerrarTab;
     private javax.swing.JPanel pnlEmpleados;
-    private javax.swing.JPanel pnlExportar;
+    private javax.swing.JPanel pnlOpciones;
     private javax.swing.JPanel pnlRango;
     private javax.swing.JPanel pnlReporte;
     private javax.swing.JTabbedPane pnlTab;
@@ -769,25 +786,25 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
             grupoSeleccionado = this.grupoList.get(seleccionado);
         }
     }
-
-    private Formato obtenerFormato() {
-        int seleccionado = cboExportarFormato.getSelectedIndex();
-
-        switch (seleccionado) {
-            case 0:
-                return Formato.PDF;
-            case 1:
-                return Formato.XLSX;
-            case 2:
-                return Formato.XLS;
-            case 3:
-                return Formato.CSV;
-            case 4:
-                return Formato.DBF;
-            default:
-                return null;
-        }
-    }
+//
+//    private Formato obtenerFormato() {
+//        int seleccionado = cboExportarFormato.getSelectedIndex();
+//
+//        switch (seleccionado) {
+//            case 0:
+//                return Formato.PDF;
+//            case 1:
+//                return Formato.XLSX;
+//            case 2:
+//                return Formato.XLS;
+//            case 3:
+//                return Formato.CSV;
+//            case 4:
+//                return Formato.DBF;
+//            default:
+//                return null;
+//        }
+//    }
 
     private void exportar(Formato formato, String ruta) {
         String reporte = "";

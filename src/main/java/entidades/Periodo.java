@@ -19,7 +19,7 @@ public class Periodo implements Serializable {
     @Column(unique=false,updatable=true,insertable=true,nullable=true,length=4,scale=0,precision=0)
     @Id
     private int anio;
-    @OneToMany(cascade={CascadeType.ALL},fetch = FetchType.LAZY,targetEntity = Feriado.class,mappedBy = "periodo")
+    @OneToMany(cascade={CascadeType.ALL},fetch = FetchType.LAZY,targetEntity = Feriado.class,mappedBy = "periodo",orphanRemoval = true)
     private List<Feriado> feriadoList;
     @OneToMany(fetch = FetchType.LAZY,targetEntity = SaldoVacacional.class,mappedBy = "periodo")
     private List<SaldoVacacional> saldoVacacionalList;
