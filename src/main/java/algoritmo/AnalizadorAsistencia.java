@@ -288,6 +288,7 @@ public class AnalizadorAsistencia {
     }
 
     private boolean isDiaLaboral(Date fecha, Turno turno) {
+        System.out.println(String.format("TIPO TURNO: ", turno.getTipo()));
         if (turno.getTipo() == 'S') {
             Calendar cal = Calendar.getInstance();
             cal.setTime(fecha);
@@ -311,6 +312,7 @@ public class AnalizadorAsistencia {
                     return false;
             }
         } else {
+            
             return turno.getFechaInicio().compareTo(fecha) <= 0
                     && turno.getFechaFin().compareTo(fecha) >= 0;
         }

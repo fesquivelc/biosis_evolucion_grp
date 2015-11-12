@@ -1230,8 +1230,9 @@ public class AsignarPermiso extends javax.swing.JInternalFrame {
             for (AsignacionPermiso asignacion : paraComprobar.getAsignacionPermisoList()) {
                 //dnis.add(asignacion.getEmpleado());
                 System.out.println(asignacion.getEmpleado());
-                List<AsignacionPermiso> lista = ac.buscarXFechaDni(asignacion.getEmpleado(), fechaInicio);
-                if (lista.isEmpty()) {
+//                List<AsignacionPermiso> lista = ac.buscarXFechaDni(asignacion.getEmpleado(), fechaInicio);
+                int conteoPorFecha = ac.contarXEmpleadoEntreFechaPorFecha(empleadoSeleccionado, fechaInicio, fechaFin);
+                if (conteoPorFecha == 0) {
 
                 } else if (accion != Controlador.MODIFICAR) {
                     errores++;
@@ -1252,9 +1253,10 @@ public class AsignarPermiso extends javax.swing.JInternalFrame {
             Permiso paraComprobar = this.controlador.getSeleccionado();
             for (AsignacionPermiso asignacion : paraComprobar.getAsignacionPermisoList()) {
                 List<AsignacionPermiso> lista = ac.buscarXHora(asignacion.getEmpleado(), fechaInicio);
-                lista = lista.stream().filter(perm -> (horaInicio.compareTo(perm.getPermiso().getHoraInicio()) <= 0 && horaFin.compareTo(perm.getPermiso().getHoraInicio()) >= 0)
-                        || (perm.getPermiso().getHoraInicio().compareTo(horaInicio) <= 0 && perm.getPermiso().getHoraFin().compareTo(horaInicio) >= 0)).collect(Collectors.toList());
-                if (lista.isEmpty()) {
+                
+                Long conteoPorHora = lista.stream().filter(perm -> (horaInicio.compareTo(perm.getPermiso().getHoraInicio()) <= 0 && horaFin.compareTo(perm.getPermiso().getHoraInicio()) >= 0)
+                        || (perm.getPermiso().getHoraInicio().compareTo(horaInicio) <= 0 && perm.getPermiso().getHoraFin().compareTo(horaInicio) >= 0)).count();
+                if (conteoPorHora.intValue() == 0) {
 
                 } else {
                     errores++;

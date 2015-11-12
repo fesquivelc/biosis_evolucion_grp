@@ -48,12 +48,28 @@ public class AsignacionPermisoControlador extends Controlador<AsignacionPermiso>
         return this.getDao().buscar(jpl, mapa);
     }
     
-    //Query para comprobacion de permisos en rango de hora
-    public List<AsignacionPermiso> buscarXHora(Empleado empleado, Date horaInicio){
-        String jpl = "SELECT a FROM AsignacionPermiso a WHERE a.empleado = :dni AND :horaInicio BETWEEN a.permiso.horaInicio and a.permiso.horaFin ";
+    public int contarXEmpleadoEntreFechaPorFecha(Empleado empleado,Date fechaInicio, Date fechaFin){
+        String jpl = "SELECT COUNT(a) FROM AsignacionPermiso a WHERE "
+                + "a.empleado = :dni AND "
+                + "a.permiso.opcion = 'F' AND "
+                + "("
+                + "(a.permiso.fechaInicio >= :fechaInicio AND a.permiso.fechaInicio <= :fechaFin) OR "
+                + "(a.permiso.fechaInicio <= :fechaInicio AND a.permiso.fechaFin >= :fechaInicio)"
+                + ")";
         Map<String, Object> mapa = new HashMap<>();
         mapa.put("dni", empleado);
-        mapa.put("horaInicio", horaInicio);
+        mapa.put("fechaInicio", fechaInicio);
+        mapa.put("fechaFin", fechaFin);
+        int conteo = this.getDao().contar(jpl, mapa);
+        return conteo;
+    }
+    
+    //Query para comprobacion de permisos en rango de hora
+    public List<AsignacionPermiso> buscarXHora(Empleado empleado, Date fecha){
+        String jpl = "SELECT a FROM AsignacionPermiso a WHERE a.empleado = :dni AND a.permiso.opcion = 'H' AND a.permiso.fechaInicio = :fecha";
+        Map<String, Object> mapa = new HashMap<>();
+        mapa.put("dni", empleado);
+        mapa.put("fecha", fecha);
         return this.getDao().buscar(jpl, mapa);
     }
     

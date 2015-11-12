@@ -5883,3 +5883,105 @@ Caused by: java.lang.NoSuchMethodException: Unknown property 'horaEvento' on cla
 2015-11-12 09:56:34.929	 INFO	[main]	CLASE: DriverManagerConnectionProviderImpl	 METODO: configure	LINEA:102	MSJE:HHH000115: Hibernate connection pool size: 20 (min=1)
 2015-11-12 09:56:36.201	 INFO	[main]	CLASE: Dialect	 METODO: <init>	LINEA:145	MSJE:HHH000400: Using dialect: org.hibernate.dialect.SQLServer2005Dialect
 2015-11-12 09:56:36.633	 INFO	[main]	CLASE: ASTQueryTranslatorFactory	 METODO: <init>	LINEA:47	MSJE:HHH000397: Using ASTQueryTranslatorFactory
+2015-11-12 11:23:18.096	 WARN	[main]	CLASE: HibernatePersistence	 METODO: logDeprecation	LINEA:58	MSJE:HHH015016: Encountered a deprecated javax.persistence.spi.PersistenceProvider [org.hibernate.ejb.HibernatePersistence]; use [org.hibernate.jpa.HibernatePersistenceProvider] instead.
+2015-11-12 11:23:18.100	 WARN	[main]	CLASE: HibernatePersistence	 METODO: logDeprecation	LINEA:58	MSJE:HHH015016: Encountered a deprecated javax.persistence.spi.PersistenceProvider [org.hibernate.ejb.HibernatePersistence]; use [org.hibernate.jpa.HibernatePersistenceProvider] instead.
+2015-11-12 11:23:18.102	 WARN	[main]	CLASE: HibernatePersistence	 METODO: logDeprecation	LINEA:58	MSJE:HHH015016: Encountered a deprecated javax.persistence.spi.PersistenceProvider [org.hibernate.ejb.HibernatePersistence]; use [org.hibernate.jpa.HibernatePersistenceProvider] instead.
+2015-11-12 11:23:18.266	 INFO	[main]	CLASE: LogHelper	 METODO: logPersistenceUnitInformation	LINEA:46	MSJE:HHH000204: Processing PersistenceUnitInfo [
+	name: biosis-PU
+	...]
+2015-11-12 11:23:18.383	 INFO	[main]	CLASE: Version	 METODO: logVersion	LINEA:54	MSJE:HHH000412: Hibernate Core {4.3.1.Final}
+2015-11-12 11:23:18.386	 INFO	[main]	CLASE: Environment	 METODO: <clinit>	LINEA:239	MSJE:HHH000206: hibernate.properties not found
+2015-11-12 11:23:18.388	 INFO	[main]	CLASE: Environment	 METODO: buildBytecodeProvider	LINEA:346	MSJE:HHH000021: Bytecode provider name : javassist
+2015-11-12 11:23:18.877	 INFO	[main]	CLASE: JavaReflectionManager	 METODO: <clinit>	LINEA:66	MSJE:HCANN000001: Hibernate Commons Annotations {4.0.4.Final}
+2015-11-12 11:23:18.931	 WARN	[main]	CLASE: DriverManagerConnectionProviderImpl	 METODO: configure	LINEA:93	MSJE:HHH000402: Using Hibernate built-in connection pool (not for production use!)
+2015-11-12 11:23:19.029	 INFO	[main]	CLASE: DriverManagerConnectionProviderImpl	 METODO: buildCreator	LINEA:166	MSJE:HHH000401: using driver [com.microsoft.sqlserver.jdbc.SQLServerDriver] at URL [jdbc:sqlserver://127.0.0.1:53041;databaseName=sm_biosis;sendTimeAsDatetime=false]
+2015-11-12 11:23:19.030	 INFO	[main]	CLASE: DriverManagerConnectionProviderImpl	 METODO: buildCreator	LINEA:175	MSJE:HHH000046: Connection properties: {user=sa, password=****}
+2015-11-12 11:23:19.030	 INFO	[main]	CLASE: DriverManagerConnectionProviderImpl	 METODO: buildCreator	LINEA:180	MSJE:HHH000006: Autocommit mode: false
+2015-11-12 11:23:19.032	 INFO	[main]	CLASE: DriverManagerConnectionProviderImpl	 METODO: configure	LINEA:102	MSJE:HHH000115: Hibernate connection pool size: 20 (min=1)
+2015-11-12 11:23:19.517	 INFO	[main]	CLASE: Dialect	 METODO: <init>	LINEA:145	MSJE:HHH000400: Using dialect: org.hibernate.dialect.SQLServer2005Dialect
+2015-11-12 11:23:19.902	 INFO	[main]	CLASE: ASTQueryTranslatorFactory	 METODO: <init>	LINEA:47	MSJE:HHH000397: Using ASTQueryTranslatorFactory
+2015-11-12 11:27:52.739	 WARN	[main]	CLASE: HibernatePersistence	 METODO: logDeprecation	LINEA:58	MSJE:HHH015016: Encountered a deprecated javax.persistence.spi.PersistenceProvider [org.hibernate.ejb.HibernatePersistence]; use [org.hibernate.jpa.HibernatePersistenceProvider] instead.
+2015-11-12 11:27:52.743	 WARN	[main]	CLASE: HibernatePersistence	 METODO: logDeprecation	LINEA:58	MSJE:HHH015016: Encountered a deprecated javax.persistence.spi.PersistenceProvider [org.hibernate.ejb.HibernatePersistence]; use [org.hibernate.jpa.HibernatePersistenceProvider] instead.
+2015-11-12 11:27:52.744	 WARN	[main]	CLASE: HibernatePersistence	 METODO: logDeprecation	LINEA:58	MSJE:HHH015016: Encountered a deprecated javax.persistence.spi.PersistenceProvider [org.hibernate.ejb.HibernatePersistence]; use [org.hibernate.jpa.HibernatePersistenceProvider] instead.
+2015-11-12 11:27:52.897	 INFO	[main]	CLASE: LogHelper	 METODO: logPersistenceUnitInformation	LINEA:46	MSJE:HHH000204: Processing PersistenceUnitInfo [
+	name: biosis-PU
+	...]
+2015-11-12 11:27:53.013	 INFO	[main]	CLASE: Version	 METODO: logVersion	LINEA:54	MSJE:HHH000412: Hibernate Core {4.3.1.Final}
+2015-11-12 11:27:53.017	 INFO	[main]	CLASE: Environment	 METODO: <clinit>	LINEA:239	MSJE:HHH000206: hibernate.properties not found
+2015-11-12 11:27:53.021	 INFO	[main]	CLASE: Environment	 METODO: buildBytecodeProvider	LINEA:346	MSJE:HHH000021: Bytecode provider name : javassist
+2015-11-12 11:27:53.477	 INFO	[main]	CLASE: JavaReflectionManager	 METODO: <clinit>	LINEA:66	MSJE:HCANN000001: Hibernate Commons Annotations {4.0.4.Final}
+2015-11-12 11:27:53.523	 WARN	[main]	CLASE: DriverManagerConnectionProviderImpl	 METODO: configure	LINEA:93	MSJE:HHH000402: Using Hibernate built-in connection pool (not for production use!)
+2015-11-12 11:27:53.623	 INFO	[main]	CLASE: DriverManagerConnectionProviderImpl	 METODO: buildCreator	LINEA:166	MSJE:HHH000401: using driver [com.microsoft.sqlserver.jdbc.SQLServerDriver] at URL [jdbc:sqlserver://127.0.0.1:53041;databaseName=sm_biosis;sendTimeAsDatetime=false]
+2015-11-12 11:27:53.624	 INFO	[main]	CLASE: DriverManagerConnectionProviderImpl	 METODO: buildCreator	LINEA:175	MSJE:HHH000046: Connection properties: {user=sa, password=****}
+2015-11-12 11:27:53.624	 INFO	[main]	CLASE: DriverManagerConnectionProviderImpl	 METODO: buildCreator	LINEA:180	MSJE:HHH000006: Autocommit mode: false
+2015-11-12 11:27:53.626	 INFO	[main]	CLASE: DriverManagerConnectionProviderImpl	 METODO: configure	LINEA:102	MSJE:HHH000115: Hibernate connection pool size: 20 (min=1)
+2015-11-12 11:27:54.075	 INFO	[main]	CLASE: Dialect	 METODO: <init>	LINEA:145	MSJE:HHH000400: Using dialect: org.hibernate.dialect.SQLServer2005Dialect
+2015-11-12 11:27:54.458	 INFO	[main]	CLASE: ASTQueryTranslatorFactory	 METODO: <init>	LINEA:47	MSJE:HHH000397: Using ASTQueryTranslatorFactory
+2015-11-12 11:35:45.814	 WARN	[main]	CLASE: HibernatePersistence	 METODO: logDeprecation	LINEA:58	MSJE:HHH015016: Encountered a deprecated javax.persistence.spi.PersistenceProvider [org.hibernate.ejb.HibernatePersistence]; use [org.hibernate.jpa.HibernatePersistenceProvider] instead.
+2015-11-12 11:35:45.820	 WARN	[main]	CLASE: HibernatePersistence	 METODO: logDeprecation	LINEA:58	MSJE:HHH015016: Encountered a deprecated javax.persistence.spi.PersistenceProvider [org.hibernate.ejb.HibernatePersistence]; use [org.hibernate.jpa.HibernatePersistenceProvider] instead.
+2015-11-12 11:35:45.821	 WARN	[main]	CLASE: HibernatePersistence	 METODO: logDeprecation	LINEA:58	MSJE:HHH015016: Encountered a deprecated javax.persistence.spi.PersistenceProvider [org.hibernate.ejb.HibernatePersistence]; use [org.hibernate.jpa.HibernatePersistenceProvider] instead.
+2015-11-12 11:35:45.977	 INFO	[main]	CLASE: LogHelper	 METODO: logPersistenceUnitInformation	LINEA:46	MSJE:HHH000204: Processing PersistenceUnitInfo [
+	name: biosis-PU
+	...]
+2015-11-12 11:35:46.076	 INFO	[main]	CLASE: Version	 METODO: logVersion	LINEA:54	MSJE:HHH000412: Hibernate Core {4.3.1.Final}
+2015-11-12 11:35:46.078	 INFO	[main]	CLASE: Environment	 METODO: <clinit>	LINEA:239	MSJE:HHH000206: hibernate.properties not found
+2015-11-12 11:35:46.081	 INFO	[main]	CLASE: Environment	 METODO: buildBytecodeProvider	LINEA:346	MSJE:HHH000021: Bytecode provider name : javassist
+2015-11-12 11:35:46.563	 INFO	[main]	CLASE: JavaReflectionManager	 METODO: <clinit>	LINEA:66	MSJE:HCANN000001: Hibernate Commons Annotations {4.0.4.Final}
+2015-11-12 11:35:46.625	 WARN	[main]	CLASE: DriverManagerConnectionProviderImpl	 METODO: configure	LINEA:93	MSJE:HHH000402: Using Hibernate built-in connection pool (not for production use!)
+2015-11-12 11:35:46.723	 INFO	[main]	CLASE: DriverManagerConnectionProviderImpl	 METODO: buildCreator	LINEA:166	MSJE:HHH000401: using driver [com.microsoft.sqlserver.jdbc.SQLServerDriver] at URL [jdbc:sqlserver://127.0.0.1:53041;databaseName=sm_biosis;sendTimeAsDatetime=false]
+2015-11-12 11:35:46.724	 INFO	[main]	CLASE: DriverManagerConnectionProviderImpl	 METODO: buildCreator	LINEA:175	MSJE:HHH000046: Connection properties: {user=sa, password=****}
+2015-11-12 11:35:46.724	 INFO	[main]	CLASE: DriverManagerConnectionProviderImpl	 METODO: buildCreator	LINEA:180	MSJE:HHH000006: Autocommit mode: false
+2015-11-12 11:35:46.726	 INFO	[main]	CLASE: DriverManagerConnectionProviderImpl	 METODO: configure	LINEA:102	MSJE:HHH000115: Hibernate connection pool size: 20 (min=1)
+2015-11-12 11:35:47.236	 INFO	[main]	CLASE: Dialect	 METODO: <init>	LINEA:145	MSJE:HHH000400: Using dialect: org.hibernate.dialect.SQLServer2005Dialect
+2015-11-12 11:35:47.610	 INFO	[main]	CLASE: ASTQueryTranslatorFactory	 METODO: <init>	LINEA:47	MSJE:HHH000397: Using ASTQueryTranslatorFactory
+2015-11-12 11:58:06.034	 WARN	[main]	CLASE: HibernatePersistence	 METODO: logDeprecation	LINEA:58	MSJE:HHH015016: Encountered a deprecated javax.persistence.spi.PersistenceProvider [org.hibernate.ejb.HibernatePersistence]; use [org.hibernate.jpa.HibernatePersistenceProvider] instead.
+2015-11-12 11:58:06.038	 WARN	[main]	CLASE: HibernatePersistence	 METODO: logDeprecation	LINEA:58	MSJE:HHH015016: Encountered a deprecated javax.persistence.spi.PersistenceProvider [org.hibernate.ejb.HibernatePersistence]; use [org.hibernate.jpa.HibernatePersistenceProvider] instead.
+2015-11-12 11:58:06.039	 WARN	[main]	CLASE: HibernatePersistence	 METODO: logDeprecation	LINEA:58	MSJE:HHH015016: Encountered a deprecated javax.persistence.spi.PersistenceProvider [org.hibernate.ejb.HibernatePersistence]; use [org.hibernate.jpa.HibernatePersistenceProvider] instead.
+2015-11-12 11:58:06.188	 INFO	[main]	CLASE: LogHelper	 METODO: logPersistenceUnitInformation	LINEA:46	MSJE:HHH000204: Processing PersistenceUnitInfo [
+	name: biosis-PU
+	...]
+2015-11-12 11:58:06.287	 INFO	[main]	CLASE: Version	 METODO: logVersion	LINEA:54	MSJE:HHH000412: Hibernate Core {4.3.1.Final}
+2015-11-12 11:58:06.289	 INFO	[main]	CLASE: Environment	 METODO: <clinit>	LINEA:239	MSJE:HHH000206: hibernate.properties not found
+2015-11-12 11:58:06.292	 INFO	[main]	CLASE: Environment	 METODO: buildBytecodeProvider	LINEA:346	MSJE:HHH000021: Bytecode provider name : javassist
+2015-11-12 11:58:06.718	 INFO	[main]	CLASE: JavaReflectionManager	 METODO: <clinit>	LINEA:66	MSJE:HCANN000001: Hibernate Commons Annotations {4.0.4.Final}
+2015-11-12 11:58:06.763	 WARN	[main]	CLASE: DriverManagerConnectionProviderImpl	 METODO: configure	LINEA:93	MSJE:HHH000402: Using Hibernate built-in connection pool (not for production use!)
+2015-11-12 11:58:06.857	 INFO	[main]	CLASE: DriverManagerConnectionProviderImpl	 METODO: buildCreator	LINEA:166	MSJE:HHH000401: using driver [com.microsoft.sqlserver.jdbc.SQLServerDriver] at URL [jdbc:sqlserver://127.0.0.1:53041;databaseName=sm_biosis;sendTimeAsDatetime=false]
+2015-11-12 11:58:06.858	 INFO	[main]	CLASE: DriverManagerConnectionProviderImpl	 METODO: buildCreator	LINEA:175	MSJE:HHH000046: Connection properties: {user=sa, password=****}
+2015-11-12 11:58:06.858	 INFO	[main]	CLASE: DriverManagerConnectionProviderImpl	 METODO: buildCreator	LINEA:180	MSJE:HHH000006: Autocommit mode: false
+2015-11-12 11:58:06.860	 INFO	[main]	CLASE: DriverManagerConnectionProviderImpl	 METODO: configure	LINEA:102	MSJE:HHH000115: Hibernate connection pool size: 20 (min=1)
+2015-11-12 11:58:07.273	 INFO	[main]	CLASE: Dialect	 METODO: <init>	LINEA:145	MSJE:HHH000400: Using dialect: org.hibernate.dialect.SQLServer2005Dialect
+2015-11-12 11:58:07.639	 INFO	[main]	CLASE: ASTQueryTranslatorFactory	 METODO: <init>	LINEA:47	MSJE:HHH000397: Using ASTQueryTranslatorFactory
+2015-11-12 11:59:34.669	 WARN	[main]	CLASE: HibernatePersistence	 METODO: logDeprecation	LINEA:58	MSJE:HHH015016: Encountered a deprecated javax.persistence.spi.PersistenceProvider [org.hibernate.ejb.HibernatePersistence]; use [org.hibernate.jpa.HibernatePersistenceProvider] instead.
+2015-11-12 11:59:34.672	 WARN	[main]	CLASE: HibernatePersistence	 METODO: logDeprecation	LINEA:58	MSJE:HHH015016: Encountered a deprecated javax.persistence.spi.PersistenceProvider [org.hibernate.ejb.HibernatePersistence]; use [org.hibernate.jpa.HibernatePersistenceProvider] instead.
+2015-11-12 11:59:34.673	 WARN	[main]	CLASE: HibernatePersistence	 METODO: logDeprecation	LINEA:58	MSJE:HHH015016: Encountered a deprecated javax.persistence.spi.PersistenceProvider [org.hibernate.ejb.HibernatePersistence]; use [org.hibernate.jpa.HibernatePersistenceProvider] instead.
+2015-11-12 11:59:34.809	 INFO	[main]	CLASE: LogHelper	 METODO: logPersistenceUnitInformation	LINEA:46	MSJE:HHH000204: Processing PersistenceUnitInfo [
+	name: biosis-PU
+	...]
+2015-11-12 11:59:34.906	 INFO	[main]	CLASE: Version	 METODO: logVersion	LINEA:54	MSJE:HHH000412: Hibernate Core {4.3.1.Final}
+2015-11-12 11:59:34.909	 INFO	[main]	CLASE: Environment	 METODO: <clinit>	LINEA:239	MSJE:HHH000206: hibernate.properties not found
+2015-11-12 11:59:34.911	 INFO	[main]	CLASE: Environment	 METODO: buildBytecodeProvider	LINEA:346	MSJE:HHH000021: Bytecode provider name : javassist
+2015-11-12 11:59:35.372	 INFO	[main]	CLASE: JavaReflectionManager	 METODO: <clinit>	LINEA:66	MSJE:HCANN000001: Hibernate Commons Annotations {4.0.4.Final}
+2015-11-12 11:59:35.433	 WARN	[main]	CLASE: DriverManagerConnectionProviderImpl	 METODO: configure	LINEA:93	MSJE:HHH000402: Using Hibernate built-in connection pool (not for production use!)
+2015-11-12 11:59:35.529	 INFO	[main]	CLASE: DriverManagerConnectionProviderImpl	 METODO: buildCreator	LINEA:166	MSJE:HHH000401: using driver [com.microsoft.sqlserver.jdbc.SQLServerDriver] at URL [jdbc:sqlserver://127.0.0.1:53041;databaseName=sm_biosis;sendTimeAsDatetime=false]
+2015-11-12 11:59:35.530	 INFO	[main]	CLASE: DriverManagerConnectionProviderImpl	 METODO: buildCreator	LINEA:175	MSJE:HHH000046: Connection properties: {user=sa, password=****}
+2015-11-12 11:59:35.531	 INFO	[main]	CLASE: DriverManagerConnectionProviderImpl	 METODO: buildCreator	LINEA:180	MSJE:HHH000006: Autocommit mode: false
+2015-11-12 11:59:35.532	 INFO	[main]	CLASE: DriverManagerConnectionProviderImpl	 METODO: configure	LINEA:102	MSJE:HHH000115: Hibernate connection pool size: 20 (min=1)
+2015-11-12 11:59:36.036	 INFO	[main]	CLASE: Dialect	 METODO: <init>	LINEA:145	MSJE:HHH000400: Using dialect: org.hibernate.dialect.SQLServer2005Dialect
+2015-11-12 11:59:36.404	 INFO	[main]	CLASE: ASTQueryTranslatorFactory	 METODO: <init>	LINEA:47	MSJE:HHH000397: Using ASTQueryTranslatorFactory
+2015-11-12 12:10:57.790	 WARN	[main]	CLASE: HibernatePersistence	 METODO: logDeprecation	LINEA:58	MSJE:HHH015016: Encountered a deprecated javax.persistence.spi.PersistenceProvider [org.hibernate.ejb.HibernatePersistence]; use [org.hibernate.jpa.HibernatePersistenceProvider] instead.
+2015-11-12 12:10:57.794	 WARN	[main]	CLASE: HibernatePersistence	 METODO: logDeprecation	LINEA:58	MSJE:HHH015016: Encountered a deprecated javax.persistence.spi.PersistenceProvider [org.hibernate.ejb.HibernatePersistence]; use [org.hibernate.jpa.HibernatePersistenceProvider] instead.
+2015-11-12 12:10:57.795	 WARN	[main]	CLASE: HibernatePersistence	 METODO: logDeprecation	LINEA:58	MSJE:HHH015016: Encountered a deprecated javax.persistence.spi.PersistenceProvider [org.hibernate.ejb.HibernatePersistence]; use [org.hibernate.jpa.HibernatePersistenceProvider] instead.
+2015-11-12 12:10:57.951	 INFO	[main]	CLASE: LogHelper	 METODO: logPersistenceUnitInformation	LINEA:46	MSJE:HHH000204: Processing PersistenceUnitInfo [
+	name: biosis-PU
+	...]
+2015-11-12 12:10:58.056	 INFO	[main]	CLASE: Version	 METODO: logVersion	LINEA:54	MSJE:HHH000412: Hibernate Core {4.3.1.Final}
+2015-11-12 12:10:58.059	 INFO	[main]	CLASE: Environment	 METODO: <clinit>	LINEA:239	MSJE:HHH000206: hibernate.properties not found
+2015-11-12 12:10:58.062	 INFO	[main]	CLASE: Environment	 METODO: buildBytecodeProvider	LINEA:346	MSJE:HHH000021: Bytecode provider name : javassist
+2015-11-12 12:10:58.554	 INFO	[main]	CLASE: JavaReflectionManager	 METODO: <clinit>	LINEA:66	MSJE:HCANN000001: Hibernate Commons Annotations {4.0.4.Final}
+2015-11-12 12:10:58.614	 WARN	[main]	CLASE: DriverManagerConnectionProviderImpl	 METODO: configure	LINEA:93	MSJE:HHH000402: Using Hibernate built-in connection pool (not for production use!)
+2015-11-12 12:10:58.705	 INFO	[main]	CLASE: DriverManagerConnectionProviderImpl	 METODO: buildCreator	LINEA:166	MSJE:HHH000401: using driver [com.microsoft.sqlserver.jdbc.SQLServerDriver] at URL [jdbc:sqlserver://127.0.0.1:53041;databaseName=sm_biosis;sendTimeAsDatetime=false]
+2015-11-12 12:10:58.783	 INFO	[main]	CLASE: DriverManagerConnectionProviderImpl	 METODO: buildCreator	LINEA:175	MSJE:HHH000046: Connection properties: {user=sa, password=****}
+2015-11-12 12:10:58.784	 INFO	[main]	CLASE: DriverManagerConnectionProviderImpl	 METODO: buildCreator	LINEA:180	MSJE:HHH000006: Autocommit mode: false
+2015-11-12 12:10:58.786	 INFO	[main]	CLASE: DriverManagerConnectionProviderImpl	 METODO: configure	LINEA:102	MSJE:HHH000115: Hibernate connection pool size: 20 (min=1)
+2015-11-12 12:10:59.254	 INFO	[main]	CLASE: Dialect	 METODO: <init>	LINEA:145	MSJE:HHH000400: Using dialect: org.hibernate.dialect.SQLServer2005Dialect
+2015-11-12 12:10:59.621	 INFO	[main]	CLASE: ASTQueryTranslatorFactory	 METODO: <init>	LINEA:47	MSJE:HHH000397: Using ASTQueryTranslatorFactory
