@@ -36,7 +36,7 @@ public class InterpreteDetalle implements Interprete<RptAsistenciaDetallado> {
         for (Asistencia asistencia : registroAsistencia) {
 
             RptAsistenciaDetallado detalleAsistencia = null;
-            RegimenLaboral regLab = asistencia.getEmpleado().getContratoList().get(0).getRegimenLaboral();
+            RegimenLaboral regLab = asistencia.getEmpleado().getContratoList().isEmpty() ? null : asistencia.getEmpleado().getContratoList().get(0).getRegimenLaboral();
             String regimenLaboral = regLab == null ? "" : regLab.getNombre();
             if (asistencia.getResultado() == AnalizadorAsistencia.ASISTENCIA) {
                 Long marcacionesMaximas = asistencia.getDetalleAsistenciaList().stream().filter(d -> d.getHoraReferencia() != null).count();

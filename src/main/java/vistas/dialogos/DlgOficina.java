@@ -49,7 +49,6 @@ public class DlgOficina extends javax.swing.JDialog {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
         jPanel1 = new javax.swing.JPanel();
         pnlSeleccion = new javax.swing.JPanel();
@@ -65,7 +64,7 @@ public class DlgOficina extends javax.swing.JDialog {
         jPanel1.setLayout(new java.awt.GridLayout(1, 0));
 
         pnlSeleccion.setBorder(javax.swing.BorderFactory.createTitledBorder("Selección de área o sede"));
-        pnlSeleccion.setLayout(new java.awt.GridBagLayout());
+        pnlSeleccion.setLayout(new java.awt.BorderLayout());
 
         trAreas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         trAreas.setRowHeight(30);
@@ -76,16 +75,9 @@ public class DlgOficina extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(trAreas);
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weightx = 0.1;
-        gridBagConstraints.weighty = 0.2;
-        pnlSeleccion.add(jScrollPane1, gridBagConstraints);
+        pnlSeleccion.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
-        jPanel2.setLayout(new java.awt.GridLayout());
+        jPanel2.setLayout(new java.awt.GridLayout(1, 0, 10, 0));
 
         jButton1.setText("Seleccionar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -103,7 +95,7 @@ public class DlgOficina extends javax.swing.JDialog {
         });
         jPanel2.add(jButton2);
 
-        pnlSeleccion.add(jPanel2, new java.awt.GridBagConstraints());
+        pnlSeleccion.add(jPanel2, java.awt.BorderLayout.SOUTH);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
