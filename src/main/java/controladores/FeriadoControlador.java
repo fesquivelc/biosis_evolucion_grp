@@ -5,6 +5,7 @@
  */
 package controladores;
 
+import com.personal.utiles.FechaUtil;
 import entidades.Feriado;
 import java.util.Date;
 import java.util.HashMap;
@@ -34,11 +35,11 @@ public class FeriadoControlador extends Controlador<Feriado> {
     }
 
     public List<Feriado> buscarXFechas(Date fechaInicio, Date fechaFin) {
-        String jpql = "SELECT f FROM Feriado f WHERE (f.fechaInicio <= :fechaInicio AND f.fechaFin >= :fechaInicio) OR (f.fechaInicio BETWEEN :fechaInicio AND :fechaFin)";
+        String jpql = "SELECT f FROM Feriado f WHERE (f.fechaInicio <= :fechaInicio AND f.fechaFin >= :fechaInicio) OR (f.fechaInicio >= :fechaInicio AND f.fechaInicio <= :fechaFin)";
         Map<String, Object> mapa = new HashMap<>();
-        mapa.put("fechaInicio", fechaInicio);
-        mapa.put("fechaFin", fechaFin);
-        List<Feriado> feriados = this.getDao().buscar(jpql, mapa, -1, 1);
+        mapa.put("fechaInicio", FechaUtil.soloFecha(fechaInicio));
+        mapa.put("fechaFin", FechaUtil.soloFecha(fechaFin));
+        List<Feriado> feriados = this.getDao().buscar(jpql, mapa, -1, -1);
         return feriados;
     }
 

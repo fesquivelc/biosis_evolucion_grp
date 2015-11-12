@@ -389,10 +389,14 @@ public class CRUDPeriodo extends javax.swing.JInternalFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         DlgFeriado dlgFeriado = new DlgFeriado(this, Controlador.NUEVO);
+        dlgFeriado.setPeriodo(this.controlador.getSeleccionado());
         Feriado feriado = dlgFeriado.getFeriado();
-        feriado.setPeriodo(this.controlador.getSeleccionado());
-        feriadoList.add(feriado);
-        this.controlador.getSeleccionado().getFeriadoList().add(feriado);
+        if (feriado != null) {
+            feriado.setPeriodo(this.controlador.getSeleccionado());
+            feriadoList.add(feriado);
+            this.controlador.getSeleccionado().getFeriadoList().add(feriado);
+        }
+
 
     }//GEN-LAST:event_jButton1ActionPerformed
 

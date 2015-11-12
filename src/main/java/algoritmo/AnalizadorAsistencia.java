@@ -207,6 +207,7 @@ public class AnalizadorAsistencia {
 
     private void cargarFeriados(Date fechaInicio, Date fechaFin) {
         this.feriadoList = ferc.buscarXFechas(fechaInicio, fechaFin);
+        System.out.println("TAMAÑO FERIADOS: " + this.feriadoList.size());
     }
 
     private void cargarSalidas(Empleado empleado, Date fechaInicio, Date fechaFin) {
@@ -214,15 +215,17 @@ public class AnalizadorAsistencia {
     }
 
     private Feriado buscarFeriado(Date dia) {
+        Date diaSoloFecha = FechaUtil.soloFecha(dia);
         try {
+//            System.out.println("TAMAÑO FERIADOS: "+this.feriadoList.size());
             Feriado feriado = this.feriadoList
                     .stream()
-                    .filter(fer -> fer.getFechaInicio().compareTo(dia) <= 0 && fer.getFechaFin().compareTo(dia) >= 0)
+                    .filter(fer -> fer.getFechaInicio().compareTo(diaSoloFecha) <= 0 && fer.getFechaFin().compareTo(diaSoloFecha) >= 0)
                     .findFirst()
                     .get();
             return feriado;
         } catch (NoSuchElementException e) {
-            System.out.println("NO HAY FERIADOS EN ESTA FECHA");
+            System.out.println("NO HAY FERIADOS EN ESTA FECHA: "+diaSoloFecha);
             return null;
         }
     }

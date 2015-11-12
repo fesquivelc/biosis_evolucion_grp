@@ -46,6 +46,7 @@ public class DlgFeriado extends javax.swing.JDialog {
     }
 
     public Feriado getFeriado() {
+        this.setVisible(true);
         return feriado;
     }
 
