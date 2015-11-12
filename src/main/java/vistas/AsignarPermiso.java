@@ -134,7 +134,6 @@ public class AsignarPermiso extends javax.swing.JInternalFrame {
         jPanel5 = new javax.swing.JPanel();
         btnGuardar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
         opciones.add(radFecha);
         opciones.add(radHora);
         opciones.add(radLote);
@@ -625,7 +624,6 @@ public class AsignarPermiso extends javax.swing.JInternalFrame {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         pnlDatos.add(jPanel5, gridBagConstraints);
-        pnlDatos.add(jDateChooser1, new java.awt.GridBagConstraints());
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
@@ -921,7 +919,6 @@ public class AsignarPermiso extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
