@@ -87,12 +87,6 @@ public class AsignarPermiso extends javax.swing.JInternalFrame {
         jButton2 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblTabla = new org.jdesktop.swingx.JXTable();
-        lblBusqueda = new org.jdesktop.swingx.JXBusyLabel();
-        txtEmpleado = new javax.swing.JTextField();
-        jButton4 = new javax.swing.JButton();
-        btnLimpiar = new javax.swing.JButton();
-        jLabel9 = new javax.swing.JLabel();
-        btnBuscar = new javax.swing.JButton();
         pnlNavegacion = new javax.swing.JPanel();
         btnPrimero = new javax.swing.JButton();
         btnAnterior = new javax.swing.JButton();
@@ -101,8 +95,16 @@ public class AsignarPermiso extends javax.swing.JInternalFrame {
         btnSiguiente = new javax.swing.JButton();
         btnUltimo = new javax.swing.JButton();
         cboTamanio = new javax.swing.JComboBox();
+        pnlBusqueda = new javax.swing.JPanel();
         dcFechaInicioBusqueda = new com.toedter.calendar.JDateChooser();
         dcFechaFinBusqueda = new com.toedter.calendar.JDateChooser();
+        txtEmpleado = new javax.swing.JTextField();
+        lblBusqueda = new org.jdesktop.swingx.JXBusyLabel();
+        btnLimpiar = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jLabel9 = new javax.swing.JLabel();
+        btnBuscar = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
         pnlDatos = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -148,7 +150,7 @@ public class AsignarPermiso extends javax.swing.JInternalFrame {
 
         pnlListado.setBorder(javax.swing.BorderFactory.createTitledBorder("Permisos"));
         java.awt.GridBagLayout jPanel1Layout = new java.awt.GridBagLayout();
-        jPanel1Layout.columnWidths = new int[] {0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0};
+        jPanel1Layout.columnWidths = new int[] {0};
         jPanel1Layout.rowHeights = new int[] {0, 5, 0, 5, 0, 5, 0};
         pnlListado.setLayout(jPanel1Layout);
 
@@ -189,7 +191,6 @@ public class AsignarPermiso extends javax.swing.JInternalFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 6;
-        gridBagConstraints.gridwidth = 15;
         pnlListado.add(jPanel3, gridBagConstraints);
 
         tblTabla.setHorizontalScrollEnabled(true);
@@ -203,79 +204,10 @@ public class AsignarPermiso extends javax.swing.JInternalFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 15;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 0.1;
         gridBagConstraints.weighty = 0.1;
         pnlListado.add(jScrollPane1, gridBagConstraints);
-
-        lblBusqueda.setText("Empleado");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        pnlListado.add(lblBusqueda, gridBagConstraints);
-
-        txtEmpleado.setEditable(false);
-        txtEmpleado.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtEmpleadoActionPerformed(evt);
-            }
-        });
-        txtEmpleado.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtEmpleadoKeyReleased(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weightx = 0.1;
-        pnlListado.add(txtEmpleado, gridBagConstraints);
-
-        jButton4.setText("...");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        pnlListado.add(jButton4, gridBagConstraints);
-
-        btnLimpiar.setText("Limpiar");
-        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLimpiarActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 6;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        pnlListado.add(btnLimpiar, gridBagConstraints);
-
-        jLabel9.setText("-");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 10;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        pnlListado.add(jLabel9, gridBagConstraints);
-
-        btnBuscar.setText("Buscar");
-        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 14;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        pnlListado.add(btnBuscar, gridBagConstraints);
 
         pnlNavegacion.setLayout(new java.awt.GridLayout(1, 0, 2, 0));
 
@@ -295,7 +227,7 @@ public class AsignarPermiso extends javax.swing.JInternalFrame {
         });
         pnlNavegacion.add(btnAnterior);
 
-        spPagina.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(1), Integer.valueOf(1), null, Integer.valueOf(1)));
+        spPagina.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
         spPagina.setMinimumSize(new java.awt.Dimension(60, 20));
         spPagina.setPreferredSize(new java.awt.Dimension(60, 20));
         spPagina.addChangeListener(new javax.swing.event.ChangeListener() {
@@ -340,16 +272,100 @@ public class AsignarPermiso extends javax.swing.JInternalFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
-        gridBagConstraints.gridwidth = 15;
         pnlListado.add(pnlNavegacion, gridBagConstraints);
+
+        pnlBusqueda.setLayout(new java.awt.GridBagLayout());
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 8;
-        gridBagConstraints.gridy = 0;
-        pnlListado.add(dcFechaInicioBusqueda, gridBagConstraints);
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        pnlBusqueda.add(dcFechaInicioBusqueda, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 12;
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 1;
+        pnlBusqueda.add(dcFechaFinBusqueda, gridBagConstraints);
+
+        txtEmpleado.setEditable(false);
+        txtEmpleado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtEmpleadoActionPerformed(evt);
+            }
+        });
+        txtEmpleado.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtEmpleadoKeyReleased(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
-        pnlListado.add(dcFechaFinBusqueda, gridBagConstraints);
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 0.1;
+        pnlBusqueda.add(txtEmpleado, gridBagConstraints);
+
+        lblBusqueda.setText("Empleado:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        pnlBusqueda.add(lblBusqueda, gridBagConstraints);
+
+        btnLimpiar.setText("Limpiar");
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 6;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        pnlBusqueda.add(btnLimpiar, gridBagConstraints);
+
+        jButton4.setText("...");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        pnlBusqueda.add(jButton4, gridBagConstraints);
+
+        jLabel9.setText("-");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        pnlBusqueda.add(jLabel9, gridBagConstraints);
+
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        pnlBusqueda.add(btnBuscar, gridBagConstraints);
+
+        jLabel5.setText("Fechas:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        pnlBusqueda.add(jLabel5, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 0.1;
+        pnlListado.add(pnlBusqueda, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -715,7 +731,8 @@ public class AsignarPermiso extends javax.swing.JInternalFrame {
                 FormularioUtil.limpiarComponente(this.pnlDatos);
                 this.integrantes.clear();
                 this.controles(accion);
-                this.actualizarTabla();
+                
+                this.busqueda();
 
                 if (FormularioUtil.dialogoConfirmar(this, 4)) {
                     this.imprimirBoleta(seleccionada);
@@ -794,12 +811,8 @@ public class AsignarPermiso extends javax.swing.JInternalFrame {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
-        System.out.println("BUSCAR");
-        lblBusqueda.setBusy(true);
-        paginaActual = 1;
-        buscar();
-        actualizarControlesNavegacion();
-        lblBusqueda.setBusy(false);
+        busqueda();
+        
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnPrimeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrimeroActionPerformed
@@ -926,6 +939,7 @@ public class AsignarPermiso extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -937,6 +951,7 @@ public class AsignarPermiso extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private org.jdesktop.swingx.JXBusyLabel lblBusqueda;
     private javax.swing.ButtonGroup opciones;
+    private javax.swing.JPanel pnlBusqueda;
     private javax.swing.JPanel pnlDatos;
     private javax.swing.JPanel pnlListado;
     private javax.swing.JPanel pnlNavegacion;
@@ -1033,12 +1048,14 @@ public class AsignarPermiso extends javax.swing.JInternalFrame {
 
         FormularioUtil.activarComponente(this.pnlListado, !bandera);
         FormularioUtil.activarComponente(this.pnlDatos, bandera);
+        FormularioUtil.activarComponente(this.txtEmpleado, false);
 //        FormularioUtil.activarComponente(this.btnImprimirTodo, false);
 
         if (accion != Controlador.MODIFICAR) {
             FormularioUtil.limpiarComponente(this.pnlDatos);
         }
 
+        
         this.txtTipoPermiso.setEditable(false);
         checkPorFecha(accion);
     }
@@ -1282,5 +1299,14 @@ public class AsignarPermiso extends javax.swing.JInternalFrame {
         spHoraInicio.setEnabled(radHora.isSelected() || radLote.isSelected());
         spHoraFin.setEnabled(radHora.isSelected() || radLote.isSelected());
 
+    }
+
+    private void busqueda() {
+        System.out.println("BUSCAR");
+        lblBusqueda.setBusy(true);
+        paginaActual = 1;
+        buscar();
+        actualizarControlesNavegacion();
+        lblBusqueda.setBusy(false);
     }
 }
