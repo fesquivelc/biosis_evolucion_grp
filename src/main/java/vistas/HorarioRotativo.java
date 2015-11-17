@@ -275,7 +275,7 @@ public class HorarioRotativo extends javax.swing.JInternalFrame {
         pnlAccionAsignado.add(btnAsignar);
 
         btnAsignar4.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        btnAsignar4.setText("Modificar asignacón");
+        btnAsignar4.setText("Modificar asignación");
         btnAsignar4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAsignar4ActionPerformed(evt);
@@ -681,7 +681,13 @@ public class HorarioRotativo extends javax.swing.JInternalFrame {
 
     private void btnAsignar3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsignar3ActionPerformed
         // TODO add your handling code here:
-
+        int fila = tblDetalleHorario.getSelectedRow();
+        
+        if(fila != -1){
+            Turno turno = this.detalleHorarioList.get(fila);
+            this.detalleHorarioList.remove(turno);
+            this.horarioControlador.getSeleccionado().getTurnoList().remove(turno);
+        }
     }//GEN-LAST:event_btnAsignar3ActionPerformed
 
     private void btnAsignar4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsignar4ActionPerformed

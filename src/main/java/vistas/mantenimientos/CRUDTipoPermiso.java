@@ -13,6 +13,7 @@ import com.personal.utiles.FormularioUtil;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.text.DateFormatter;
 import org.jdesktop.observablecollections.ObservableCollections;
@@ -74,7 +75,7 @@ public class CRUDTipoPermiso extends javax.swing.JInternalFrame {
         setTitle("MANTENIMIENTO TIPOS DE PERMISO");
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
-        pnlDatos.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos de jornada"));
+        pnlDatos.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos de tipo de permiso"));
 
         java.awt.GridBagLayout jPanel1Layout = new java.awt.GridBagLayout();
         jPanel1Layout.columnWidths = new int[] {0, 5, 0};
@@ -268,6 +269,9 @@ public class CRUDTipoPermiso extends javax.swing.JInternalFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
+        if(hayErrores()){
+            return;
+        }
         if (FormularioUtil.dialogoConfirmar(this, accion)) {
             TipoPermiso seleccionada = controlador.getSeleccionado();
             FormularioUtil.convertirMayusculas(this.pnlDatos);
@@ -402,5 +406,28 @@ public class CRUDTipoPermiso extends javax.swing.JInternalFrame {
             default:
                 return "";
         }
+    }
+
+    private boolean hayErrores() {
+        String mensajeError = "Se encontraron los siguientes errores:\n";
+        int errores = 0;
+        
+        
+        
+        if(this.txtCodigo.getText().trim().isEmpty()){
+            errores++;
+            mensajeError += "- El campo código no debe estar en blanco\n";
+        }
+        
+        if(this.txtNombre.getText().trim().isEmpty()){
+            errores++;
+            mensajeError += "- El campo nombre no debe estar en blanco\n";
+        }
+        
+        if(errores > 0){
+            JOptionPane.showMessageDialog(this, mensajeError, "Mensaje del sistema", JOptionPane.WARNING_MESSAGE);
+        }
+        
+        return errores > 0;
     }
 }

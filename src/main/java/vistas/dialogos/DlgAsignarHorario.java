@@ -88,7 +88,7 @@ public class DlgAsignarHorario extends javax.swing.JDialog {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jPanel1.add(jLabel4, gridBagConstraints);
 
-        radEmpleado.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        radEmpleado.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         radEmpleado.setSelected(true);
         radEmpleado.setText("Empleado:");
         radEmpleado.addActionListener(new java.awt.event.ActionListener() {
@@ -102,7 +102,7 @@ public class DlgAsignarHorario extends javax.swing.JDialog {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jPanel1.add(radEmpleado, gridBagConstraints);
 
-        radGrupo.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        radGrupo.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         radGrupo.setText("Grupo:");
         radGrupo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -116,7 +116,7 @@ public class DlgAsignarHorario extends javax.swing.JDialog {
         jPanel1.add(radGrupo, gridBagConstraints);
 
         txtEmpleado.setEditable(false);
-        txtEmpleado.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        txtEmpleado.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
@@ -124,7 +124,7 @@ public class DlgAsignarHorario extends javax.swing.JDialog {
         gridBagConstraints.weightx = 0.1;
         jPanel1.add(txtEmpleado, gridBagConstraints);
 
-        cboGrupoHorario.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        cboGrupoHorario.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         cboGrupoHorario.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
@@ -132,7 +132,7 @@ public class DlgAsignarHorario extends javax.swing.JDialog {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         jPanel1.add(cboGrupoHorario, gridBagConstraints);
 
-        dcFechaInicio.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        dcFechaInicio.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 4;
@@ -141,7 +141,7 @@ public class DlgAsignarHorario extends javax.swing.JDialog {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jPanel1.add(dcFechaInicio, gridBagConstraints);
 
-        dcFechaFin.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        dcFechaFin.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 6;
@@ -150,7 +150,7 @@ public class DlgAsignarHorario extends javax.swing.JDialog {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jPanel1.add(dcFechaFin, gridBagConstraints);
 
-        btnEmpleado.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        btnEmpleado.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         btnEmpleado.setText("...");
         btnEmpleado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
