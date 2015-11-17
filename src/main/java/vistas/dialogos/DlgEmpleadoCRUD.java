@@ -44,6 +44,7 @@ import javax.swing.DefaultListCellRenderer;
 import javax.swing.JInternalFrame;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
+import org.apache.commons.lang.StringUtils;
 import org.jdesktop.beansbinding.AutoBinding;
 import org.jdesktop.beansbinding.BeanProperty;
 import org.jdesktop.observablecollections.ObservableCollections;
@@ -982,7 +983,10 @@ public class DlgEmpleadoCRUD extends javax.swing.JDialog {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        guardar();
+        if(!hayErrores()){
+            guardar();
+        }           
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     Contrato contratosG;
@@ -1550,5 +1554,21 @@ public class DlgEmpleadoCRUD extends javax.swing.JDialog {
         binding.addColumnBinding(bRegimenLaboral).setColumnName("REGIMEN").setEditable(false);
 
         binding.bind();
+    }
+
+    private boolean hayErrores() {
+        //COMPROBAMOS LOS DISTINTOS TIPOS
+        String mensajeError = "Se han detectado los siguientes errores:\n";
+        int errores = 0;
+        
+        if(!(StringUtils.isNumeric(this.txtTelefono1.getText()) && StringUtils.isNumeric(this.txtTelefono2.getText()))){
+            mensajeError += "- El campo teléfono debe ser numérico\n";
+            errores++;
+        }
+        
+        if(errores > 0){
+            JOptionPane.showMessageDialog(this, mensajeError, "Mensaje del sistema", JOptionPane.WARNING_MESSAGE);
+        }
+        return errores != 0;        
     }
 }
