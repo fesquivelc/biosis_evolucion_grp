@@ -149,11 +149,11 @@ public class MTAsistencia extends ModeloTabla<RptAsistenciaDetallado> {
                 return "TARDANZA";
             case AnalizadorAsistencia.FALTA:
                 return "FALTA";
-            case AnalizadorAsistencia.PERMISO_FECHA:
+            case AnalizadorAsistencia.PERMISO_FECHA: case AnalizadorAsistencia.BOLETA_PERMISO:
                 return "PERMISO";
             case AnalizadorAsistencia.FERIADO:
                 return "FERIADO";
-            case AnalizadorAsistencia.VACACION:
+            case AnalizadorAsistencia.VACACION: case AnalizadorAsistencia.BOLETA_VACACION:
                 return "VACACION";
             default:
                 return "";
