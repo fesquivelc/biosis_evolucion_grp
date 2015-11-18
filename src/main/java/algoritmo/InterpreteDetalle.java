@@ -200,6 +200,8 @@ public class InterpreteDetalle implements Interprete<RptAsistenciaDetallado> {
                 return asistencia.getVacacion().getDocumento();
             case AnalizadorAsistencia.PERMISO_FECHA:
                 return asistencia.getPermiso().getDocumento();
+            case AnalizadorAsistencia.BOLETA_PERMISO:
+                return asistencia.getBoleta().getMotivo().getDescripcion();
             default:
                 return "";
         }

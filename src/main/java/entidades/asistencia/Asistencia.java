@@ -9,6 +9,7 @@ import entidades.Feriado;
 import entidades.Permiso;
 import entidades.Vacacion;
 import entidades.escalafon.Empleado;
+import entidades.sisgedo.Boleta;
 import java.util.Date;
 import java.util.List;
 
@@ -27,6 +28,15 @@ public class Asistencia {
     private Vacacion vacacion;
     private Feriado feriado;
     private boolean permisoConGoce;
+    private Boleta boleta;
+
+    public Boleta getBoleta() {
+        return boleta;
+    }
+
+    public void setBoleta(Boleta boleta) {
+        this.boleta = boleta;
+    }
 
     public boolean isPermisoConGoce() {
         return permisoConGoce;

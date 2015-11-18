@@ -14,7 +14,6 @@ import controladores.PermisoControlador;
 import controladores.VacacionControlador;
 import controladores.sisgedo.BoletaControlador;
 import entidades.AsignacionHorario;
-import entidades.DetalleJornada;
 import entidades.Feriado;
 import entidades.Marcacion;
 import entidades.Permiso;
@@ -24,6 +23,7 @@ import entidades.asistencia.Asistencia;
 import entidades.asistencia.DetalleAsistencia;
 import entidades.escalafon.Contrato;
 import entidades.escalafon.Empleado;
+import entidades.sisgedo.Boleta;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -42,6 +42,8 @@ public class AnalizadorAsistencia {
 
     static final int NINGUNO = 0;
     public static final int PERMISO_FECHA = 1;
+    public static final int BOLETA_VACACION = 13;
+    public static final int BOLETA_PERMISO = 11;
     public static final int FERIADO = 2;
     public static final int VACACION = 3;
     static final int PERMISO_HORA = 4;
@@ -58,6 +60,8 @@ public class AnalizadorAsistencia {
     private List<Feriado> feriadoList;
     private List<Permiso> permisoList;
     private List<Vacacion> vacacionList;
+    private List<Boleta> boletaXFechaList;
+    private List<Boleta> boletaXHoraList;
     /*
      LISTADO DE LAS MARCACIONES DEL EMPLEADO
      */
@@ -82,6 +86,7 @@ public class AnalizadorAsistencia {
 //        int tipoPermiso;
         empleadoList.stream().forEach(empleado -> {
             cargarSalidas(empleado, fechaInicio, fechaFin);
+            cargarBoletas(empleado, fechaInicio, fechaFin);
             cargarVacaciones(empleado, fechaInicio, fechaFin);
             List<Contrato> contratos = contc.obtenerContratosXFechas(empleado, fechaInicio, fechaFin);
             Date desde1 = fechaInicio;
@@ -98,37 +103,41 @@ public class AnalizadorAsistencia {
 
                 Calendar iteradorDia = Calendar.getInstance();
                 iteradorDia.setTime(desde2);
-
+                Boleta boletaXFecha = null;
                 Permiso permisoXFecha = null;
                 Vacacion vacacion = null;
                 List<Turno> turnos = asignacion.getHorario().getTurnoList();
                 System.out.println("EMPLEADO: " + empleado.getNombreCompleto() + " TURNOS: ");
                 turnos.stream().forEach(t -> System.out.println(String.format("ID: %s JORNADA: %s", t.getId(), t.getJornada().getNombre())));
                 while (iteradorDia.getTime().compareTo(hasta2) <= 0) {
-//                    if(objetoPermiso == null){
-                    vacacion = this.buscarVacacion(iteradorDia.getTime());
-                    if (vacacion == null) {
-                        permisoXFecha = this.buscarPermisoXFecha(iteradorDia.getTime());
-                        if (permisoXFecha == null) {
-                            if (isDiaLaboral(iteradorDia.getTime(), turnos)) {
-                                Feriado feriado = this.buscarFeriado(iteradorDia.getTime());
-                                if (feriado == null) {
-                                    asistenciaList.addAll(this.generarAsistencia(
-                                            empleado,
-                                            iteradorDia.getTime(),
-                                            turnos.stream().filter(t -> this.isDiaLaboral(iteradorDia.getTime(), t)).collect(Collectors.toList())));
-                                } else {
-                                    asistenciaList.add(this.generarAsistencia(empleado, iteradorDia.getTime(), feriado));
+                    boletaXFecha = this.buscarBoletaXFecha(iteradorDia.getTime());
+                    if (boletaXFecha == null) {
+                        vacacion = this.buscarVacacion(iteradorDia.getTime());
+                        if (vacacion == null) {
+                            permisoXFecha = this.buscarPermisoXFecha(iteradorDia.getTime());
+                            if (permisoXFecha == null) {
+                                if (isDiaLaboral(iteradorDia.getTime(), turnos)) {
+                                    Feriado feriado = this.buscarFeriado(iteradorDia.getTime());
+                                    if (feriado == null) {
+                                        asistenciaList.addAll(this.generarAsistencia(
+                                                empleado,
+                                                iteradorDia.getTime(),
+                                                turnos.stream().filter(t -> this.isDiaLaboral(iteradorDia.getTime(), t)).collect(Collectors.toList())));
+                                    } else {
+                                        asistenciaList.add(this.generarAsistencia(empleado, iteradorDia.getTime(), feriado));
+                                    }
                                 }
+                            } else {
+                                Asistencia asistencia = this.generarAsistencia(empleado, iteradorDia.getTime(), permisoXFecha);
+                                asistencia.setPermisoConGoce(permisoXFecha.getTipoPermiso().getTipoDescuento() == 'C');
+                                asistenciaList.add(asistencia);
+
                             }
                         } else {
-                            Asistencia asistencia = this.generarAsistencia(empleado, iteradorDia.getTime(), permisoXFecha);
-                            asistencia.setPermisoConGoce(permisoXFecha.getTipoPermiso().getTipoDescuento() == 'C');
-                            asistenciaList.add(asistencia);
-
+                            asistenciaList.add(this.generarAsistencia(empleado, iteradorDia.getTime(), vacacion));
                         }
                     } else {
-                        asistenciaList.add(this.generarAsistencia(empleado, iteradorDia.getTime(), vacacion));
+                         asistenciaList.add(this.generarAsistencia(empleado, iteradorDia.getTime(), boletaXFecha));
                     }
 
                     iteradorDia.add(Calendar.DATE, 1);
@@ -200,6 +209,39 @@ public class AnalizadorAsistencia {
         });
         return desglose;
     }
+    
+    private List<DetalleAsistencia> desglosarBoleta(List<Boleta> permisoList) {
+        List<DetalleAsistencia> desglose = new ArrayList<>();
+        Calendar cal = Calendar.getInstance();
+        permisoList.stream().forEach(perm -> {
+            //RECORDAR QUE LOS TIPOS DE PERMISO SIN GOCE SON : 19,22,23,25,26
+            int idMotivo = perm.getMotivo().getId().intValue();
+            
+            DetalleAsistencia detalleI = new DetalleAsistencia();
+            detalleI.setBandera(true);
+            detalleI.setDiaSiguiente(false); //POR REVISAR
+            detalleI.setHoraReferencia(FechaUtil.soloHora(perm.getInicioFechaHora()));
+            detalleI.setHoraReferenciaDesde(FechaUtil.soloHora(perm.getInicioFechaHora()));
+            cal.setTime(FechaUtil.soloHora(perm.getInicioFechaHora()));
+            cal.add(Calendar.MINUTE, 40); //VARIABLE
+            detalleI.setHoraReferenciaHasta(cal.getTime());
+            detalleI.setTipo('P');
+            detalleI.setPermisoConGoce(isConGoce(idMotivo));
+
+            DetalleAsistencia detalleF = new DetalleAsistencia();
+            detalleF.setBandera(false);
+            detalleF.setDiaSiguiente(false); //POR REVISAR
+            detalleF.setHoraReferencia(FechaUtil.soloHora(perm.getRetornoFechaHora()));
+            cal.add(Calendar.SECOND, 1);
+            detalleF.setHoraReferenciaDesde(cal.getTime());
+            detalleF.setMotivo(perm.getMotivo().getDescripcion());
+            detalleF.setPermisoConGoce(isConGoce(idMotivo));
+
+            desglose.add(detalleI);
+            desglose.add(detalleF);
+        });
+        return desglose;
+    }
 
     private void cargarVacaciones(Empleado empleado, Date fechaInicio, Date fechaFin) {
         this.vacacionList = vacc.buscarXEmpleadoEntreFecha(empleado, fechaInicio, fechaFin);
@@ -225,7 +267,7 @@ public class AnalizadorAsistencia {
                     .get();
             return feriado;
         } catch (NoSuchElementException e) {
-            System.out.println("NO HAY FERIADOS EN ESTA FECHA: "+diaSoloFecha);
+            System.out.println("NO HAY FERIADOS EN ESTA FECHA: " + diaSoloFecha);
             return null;
         }
     }
@@ -312,7 +354,7 @@ public class AnalizadorAsistencia {
                     return false;
             }
         } else {
-            
+
             return turno.getFechaInicio().compareTo(fecha) <= 0
                     && turno.getFechaFin().compareTo(fecha) >= 0;
         }
@@ -350,6 +392,16 @@ public class AnalizadorAsistencia {
         asistencia.setFeriado(feriado);
         return asistencia;
     }
+    private Asistencia generarAsistencia(Empleado empleado, Date dia, Boleta boletaXFecha) {
+        //TENER EN CUENTA QUE 12 Y 13 SON VACACIONES
+        int idMotivo = boletaXFecha.getMotivo().getId().intValue();
+        Asistencia asistencia = new Asistencia();
+        asistencia.setEmpleado(empleado);
+        asistencia.setFecha(dia);
+        asistencia.setResultado(idMotivo == 12 || idMotivo == 13 ? BOLETA_VACACION : BOLETA_PERMISO);
+        asistencia.setBoleta(boletaXFecha);
+        return asistencia;
+    }
 
     /*
      Genera un registro de asistencia para el análisis de los turnos
@@ -363,6 +415,7 @@ public class AnalizadorAsistencia {
         turnos.stream().forEach(turno -> {
             Asistencia asistencia = new Asistencia();
             asistencia.setPermisoList(this.desglosar(this.buscarPermisoXHora(empleado, dia)));
+            asistencia.getPermisoList().addAll(this.desglosarBoleta(this.buscarBoletaXHora(empleado, dia)));
             asistencia.setFecha(dia);
             asistencia.setDetalleAsistenciaList(this.desglosar(turno));
             asistencia.setEmpleado(empleado);
@@ -386,5 +439,52 @@ public class AnalizadorAsistencia {
 
     private List<Permiso> buscarPermisoXHora(Empleado empleado, Date dia) {
         return this.permc.buscarPermisosPorHoraEnFecha(empleado, dia);
+    }
+
+    private Boleta buscarBoletaXFecha(Date dia) {
+        try {
+            Date soloFechaComparacion = FechaUtil.soloFecha(dia);
+            Boleta permiso = this.boletaXFechaList
+                    .stream()
+                    .filter(perm
+                            -> FechaUtil.soloFecha(perm.getInicioFechaHora()).compareTo(soloFechaComparacion) <= 0
+                            && FechaUtil.soloFecha(perm.getRetornoFechaHora()).compareTo(soloFechaComparacion) >= 0
+                    )
+                    .findFirst()
+                    .get();
+            return permiso;
+        } catch (NoSuchElementException e) {
+            System.out.println("NO HAY BOLETAS POR FECHA EN ESTA FECHA");
+            return null;
+        }
+    }
+
+    private List<Boleta> buscarBoletaXHora(Empleado empleado, Date dia) {
+        try {
+            Date soloFechaComparacion = FechaUtil.soloFecha(dia);
+            List<Boleta> permiso = this.boletaXFechaList
+                    .stream()
+                    .filter(perm
+                            -> FechaUtil.soloFecha(perm.getInicioFechaHora()).compareTo(soloFechaComparacion) <= 0
+                            && FechaUtil.soloFecha(perm.getRetornoFechaHora()).compareTo(soloFechaComparacion) >= 0
+                    )
+                    .collect(Collectors.toList());
+            return permiso;
+        } catch (NoSuchElementException e) {
+            System.out.println("NO HAY BOLETAS POR FECHA EN ESTA FECHA");
+            return null;
+        }
+    }
+
+    private boolean isConGoce(int idMotivo) {
+            //RECORDAR QUE LOS TIPOS DE PERMISO SIN GOCE SON : 19,22,23,25,26
+        return idMotivo == 19 || idMotivo == 22 || idMotivo == 23 || idMotivo == 25 || idMotivo == 26;
+    }
+
+    private void cargarBoletas(Empleado empleado, Date fechaInicio, Date fechaFin) {
+        List<Boleta> boletas = this.bolc.permisoXFechaXEmpleadoEntreFecha(empleado, fechaInicio, fechaFin);
+        
+        this.boletaXFechaList = boletas.stream().filter(bol -> FechaUtil.soloFecha(bol.getInicioFechaHora()).compareTo(FechaUtil.soloFecha(bol.getRetornoFechaHora())) < 0).collect(Collectors.toList());
+        this.boletaXHoraList = boletas.stream().filter(bol -> FechaUtil.soloFecha(bol.getInicioFechaHora()).compareTo(FechaUtil.soloFecha(bol.getRetornoFechaHora())) == 0).collect(Collectors.toList());
     }
 }
