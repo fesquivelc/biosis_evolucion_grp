@@ -5,6 +5,7 @@
  */
 package vistas.dialogos;
 
+import com.personal.utiles.FechaUtil;
 import com.personal.utiles.FormularioUtil;
 import controladores.Controlador;
 import controladores.DepartamentoControlador;
@@ -983,18 +984,16 @@ public class DlgEmpleadoCRUD extends javax.swing.JDialog {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        if(!hayErrores()){
+        if (!hayErrores()) {
             guardar();
-        }           
-        
+        }
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     Contrato contratosG;
     List<Contrato> listaContratosG = new ArrayList();
 
-    private void btnAgregarCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarCActionPerformed
-        // TODO add your handling code here:
-
+    private void Agregar() {
         contratosG.setEmpleado(empleado);
         contratosG.setFechaInicio(dcFechaInicio.getDate());
         contratosG.setFechaFin(dcFechaFin.getDate());
@@ -1005,13 +1004,18 @@ public class DlgEmpleadoCRUD extends javax.swing.JDialog {
         lista2.add(contratosG);
 
         FormularioUtil.activarComponente(this.panelDatosC, false);
+        FormularioUtil.activarComponente(panelTblC, true);
+    }
+    private void btnAgregarCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarCActionPerformed
+        // TODO add your handling code here:
+        if (!hayErroresLaborales("Contrato")) {
+            Agregar();
+        }
     }//GEN-LAST:event_btnAgregarCActionPerformed
     AreaEmpleado areaF;
     List<AreaEmpleado> listaAreaEmpleadoG = new ArrayList();
 
-    private void btnAgregarAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarAActionPerformed
-        // TODO add your handling code here:
-
+    private void AgregarArea() {
         areaF.setEmpleado(empleado);
         areaF.setFechaInicio(dtFechaInicio.getDate());
         areaF.setFechaFin(dtFechaFin.getDate());
@@ -1020,6 +1024,14 @@ public class DlgEmpleadoCRUD extends javax.swing.JDialog {
         lista.add(areaF);
 
         FormularioUtil.activarComponente(this.panelDatosA, false);
+        FormularioUtil.activarComponente(panelTblA, true);
+    }
+    private void btnAgregarAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarAActionPerformed
+        // TODO add your handling code here:
+        if (!hayErroresLaborales("Area")) {
+            AgregarArea();
+        }
+
     }//GEN-LAST:event_btnAgregarAActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -1087,9 +1099,7 @@ public class DlgEmpleadoCRUD extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_tblContratosMouseReleased
 
-    private void btnModDatosCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModDatosCActionPerformed
-        // TODO add your handling code here:
-
+    private void Modificar() {
         Contrato contratoCambio = cc.getSeleccionado();
 
         contratoCambio.setEmpleado(empleado);
@@ -1102,10 +1112,17 @@ public class DlgEmpleadoCRUD extends javax.swing.JDialog {
 
         cc.accion(accionT);
         FormularioUtil.activarComponente(this.panelDatosC, false);
+        FormularioUtil.activarComponente(panelTblC, true);
+    }
+    private void btnModDatosCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModDatosCActionPerformed
+        // TODO add your handling code here:
+        if (!hayErroresLaborales("Contrato")) {
+            Modificar();
+        }
+
     }//GEN-LAST:event_btnModDatosCActionPerformed
 
-    private void btnModAreasAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModAreasAActionPerformed
-        // TODO add your handling code here:
+    private void ModificarArea() {
         AreaEmpleado empleadoAreaCambio = ea.getSeleccionado();
 
         empleadoAreaCambio.setEmpleado(empleado);
@@ -1116,6 +1133,13 @@ public class DlgEmpleadoCRUD extends javax.swing.JDialog {
 
         ea.accion(accionT);
         FormularioUtil.activarComponente(this.panelDatosA, false);
+        FormularioUtil.activarComponente(panelTblA, true);
+    }
+    private void btnModAreasAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModAreasAActionPerformed
+        // TODO add your handling code here:
+        if (!hayErroresLaborales("Area")) {
+            ModificarArea();
+        }
     }//GEN-LAST:event_btnModAreasAActionPerformed
 
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
@@ -1560,15 +1584,81 @@ public class DlgEmpleadoCRUD extends javax.swing.JDialog {
         //COMPROBAMOS LOS DISTINTOS TIPOS
         String mensajeError = "Se han detectado los siguientes errores:\n";
         int errores = 0;
-        
-        if(!(StringUtils.isNumeric(this.txtTelefono1.getText()) && StringUtils.isNumeric(this.txtTelefono2.getText()))){
+
+        if (!(StringUtils.isNumeric(this.txtTelefono1.getText()) && StringUtils.isNumeric(this.txtTelefono2.getText()))) {
             mensajeError += "- El campo teléfono debe ser numérico\n";
             errores++;
         }
-        
-        if(errores > 0){
+
+
+        if (errores > 0) {
             JOptionPane.showMessageDialog(this, mensajeError, "Mensaje del sistema", JOptionPane.WARNING_MESSAGE);
         }
-        return errores != 0;        
+        return errores != 0;
+    }
+
+    private boolean hayErroresLaborales(String tipo) {
+        //COMPROBAMOS LOS DISTINTOS TIPOS
+
+        String mensajeError = "Se han detectado los siguientes errores:\n";
+        int errores = 0;
+
+//        if(!(StringUtils.isNumeric(this.txtTelefono1.getText()) && StringUtils.isNumeric(this.txtTelefono2.getText()))){
+//            mensajeError += "- El campo teléfono debe ser numérico\n";
+//            errores++;
+//        }
+        List<Contrato> listaContratos = cc.buscarXNombrexFechaASC(empleado);
+        List<AreaEmpleado> listaAreas = ea.buscarXNombrexFechaASC(empleado);
+
+        int conteo = 0;
+        int erroresContratos = 0;
+
+        if (tipo.equals("Contrato")) {
+            for (Contrato contratosList : listaContratos) {
+
+                if (contratosList.getFechaFin() == null) {
+                    conteo++;
+                } else if (((dcFechaInicio.getDate().compareTo(contratosList.getFechaInicio()) <= 0) & (dcFechaFin.getDate().compareTo(contratosList.getFechaInicio()) >= 0)) || ((dcFechaInicio.getDate().compareTo(contratosList.getFechaInicio()) >= 0) & (dcFechaInicio.getDate().compareTo(contratosList.getFechaFin()) <= 0))) {
+                    erroresContratos++;
+                }
+            }
+        } else if (tipo.equals("Area")) {
+            for (AreaEmpleado areaList : listaAreas) {
+
+                if (areaList.getFechaFin() == null) {
+                    conteo++;
+                } else if (((dtFechaInicio.getDate().compareTo(areaList.getFechaInicio()) <= 0) & (dtFechaFin.getDate().compareTo(areaList.getFechaInicio()) >= 0)) || ((dtFechaInicio.getDate().compareTo(areaList.getFechaInicio()) >= 0) & (dtFechaInicio.getDate().compareTo(areaList.getFechaFin()) <= 0))) {
+                    erroresContratos++;
+                }
+            }
+        }
+        if (conteo > 0) {
+            mensajeError += "- Se debe finalizar el ciclo del " + tipo + " antes de agregar otro\n";
+            errores++;
+        }
+
+        if (erroresContratos > 0) {
+            mensajeError += "- Rango de fechas se encuentra en conflicto con algún " + tipo + "\n";
+            errores++;
+        }
+
+//        boolean x = dcFechaFin.getDate().after(dcFechaInicio.getDate());
+        if (tipo.equals("Contrato")) {
+            if (FechaUtil.soloFecha(dcFechaFin.getDate()).compareTo(FechaUtil.soloFecha(dcFechaInicio.getDate())) <= 0) {
+                mensajeError += "- La fecha de fin debe ser mayor a la fecha de inicio\n";
+                errores++;
+            }
+        } else if (tipo.equals("Area")) {
+            if (FechaUtil.soloFecha(dtFechaFin.getDate()).compareTo(FechaUtil.soloFecha(dtFechaInicio.getDate())) <= 0) {
+                mensajeError += "- La fecha de fin debe ser mayor a la fecha de inicio\n";
+                errores++;
+            }
+
+        }
+
+        if (errores > 0) {
+            JOptionPane.showMessageDialog(this, mensajeError, "Mensaje del sistema", JOptionPane.WARNING_MESSAGE);
+        }
+        return errores != 0;
     }
 }
