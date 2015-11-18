@@ -51,14 +51,14 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
             <Property name="columns" type="int" value="0"/>
-            <Property name="rows" type="int" value="1"/>
             <Property name="horizontalGap" type="int" value="5"/>
+            <Property name="rows" type="int" value="1"/>
           </Layout>
           <SubComponents>
             <Component class="javax.swing.JButton" name="jButton1">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="SansSerif" size="14" style="0"/>
+                  <Font name="SansSerif" size="12" style="0"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Guardar"/>
               </Properties>
@@ -69,7 +69,7 @@
             <Component class="javax.swing.JButton" name="jButton2">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="SansSerif" size="14" style="0"/>
+                  <Font name="SansSerif" size="12" style="0"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Cancelar"/>
               </Properties>
@@ -82,7 +82,7 @@
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="SansSerif" size="14" style="0"/>
+              <Font name="SansSerif" size="12" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Empleado:"/>
           </Properties>
@@ -95,7 +95,7 @@
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="SansSerif" size="14" style="0"/>
+              <Font name="SansSerif" size="12" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Interrupci&#xf3;n desde:"/>
           </Properties>
@@ -108,7 +108,7 @@
         <Component class="javax.swing.JLabel" name="jLabel3">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="SansSerif" size="14" style="0"/>
+              <Font name="SansSerif" size="12" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Inicio reprogramaci&#xf3;n:"/>
           </Properties>
@@ -121,7 +121,7 @@
         <Component class="javax.swing.JTextField" name="txtEmpleado">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="SansSerif" size="14" style="0"/>
+              <Font name="SansSerif" size="12" style="0"/>
             </Property>
           </Properties>
           <Constraints>
@@ -134,7 +134,7 @@
           <Properties>
             <Property name="dateFormatString" type="java.lang.String" value="dd.MM.yyyy"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="SansSerif" size="14" style="0"/>
+              <Font name="SansSerif" size="12" style="0"/>
             </Property>
           </Properties>
           <Constraints>
@@ -147,7 +147,7 @@
           <Properties>
             <Property name="dateFormatString" type="java.lang.String" value="dd.MM.yyyy"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="SansSerif" size="14" style="0"/>
+              <Font name="SansSerif" size="12" style="0"/>
             </Property>
           </Properties>
           <Constraints>
@@ -159,13 +159,13 @@
         <Component class="javax.swing.JLabel" name="jLabel5">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="SansSerif" size="14" style="0"/>
+              <Font name="SansSerif" size="12" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Motivo o documento de reprogramaci&#xf3;n:"/>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
-              <GridBagConstraints gridX="0" gridY="8" gridWidth="1" gridHeight="1" fill="0" ipadX="0" ipadY="0" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="21" weightX="0.0" weightY="0.0"/>
+              <GridBagConstraints gridX="0" gridY="6" gridWidth="1" gridHeight="1" fill="0" ipadX="0" ipadY="0" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="21" weightX="0.0" weightY="0.0"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -175,7 +175,7 @@
           </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
-              <GridBagConstraints gridX="2" gridY="8" gridWidth="1" gridHeight="1" fill="1" ipadX="0" ipadY="0" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="10" weightX="0.1" weightY="0.1"/>
+              <GridBagConstraints gridX="2" gridY="6" gridWidth="1" gridHeight="3" fill="1" ipadX="0" ipadY="0" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="10" weightX="0.1" weightY="0.1"/>
             </Constraint>
           </Constraints>
 
@@ -185,7 +185,7 @@
               <Properties>
                 <Property name="columns" type="int" value="20"/>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="SansSerif" size="14" style="0"/>
+                  <Font name="SansSerif" size="12" style="0"/>
                 </Property>
                 <Property name="rows" type="int" value="5"/>
               </Properties>
@@ -848,7 +848,7 @@
           <Parameters>
             <CodeExpression id="48">
               <ExpressionOrigin>
-                <Value type="int" value="8"/>
+                <Value type="int" value="6"/>
               </ExpressionOrigin>
             </CodeExpression>
           </Parameters>
@@ -917,7 +917,20 @@
           <Parameters>
             <CodeExpression id="53">
               <ExpressionOrigin>
-                <Value type="int" value="8"/>
+                <Value type="int" value="6"/>
+              </ExpressionOrigin>
+            </CodeExpression>
+          </Parameters>
+        </CodeStatement>
+        <CodeStatement>
+          <CodeExpression id="51_gridBagConstraints"/>
+          <StatementProvider type="CodeField">
+            <CodeField name="gridheight" class="java.awt.GridBagConstraints"/>
+          </StatementProvider>
+          <Parameters>
+            <CodeExpression id="54">
+              <ExpressionOrigin>
+                <Value type="int" value="3"/>
               </ExpressionOrigin>
             </CodeExpression>
           </Parameters>
@@ -928,7 +941,7 @@
             <CodeField name="fill" class="java.awt.GridBagConstraints"/>
           </StatementProvider>
           <Parameters>
-            <CodeExpression id="54">
+            <CodeExpression id="55">
               <ExpressionOrigin>
                 <Value type="int" value="1"/>
               </ExpressionOrigin>
@@ -941,7 +954,7 @@
             <CodeField name="weightx" class="java.awt.GridBagConstraints"/>
           </StatementProvider>
           <Parameters>
-            <CodeExpression id="55">
+            <CodeExpression id="56">
               <ExpressionOrigin>
                 <Value type="double" value="0.1"/>
               </ExpressionOrigin>
@@ -954,7 +967,7 @@
             <CodeField name="weighty" class="java.awt.GridBagConstraints"/>
           </StatementProvider>
           <Parameters>
-            <CodeExpression id="56">
+            <CodeExpression id="57">
               <ExpressionOrigin>
                 <Value type="double" value="0.1"/>
               </ExpressionOrigin>
@@ -967,7 +980,7 @@
             <CodeMethod name="add" class="java.awt.Container" parameterTypes="java.awt.Component, java.lang.Object"/>
           </StatementProvider>
           <Parameters>
-            <CodeExpression id="57_jScrollPane1">
+            <CodeExpression id="58_jScrollPane1">
               <CodeVariable name="jScrollPane1" type="8194" declaredType="javax.swing.JScrollPane"/>
               <ExpressionOrigin>
                 <ExpressionProvider type="ComponentRef">

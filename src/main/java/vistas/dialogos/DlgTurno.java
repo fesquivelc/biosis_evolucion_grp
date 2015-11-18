@@ -186,8 +186,8 @@ public class DlgTurno extends javax.swing.JDialog {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
-        if (!hayErrores()) {
-
+        if (hayErrores()) {
+            return;
         }
         int fila = trtblJornada.getSelectedRow();
         TreePath treePath = trtblJornada.getPathForRow(fila);

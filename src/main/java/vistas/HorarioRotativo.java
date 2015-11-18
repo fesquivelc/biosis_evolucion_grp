@@ -618,6 +618,9 @@ public class HorarioRotativo extends javax.swing.JInternalFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
+        if(hayErrores()){
+            return;
+        }
         if (FormularioUtil.dialogoConfirmar(this, accion)) {
             Horario horario = this.horarioControlador.getSeleccionado();
             horario.setCodigo(this.txtCodigo.getText());
@@ -863,5 +866,34 @@ public class HorarioRotativo extends javax.swing.JInternalFrame {
     private void checkFiltro() {
         FormularioUtil.activarComponente(cboTipoFiltro, chkFiltrar.isSelected());
         FormularioUtil.activarComponente(btnDialogo, chkFiltrar.isSelected());
+    }
+
+    private boolean hayErrores() {
+        int errores = 0;
+        String mensajeError = "Se encontraron los siguientes errores:\n";
+        
+        if(txtCodigo.getText().trim().isEmpty()){
+            errores++;
+            mensajeError += "- Debe especificar un código válido\n";
+        }
+        if(txtNombre.getText().trim().isEmpty()){
+            errores++;
+            mensajeError += "- Debe especificar un nombre válido\n";
+        }
+        if(txtDocumento.getText().trim().isEmpty()){
+            errores++;
+            mensajeError += "- Debe especificar un documento válido\n";
+        }
+        
+        if(detalleHorarioList.isEmpty()){
+            errores++;
+            mensajeError += "- Debe asignar al menos un detalle al horario\n";
+        }
+        
+        if(errores > 0){
+            JOptionPane.showMessageDialog(this, mensajeError, "Mensaje del sistema", JOptionPane.WARNING_MESSAGE);
+        }
+        
+        return errores > 0;
     }
 }
