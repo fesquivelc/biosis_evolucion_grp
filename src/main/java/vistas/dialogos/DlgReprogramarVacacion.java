@@ -91,7 +91,7 @@ public class DlgReprogramarVacacion extends javax.swing.JDialog {
         jPanel2.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jPanel2.setLayout(new java.awt.GridLayout(1, 0, 5, 0));
 
-        jButton1.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jButton1.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         jButton1.setText("Guardar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -100,7 +100,7 @@ public class DlgReprogramarVacacion extends javax.swing.JDialog {
         });
         jPanel2.add(jButton1);
 
-        jButton2.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jButton2.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         jButton2.setText("Cancelar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -117,7 +117,7 @@ public class DlgReprogramarVacacion extends javax.swing.JDialog {
         gridBagConstraints.weighty = 0.1;
         jPanel1.add(jPanel2, gridBagConstraints);
 
-        jLabel1.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         jLabel1.setText("Empleado:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -125,7 +125,7 @@ public class DlgReprogramarVacacion extends javax.swing.JDialog {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jPanel1.add(jLabel1, gridBagConstraints);
 
-        jLabel2.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         jLabel2.setText("Interrupción desde:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -133,7 +133,7 @@ public class DlgReprogramarVacacion extends javax.swing.JDialog {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jPanel1.add(jLabel2, gridBagConstraints);
 
-        jLabel3.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         jLabel3.setText("Inicio reprogramación:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -141,7 +141,7 @@ public class DlgReprogramarVacacion extends javax.swing.JDialog {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jPanel1.add(jLabel3, gridBagConstraints);
 
-        txtEmpleado.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        txtEmpleado.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
@@ -151,7 +151,7 @@ public class DlgReprogramarVacacion extends javax.swing.JDialog {
         jPanel1.add(txtEmpleado, gridBagConstraints);
 
         dcInterrupcionDesde.setDateFormatString("dd.MM.yyyy");
-        dcInterrupcionDesde.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        dcInterrupcionDesde.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 2;
@@ -160,7 +160,7 @@ public class DlgReprogramarVacacion extends javax.swing.JDialog {
         jPanel1.add(dcInterrupcionDesde, gridBagConstraints);
 
         dcInicioReprogramacion.setDateFormatString("dd.MM.yyyy");
-        dcInicioReprogramacion.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        dcInicioReprogramacion.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 4;
@@ -168,22 +168,23 @@ public class DlgReprogramarVacacion extends javax.swing.JDialog {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jPanel1.add(dcInicioReprogramacion, gridBagConstraints);
 
-        jLabel5.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         jLabel5.setText("Motivo o documento de reprogramación:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridy = 6;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jPanel1.add(jLabel5, gridBagConstraints);
 
         txtDocumento.setColumns(20);
-        txtDocumento.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        txtDocumento.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         txtDocumento.setRows(5);
         jScrollPane1.setViewportView(txtDocumento);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridheight = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 0.1;
         gridBagConstraints.weighty = 0.1;

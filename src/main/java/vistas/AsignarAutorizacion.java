@@ -123,7 +123,7 @@ public class AsignarAutorizacion extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setMaximizable(true);
-        setTitle("ASIGNAR PERMISO A EMPLEADO(S)");
+        setTitle("AUTORIZAR HORAS EXTRA");
         java.awt.GridBagLayout layout = new java.awt.GridBagLayout();
         layout.columnWidths = new int[] {0, 5, 0};
         layout.rowHeights = new int[] {0};
@@ -261,7 +261,7 @@ public class AsignarAutorizacion extends javax.swing.JInternalFrame {
         });
         pnlNavegacion.add(btnAnterior);
 
-        spPagina.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(1), Integer.valueOf(1), null, Integer.valueOf(1)));
+        spPagina.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
         spPagina.setMinimumSize(new java.awt.Dimension(60, 20));
         spPagina.setPreferredSize(new java.awt.Dimension(60, 20));
         spPagina.addChangeListener(new javax.swing.event.ChangeListener() {

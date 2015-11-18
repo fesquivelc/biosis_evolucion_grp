@@ -2543,7 +2543,7 @@ Caused by: java.lang.NoSuchMethodException: Unknown property 'horaInicio' on cla
 2015-07-03 10:26:49.900	 INFO	[main]	CLASE: Dialect	 METODO: <init>	LINEA:145	MSJE:HHH000400: Using dialect: org.hibernate.dialect.SQLServer2005Dialect
 2015-07-03 10:26:50.322	 INFO	[main]	CLASE: ASTQueryTranslatorFactory	 METODO: <init>	LINEA:47	MSJE:HHH000397: Using ASTQueryTranslatorFactory
 2015-07-03 10:27:42.622	 WARN	[Thread-3]	CLASE: SqlExceptionHelper	 METODO: logExceptions	LINEA:144	MSJE:SQL Error: 208, SQLState: S0002
-2015-07-03 10:27:42.625	ERROR	[Thread-3]	CLASE: SqlExceptionHelper	 METODO: logExceptions	LINEA:146	MSJE:El nombre de objeto 'interrupcion_vacacion' no es válido.
+2015-07-03 10:27:42.625	ERROR	[Thread-3]	CLASE: SqlExceptionHelper	 METODO: logExceptions	LINEA:146	MSJE:El nombre de objeto 'interrupcion_vacacion' no es vï¿½lido.
 2015-07-03 10:27:42.648	ERROR	[Thread-3]	CLASE: DAOBiosis	 METODO: buscar	LINEA:179	MSJE:ERROR AL BUSCAR: org.hibernate.exception.SQLGrammarException: could not extract ResultSet org.hibernate.exception.SQLGrammarException: could not extract ResultSet
 2015-07-03 11:17:22.308	 WARN	[main]	CLASE: HibernatePersistence	 METODO: logDeprecation	LINEA:58	MSJE:HHH015016: Encountered a deprecated javax.persistence.spi.PersistenceProvider [org.hibernate.ejb.HibernatePersistence]; use [org.hibernate.jpa.HibernatePersistenceProvider] instead.
 2015-07-03 11:17:22.364	 WARN	[main]	CLASE: HibernatePersistence	 METODO: logDeprecation	LINEA:58	MSJE:HHH015016: Encountered a deprecated javax.persistence.spi.PersistenceProvider [org.hibernate.ejb.HibernatePersistence]; use [org.hibernate.jpa.HibernatePersistenceProvider] instead.

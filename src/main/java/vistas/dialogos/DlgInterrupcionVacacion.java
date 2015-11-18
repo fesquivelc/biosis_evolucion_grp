@@ -35,7 +35,6 @@ public class DlgInterrupcionVacacion extends javax.swing.JDialog {
     private final Vacacion vacacion;
     private final VacacionControlador vc;
     private final EmpleadoControlador ec;
-    
 
     public DlgInterrupcionVacacion(JInternalFrame padre, Vacacion vacacion) {
         super(JOptionPane.getFrameForComponent(padre), true);
@@ -92,7 +91,7 @@ public class DlgInterrupcionVacacion extends javax.swing.JDialog {
 
         jPanel2.setLayout(new java.awt.GridLayout(1, 0, 5, 0));
 
-        jButton1.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jButton1.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         jButton1.setText("Guardar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -101,7 +100,7 @@ public class DlgInterrupcionVacacion extends javax.swing.JDialog {
         });
         jPanel2.add(jButton1);
 
-        jButton2.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jButton2.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         jButton2.setText("Cancelar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -118,7 +117,7 @@ public class DlgInterrupcionVacacion extends javax.swing.JDialog {
         gridBagConstraints.weighty = 0.1;
         jPanel1.add(jPanel2, gridBagConstraints);
 
-        jLabel1.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         jLabel1.setText("Empleado:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -126,7 +125,7 @@ public class DlgInterrupcionVacacion extends javax.swing.JDialog {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jPanel1.add(jLabel1, gridBagConstraints);
 
-        jLabel2.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         jLabel2.setText("Fecha de inicio interrupción::");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -134,7 +133,7 @@ public class DlgInterrupcionVacacion extends javax.swing.JDialog {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jPanel1.add(jLabel2, gridBagConstraints);
 
-        jLabel3.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         jLabel3.setText("Fecha de fin interrupcion:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -142,7 +141,7 @@ public class DlgInterrupcionVacacion extends javax.swing.JDialog {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jPanel1.add(jLabel3, gridBagConstraints);
 
-        txtEmpleado.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        txtEmpleado.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
@@ -152,7 +151,7 @@ public class DlgInterrupcionVacacion extends javax.swing.JDialog {
         jPanel1.add(txtEmpleado, gridBagConstraints);
 
         dcFechaInicio.setDateFormatString("dd.MM.yyyy");
-        dcFechaInicio.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        dcFechaInicio.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 2;
@@ -161,7 +160,7 @@ public class DlgInterrupcionVacacion extends javax.swing.JDialog {
         jPanel1.add(dcFechaInicio, gridBagConstraints);
 
         dcFechaFin.setDateFormatString("dd.MM.yyyy");
-        dcFechaFin.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        dcFechaFin.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 4;
@@ -169,7 +168,7 @@ public class DlgInterrupcionVacacion extends javax.swing.JDialog {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jPanel1.add(dcFechaFin, gridBagConstraints);
 
-        jLabel4.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         jLabel4.setText("Motivo:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -178,7 +177,7 @@ public class DlgInterrupcionVacacion extends javax.swing.JDialog {
         jPanel1.add(jLabel4, gridBagConstraints);
 
         txtMotivo.setColumns(20);
-        txtMotivo.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        txtMotivo.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         txtMotivo.setRows(5);
         jScrollPane1.setViewportView(txtMotivo);
 
@@ -192,7 +191,7 @@ public class DlgInterrupcionVacacion extends javax.swing.JDialog {
         jPanel1.add(jScrollPane1, gridBagConstraints);
 
         dcFechaInicioInterrupcion.setDateFormatString("dd.MM.yyyy");
-        dcFechaInicioInterrupcion.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        dcFechaInicioInterrupcion.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 6;
@@ -201,7 +200,7 @@ public class DlgInterrupcionVacacion extends javax.swing.JDialog {
         jPanel1.add(dcFechaInicioInterrupcion, gridBagConstraints);
 
         dcFechaFinInterrupcion.setDateFormatString("dd.MM.yyyy");
-        dcFechaFinInterrupcion.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        dcFechaFinInterrupcion.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 8;
@@ -209,7 +208,7 @@ public class DlgInterrupcionVacacion extends javax.swing.JDialog {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jPanel1.add(dcFechaFinInterrupcion, gridBagConstraints);
 
-        jLabel5.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         jLabel5.setText("Fecha de inicio:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -217,7 +216,7 @@ public class DlgInterrupcionVacacion extends javax.swing.JDialog {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jPanel1.add(jLabel5, gridBagConstraints);
 
-        jLabel6.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         jLabel6.setText("Fecha de fin:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -232,6 +231,9 @@ public class DlgInterrupcionVacacion extends javax.swing.JDialog {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        if (hayErrores()) {
+            return;
+        }
         int accion = Controlador.MODIFICAR;
         if (FormularioUtil.dialogoConfirmar(this, accion)) {
             InterrupcionVacacion interrupcion = new InterrupcionVacacion();
@@ -239,10 +241,10 @@ public class DlgInterrupcionVacacion extends javax.swing.JDialog {
             interrupcion.setFechaFin(dcFechaFinInterrupcion.getDate());
             interrupcion.setVacacion(vacacion);
             interrupcion.setMotivo(txtMotivo.getText());
-            
+
             vacacion.setInterrupcionVacacion(interrupcion);
             vc.setSeleccionado(vacacion);
-            if (vc.accion(accion)) {                
+            if (vc.accion(accion)) {
                 this.dispose();
             }
         }
@@ -288,16 +290,17 @@ public class DlgInterrupcionVacacion extends javax.swing.JDialog {
         FormularioUtil.activarComponente(dcFechaInicio, false);
         FormularioUtil.activarComponente(dcFechaFin, false);
     }
-    
+
     private final Calendar cal = Calendar.getInstance();
     private final SaldoVacacionalControlador svc = new SaldoVacacionalControlador();
+
     private int[] obtenerSaldos(Empleado empleado, Periodo periodo) {
         List<Vacacion> vacaciones = vc.buscarXEmpleadoXPeriodo(empleado, periodo);
         int[] saldo = new int[3];
         int lunesViernes = 0;
         int sabado = 0;
         int domingo = 0;
-        
+
         for (Vacacion v : vacaciones) {
             Date fechaInicio = v.getFechaInicio();
             Date fechaFin = v.isHayInterrupcion() ? v.getFechaInterrupcion() : v.getFechaFin();
@@ -316,15 +319,39 @@ public class DlgInterrupcionVacacion extends javax.swing.JDialog {
         int division = lunesViernes / 5;
         sabado = division;
         domingo = division;
-        
+
         saldo[0] = lunesViernes;
         saldo[1] = sabado;
         saldo[2] = domingo;
         return saldo;
     }
     private final Calendar calendar = Calendar.getInstance();
+
     public SaldoVacacional buscarSaldo(Empleado empleado, Periodo periodo) {
-        SaldoVacacional sv = svc.buscarXPeriodo(empleado, periodo);        
+        SaldoVacacional sv = svc.buscarXPeriodo(empleado, periodo);
         return sv;
     }
+
+    private boolean hayErrores() {
+        String mensajeError = "Se encontraron los siguientes errores:\n";
+        int errores = 0;
+
+        if (this.dcFechaInicioInterrupcion.getDate() == null
+                || this.dcFechaFinInterrupcion.getDate() == null) {
+            errores++;
+            mensajeError += "- Debe especificar fecha de inicio y fecha de fin de la interrupción\n";
+        }
+
+        if (this.txtMotivo.getText().trim().isEmpty()) {
+            errores++;
+            mensajeError += "- Debe especificar un motivo para la interrupción\n";
+        }
+
+        if (errores > 0) {
+            JOptionPane.showMessageDialog(this, mensajeError, "Mensaje del sistema", JOptionPane.WARNING_MESSAGE);
+        }
+        
+        return errores > 0;
+    }
+
 }

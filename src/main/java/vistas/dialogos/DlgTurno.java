@@ -186,16 +186,19 @@ public class DlgTurno extends javax.swing.JDialog {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
+        if (hayErrores()) {
+            return;
+        }
         int fila = trtblJornada.getSelectedRow();
         TreePath treePath = trtblJornada.getPathForRow(fila);
         Object elemento = treePath.getLastPathComponent();
         Jornada jornada = null;
-        if(elemento instanceof Jornada){
-            jornada = ((Jornada)elemento);            
-        }else if(elemento instanceof DetalleJornada){
-            jornada = ((DetalleJornada)elemento).getJornada();
+        if (elemento instanceof Jornada) {
+            jornada = ((Jornada) elemento);
+        } else if (elemento instanceof DetalleJornada) {
+            jornada = ((DetalleJornada) elemento).getJornada();
         }
-        if(jornada != null){
+        if (jornada != null) {
             Turno turno = new Turno();
             turno.setJornada(jornada);
             turno.setLunes(chkLunes.isSelected());
@@ -302,23 +305,51 @@ public class DlgTurno extends javax.swing.JDialog {
         ImageIcon iconoJornada = new ImageIcon("iconos/icon_jornada.png");
         IconValue iv = new IconValue() {
             ImageIcon iconoJornada = new ImageIcon("iconos/icon_jornada.png");
+
             @Override
             public Icon getIcon(Object nodo) {
-                if(nodo instanceof Jornada){
+                if (nodo instanceof Jornada) {
                     return iconoJornada;
-                }else{
+                } else {
                     return null;
                 }
             }
         };
 
-        trtblJornada.setClosedIcon(iconoJornada);                        
-        trtblJornada.setOpenIcon(iconoJornada);               
+        trtblJornada.setClosedIcon(iconoJornada);
+        trtblJornada.setOpenIcon(iconoJornada);
         trtblJornada.packAll();
     }
-    
-    public Turno getSeleccionado(){
+
+    public Turno getSeleccionado() {
         this.setVisible(true);
         return this.turnoSeleccionado;
+    }
+
+    private boolean hayErrores() {
+        String mensajeError = "Se encontraron los siguientes errores:\n";
+        int errores = 0;
+
+        if ((this.chkDomingo.isSelected()
+                || this.chkLunes.isSelected()
+                || this.chkMartes.isSelected()
+                || this.chkMiercoles.isSelected()
+                || this.chkJueves.isSelected()
+                || this.chkViernes.isSelected()
+                || this.chkSabado.isSelected()) == false) {
+            mensajeError += "- Debe seleccionar al menos un día\n";
+            errores++;
+        }
+        
+        if(this.trtblJornada.getSelectedRow() == -1){
+            mensajeError += "- Debe seleccionar una jornada de trabajo\n";
+            errores++;
+        }
+        
+        if(errores > 0){
+            JOptionPane.showMessageDialog(this, mensajeError, "Mensaje del sistema", JOptionPane.WARNING_MESSAGE);
+        }
+        
+        return errores > 0;
     }
 }

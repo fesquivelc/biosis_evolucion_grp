@@ -157,7 +157,7 @@ public class AsignarVacacion extends javax.swing.JInternalFrame {
 
         jPanel3.setLayout(new java.awt.GridLayout(1, 0, 10, 0));
 
-        btnNuevo.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        btnNuevo.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         btnNuevo.setText("Nuevo");
         btnNuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -166,7 +166,7 @@ public class AsignarVacacion extends javax.swing.JInternalFrame {
         });
         jPanel3.add(btnNuevo);
 
-        btnModificar.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        btnModificar.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         btnModificar.setText("Modificar");
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -175,7 +175,7 @@ public class AsignarVacacion extends javax.swing.JInternalFrame {
         });
         jPanel3.add(btnModificar);
 
-        jButton6.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jButton6.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         jButton6.setText("Eliminar");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -184,7 +184,7 @@ public class AsignarVacacion extends javax.swing.JInternalFrame {
         });
         jPanel3.add(jButton6);
 
-        jButton3.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jButton3.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         jButton3.setText("Imprimir boleta");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -193,7 +193,7 @@ public class AsignarVacacion extends javax.swing.JInternalFrame {
         });
         jPanel3.add(jButton3);
 
-        jButton2.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jButton2.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         jButton2.setText("Interrupción");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -202,7 +202,7 @@ public class AsignarVacacion extends javax.swing.JInternalFrame {
         });
         jPanel3.add(jButton2);
 
-        jButton5.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jButton5.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         jButton5.setText("Reprogramar");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -241,7 +241,7 @@ public class AsignarVacacion extends javax.swing.JInternalFrame {
         pnlListado.add(lblBusqueda, gridBagConstraints);
 
         txtEmpleado.setEditable(false);
-        txtEmpleado.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        txtEmpleado.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         txtEmpleado.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtEmpleadoKeyReleased(evt);
@@ -254,7 +254,7 @@ public class AsignarVacacion extends javax.swing.JInternalFrame {
         gridBagConstraints.weightx = 0.1;
         pnlListado.add(txtEmpleado, gridBagConstraints);
 
-        jButton4.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jButton4.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         jButton4.setText("...");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -267,7 +267,7 @@ public class AsignarVacacion extends javax.swing.JInternalFrame {
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         pnlListado.add(jButton4, gridBagConstraints);
 
-        btnLimpiar.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        btnLimpiar.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         btnLimpiar.setText("Limpiar");
         btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -287,7 +287,7 @@ public class AsignarVacacion extends javax.swing.JInternalFrame {
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         pnlListado.add(jLabel9, gridBagConstraints);
 
-        btnBuscar.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        btnBuscar.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -302,7 +302,7 @@ public class AsignarVacacion extends javax.swing.JInternalFrame {
 
         pnlNavegacion.setLayout(new java.awt.GridLayout(1, 0, 2, 0));
 
-        btnPrimero.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        btnPrimero.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         btnPrimero.setText("<<");
         btnPrimero.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -311,7 +311,7 @@ public class AsignarVacacion extends javax.swing.JInternalFrame {
         });
         pnlNavegacion.add(btnPrimero);
 
-        btnAnterior.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        btnAnterior.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         btnAnterior.setText("<");
         btnAnterior.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -320,8 +320,8 @@ public class AsignarVacacion extends javax.swing.JInternalFrame {
         });
         pnlNavegacion.add(btnAnterior);
 
-        spPagina.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        spPagina.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(1), Integer.valueOf(1), null, Integer.valueOf(1)));
+        spPagina.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        spPagina.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
         spPagina.setMinimumSize(new java.awt.Dimension(60, 20));
         spPagina.setPreferredSize(new java.awt.Dimension(60, 20));
         spPagina.addChangeListener(new javax.swing.event.ChangeListener() {
@@ -333,12 +333,12 @@ public class AsignarVacacion extends javax.swing.JInternalFrame {
 
         txtTotal.setEditable(false);
         txtTotal.setColumns(3);
-        txtTotal.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        txtTotal.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         txtTotal.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txtTotal.setText("1");
         pnlNavegacion.add(txtTotal);
 
-        btnSiguiente.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        btnSiguiente.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         btnSiguiente.setText(">");
         btnSiguiente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -347,7 +347,7 @@ public class AsignarVacacion extends javax.swing.JInternalFrame {
         });
         pnlNavegacion.add(btnSiguiente);
 
-        btnUltimo.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        btnUltimo.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         btnUltimo.setText(">>");
         btnUltimo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -356,7 +356,7 @@ public class AsignarVacacion extends javax.swing.JInternalFrame {
         });
         pnlNavegacion.add(btnUltimo);
 
-        cboTamanio.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        cboTamanio.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         cboTamanio.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "5", "10", "15", "20", "25", "40", "50" }));
         cboTamanio.setMinimumSize(new java.awt.Dimension(53, 24));
         cboTamanio.setPreferredSize(new java.awt.Dimension(53, 24));
@@ -374,14 +374,14 @@ public class AsignarVacacion extends javax.swing.JInternalFrame {
         pnlListado.add(pnlNavegacion, gridBagConstraints);
 
         dcFechaInicio1.setDateFormatString("dd.MM.yyyy");
-        dcFechaInicio1.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        dcFechaInicio1.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 8;
         gridBagConstraints.gridy = 0;
         pnlListado.add(dcFechaInicio1, gridBagConstraints);
 
         dcFechaFin1.setDateFormatString("dd.MM.yyyy");
-        dcFechaFin1.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        dcFechaFin1.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 12;
         gridBagConstraints.gridy = 0;
@@ -407,7 +407,7 @@ public class AsignarVacacion extends javax.swing.JInternalFrame {
         jPanel4Layout.rowHeights = new int[] {0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0};
         jPanel4.setLayout(jPanel4Layout);
 
-        jLabel1.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         jLabel1.setText("Empleado:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -416,7 +416,7 @@ public class AsignarVacacion extends javax.swing.JInternalFrame {
         jPanel4.add(jLabel1, gridBagConstraints);
 
         txtEmpleadoSeleccionado.setEditable(false);
-        txtEmpleadoSeleccionado.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        txtEmpleadoSeleccionado.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         txtEmpleadoSeleccionado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtEmpleadoSeleccionadoActionPerformed(evt);
@@ -430,7 +430,7 @@ public class AsignarVacacion extends javax.swing.JInternalFrame {
         gridBagConstraints.weightx = 0.1;
         jPanel4.add(txtEmpleadoSeleccionado, gridBagConstraints);
 
-        jLabel4.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         jLabel4.setText("Fecha de fin:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -444,7 +444,7 @@ public class AsignarVacacion extends javax.swing.JInternalFrame {
         pnlFHInicio.setLayout(pnlFHInicioLayout);
 
         dcFechaFin.setDateFormatString("dd.MM.yyyy");
-        dcFechaFin.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        dcFechaFin.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -465,7 +465,7 @@ public class AsignarVacacion extends javax.swing.JInternalFrame {
         pnlFHInicio1.setLayout(pnlFHInicio1Layout);
 
         dcFechaInicio.setDateFormatString("dd.MM.yyyy");
-        dcFechaInicio.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        dcFechaInicio.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -480,7 +480,7 @@ public class AsignarVacacion extends javax.swing.JInternalFrame {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jPanel4.add(pnlFHInicio1, gridBagConstraints);
 
-        jLabel7.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         jLabel7.setText("Fecha de inicio:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -488,7 +488,7 @@ public class AsignarVacacion extends javax.swing.JInternalFrame {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jPanel4.add(jLabel7, gridBagConstraints);
 
-        jButton1.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jButton1.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         jButton1.setText("...");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -500,7 +500,7 @@ public class AsignarVacacion extends javax.swing.JInternalFrame {
         gridBagConstraints.gridy = 2;
         jPanel4.add(jButton1, gridBagConstraints);
 
-        jLabel2.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         jLabel2.setText("Período:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -508,7 +508,7 @@ public class AsignarVacacion extends javax.swing.JInternalFrame {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jPanel4.add(jLabel2, gridBagConstraints);
 
-        cboPeriodo.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        cboPeriodo.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         cboPeriodo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cboPeriodo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -521,21 +521,21 @@ public class AsignarVacacion extends javax.swing.JInternalFrame {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jPanel4.add(cboPeriodo, gridBagConstraints);
 
-        txtDocumento.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        txtDocumento.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 8;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         jPanel4.add(txtDocumento, gridBagConstraints);
 
-        jLabel5.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         jLabel5.setText("Documento de vacación:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 8;
         jPanel4.add(jLabel5, gridBagConstraints);
 
-        jLabel6.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         jLabel6.setText("Vacaciones pedidas:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -545,12 +545,12 @@ public class AsignarVacacion extends javax.swing.JInternalFrame {
 
         pnlVacacionesPedidas.setLayout(new java.awt.GridBagLayout());
 
-        jLabel3.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         jLabel3.setText("LUNES - VIERNES:");
         pnlVacacionesPedidas.add(jLabel3, new java.awt.GridBagConstraints());
 
         txtLV.setColumns(2);
-        txtLV.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        txtLV.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         txtLV.setText("0");
         pnlVacacionesPedidas.add(txtLV, new java.awt.GridBagConstraints());
 
@@ -559,7 +559,7 @@ public class AsignarVacacion extends javax.swing.JInternalFrame {
         pnlVacacionesPedidas.add(jLabel8, new java.awt.GridBagConstraints());
 
         txtSab.setColumns(2);
-        txtSab.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        txtSab.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         txtSab.setText("0");
         pnlVacacionesPedidas.add(txtSab, new java.awt.GridBagConstraints());
 
@@ -568,7 +568,7 @@ public class AsignarVacacion extends javax.swing.JInternalFrame {
         pnlVacacionesPedidas.add(jLabel10, new java.awt.GridBagConstraints());
 
         txtDom.setColumns(2);
-        txtDom.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        txtDom.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         txtDom.setText("0");
         pnlVacacionesPedidas.add(txtDom, new java.awt.GridBagConstraints());
 
@@ -578,7 +578,7 @@ public class AsignarVacacion extends javax.swing.JInternalFrame {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jPanel4.add(pnlVacacionesPedidas, gridBagConstraints);
 
-        jLabel11.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLabel11.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         jLabel11.setText("Saldo Vacacional:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -587,7 +587,7 @@ public class AsignarVacacion extends javax.swing.JInternalFrame {
         jPanel4.add(jLabel11, gridBagConstraints);
 
         txtSaldo.setColumns(2);
-        txtSaldo.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        txtSaldo.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         txtSaldo.setText("30");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
@@ -597,7 +597,7 @@ public class AsignarVacacion extends javax.swing.JInternalFrame {
 
         jPanel5.setLayout(new java.awt.GridLayout(1, 0, 10, 0));
 
-        btnGuardar.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        btnGuardar.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         btnGuardar.setText("Guardar");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -606,7 +606,7 @@ public class AsignarVacacion extends javax.swing.JInternalFrame {
         });
         jPanel5.add(btnGuardar);
 
-        btnCancelar.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        btnCancelar.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1029,6 +1029,8 @@ public class AsignarVacacion extends javax.swing.JInternalFrame {
         FormularioUtil.activarComponente(this.pnlDatos, bandera);
         FormularioUtil.activarComponente(this.pnlVacacionesPedidas, false);
         FormularioUtil.activarComponente(this.txtSaldo, false);
+        FormularioUtil.activarComponente(this.txtEmpleado, false);
+        FormularioUtil.activarComponente(this.txtEmpleadoSeleccionado, false);
 
         if (accion != Controlador.MODIFICAR) {
             FormularioUtil.limpiarComponente(this.pnlDatos);

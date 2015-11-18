@@ -275,7 +275,7 @@ public class HorarioRotativo extends javax.swing.JInternalFrame {
         pnlAccionAsignado.add(btnAsignar);
 
         btnAsignar4.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        btnAsignar4.setText("Modificar asignacón");
+        btnAsignar4.setText("Modificar asignación");
         btnAsignar4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAsignar4ActionPerformed(evt);
@@ -618,6 +618,9 @@ public class HorarioRotativo extends javax.swing.JInternalFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
+        if(hayErrores()){
+            return;
+        }
         if (FormularioUtil.dialogoConfirmar(this, accion)) {
             Horario horario = this.horarioControlador.getSeleccionado();
             horario.setCodigo(this.txtCodigo.getText());
@@ -681,7 +684,13 @@ public class HorarioRotativo extends javax.swing.JInternalFrame {
 
     private void btnAsignar3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsignar3ActionPerformed
         // TODO add your handling code here:
-
+        int fila = tblDetalleHorario.getSelectedRow();
+        
+        if(fila != -1){
+            Turno turno = this.detalleHorarioList.get(fila);
+            this.detalleHorarioList.remove(turno);
+            this.horarioControlador.getSeleccionado().getTurnoList().remove(turno);
+        }
     }//GEN-LAST:event_btnAsignar3ActionPerformed
 
     private void btnAsignar4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsignar4ActionPerformed
@@ -857,5 +866,34 @@ public class HorarioRotativo extends javax.swing.JInternalFrame {
     private void checkFiltro() {
         FormularioUtil.activarComponente(cboTipoFiltro, chkFiltrar.isSelected());
         FormularioUtil.activarComponente(btnDialogo, chkFiltrar.isSelected());
+    }
+
+    private boolean hayErrores() {
+        int errores = 0;
+        String mensajeError = "Se encontraron los siguientes errores:\n";
+        
+        if(txtCodigo.getText().trim().isEmpty()){
+            errores++;
+            mensajeError += "- Debe especificar un código válido\n";
+        }
+        if(txtNombre.getText().trim().isEmpty()){
+            errores++;
+            mensajeError += "- Debe especificar un nombre válido\n";
+        }
+        if(txtDocumento.getText().trim().isEmpty()){
+            errores++;
+            mensajeError += "- Debe especificar un documento válido\n";
+        }
+        
+        if(detalleHorarioList.isEmpty()){
+            errores++;
+            mensajeError += "- Debe asignar al menos un detalle al horario\n";
+        }
+        
+        if(errores > 0){
+            JOptionPane.showMessageDialog(this, mensajeError, "Mensaje del sistema", JOptionPane.WARNING_MESSAGE);
+        }
+        
+        return errores > 0;
     }
 }

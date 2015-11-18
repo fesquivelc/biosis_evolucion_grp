@@ -10,6 +10,7 @@ import controladores.Controlador;
 import controladores.DepartamentoControlador;
 import entidades.escalafon.Departamento;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeCellRenderer;
@@ -304,6 +305,9 @@ public class CRUDAreaSede extends javax.swing.JInternalFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
+        if(hayErrores()){
+            return;
+        }
         if (FormularioUtil.dialogoConfirmar(this, accion)) {
             Departamento dep = depc.getSeleccionado();
             dep.setNombre(txtNombre.getText());
@@ -428,5 +432,21 @@ public class CRUDAreaSede extends javax.swing.JInternalFrame {
         FormularioUtil.activarComponente(btnModificar, !nom);
         trAreas.setEnabled(!nom);
         this.accion = accion;
+    }
+
+    private boolean hayErrores() {
+        String mensajeError = "Se encontraron los siguientes errores:\n";
+        int errores = 0;
+
+        if (this.txtNombre.getText().trim().isEmpty()){
+            errores++;
+            mensajeError+="Debe especificar un nombre al área\n";
+        }
+        
+        if(errores > 0){
+            JOptionPane.showMessageDialog(this, mensajeError, "Mensaje del sistema", JOptionPane.WARNING_MESSAGE);
+        }
+        
+        return errores > 0;
     }
 }
