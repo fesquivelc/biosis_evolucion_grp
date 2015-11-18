@@ -519,7 +519,22 @@ public class HorarioRotativo extends javax.swing.JInternalFrame {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
-        this.accion = Controlador.ELIMINAR;
+        
+        int fila = this.tblHorario.getSelectedRow();
+        if(fila != -1){
+            this.accion = Controlador.ELIMINAR;
+            
+            if (FormularioUtil.dialogoConfirmar(this, accion)) {
+                this.horarioControlador.setSeleccionado(this.horarioList.get(fila));
+                if (horarioControlador.accion(accion)) {
+                    FormularioUtil.mensajeExito(this, accion);
+                    accion = 0;
+                    this.controles(accion);
+                    this.actualizarTabla();
+                }
+            }
+            
+        }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void tblHorarioMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblHorarioMouseReleased
