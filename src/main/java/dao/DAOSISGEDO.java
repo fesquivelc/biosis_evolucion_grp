@@ -45,11 +45,18 @@ public class DAOSISGEDO<T> extends DAOBiosis<T>{
             String password = configuracion.getProperty("password");
 
             Map<String, String> properties = new HashMap<>();
-            properties.put("javax.persistence.jdbc.user", usuario);
-            properties.put("javax.persistence.jdbc.password", password);
-            properties.put("javax.persistence.jdbc.driver", driver);
-            properties.put("javax.persistence.jdbc.url", url);
+//            properties.put("javax.persistence.jdbc.user", usuario);
+//            properties.put("javax.persistence.jdbc.password", Encriptador.decrypt(password));
+//            properties.put("javax.persistence.jdbc.driver", driver);
+//            properties.put("javax.persistence.jdbc.url", url);
 //            properties.put("hibernate.show_sql", "true");
+            
+            properties.put("javax.persistence.jdbc.user", "kRRHH");
+            properties.put("javax.persistence.jdbc.password", "Pl4n1ll0n");
+            properties.put("javax.persistence.jdbc.driver", driver);
+            properties.put("javax.persistence.jdbc.url", "jdbc:mysql://172.16.8.253:3306/gestiondoc?zeroDateTimeBehavior=convertToNull");
+//            properties.put("hibernate.show_sql", "true");
+//            properties.put("javax.persistence.schema-generation.database.action", "none");
             properties.put("javax.persistence.schema-generation.database.action", "none");
 
 //            try {
