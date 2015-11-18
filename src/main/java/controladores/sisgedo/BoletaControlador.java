@@ -38,7 +38,7 @@ public class BoletaControlador extends Controlador<Boleta>{
         Map<String,Object> parametros = new HashMap<>();
         parametros.put("empleado", empleado.getNroDocumento());
         parametros.put("fechaHoraInicio", FechaUtil.soloFecha(fechaInicio));
-        parametros.put("fechaHoraFin", FechaUtil.unirFechaHora(fechaInicio,HerramientaGeneral.horaFinal));
+        parametros.put("fechaHoraFin", FechaUtil.unirFechaHora(fechaFin,HerramientaGeneral.horaFinal));
         return this.getDao().buscar(jpql, parametros);
     }
     

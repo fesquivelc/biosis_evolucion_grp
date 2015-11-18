@@ -129,6 +129,7 @@ public class InterpreteResumen implements Interprete<RptAsistenciaResumen> {
 
             if (detalle.getHoraEvento() == null) {
             } else {
+                System.out.println("HORA EVENTO: "+detalle.getHoraEvento()+" HORA TOLERANCIA "+detalle.getHoraReferenciaTolerancia());
                 tardanza += tardanzaMin(FechaUtil.soloHora(detalle.getHoraEvento()), FechaUtil.soloHora(detalle.getHoraReferenciaTolerancia()));
             }
         }
