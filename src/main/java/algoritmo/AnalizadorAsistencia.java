@@ -499,7 +499,7 @@ public class AnalizadorAsistencia {
                 return FechaUtil.soloFecha(bol.getInicioFechaHora()).compareTo(FechaUtil.soloFecha(bol.getFinFechaHora())) == 0;
             }
         }).collect(Collectors.toList());
-        System.out.println("BOLETAS POR FECHA: "+boletaXHoraList.size());
+        System.out.println("BOLETAS POR HORA: "+boletaXFechaList.size());
 //        this.boletaXHoraList = boletas.stream().filter(bol -> FechaUtil.soloFecha(bol.getInicioFechaHora()).compareTo(FechaUtil.soloFecha(bol.getRetornoFechaHora())) == 0).collect(Collectors.toList());
     }
 }
