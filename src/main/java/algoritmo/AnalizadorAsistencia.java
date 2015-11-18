@@ -484,7 +484,20 @@ public class AnalizadorAsistencia {
     private void cargarBoletas(Empleado empleado, Date fechaInicio, Date fechaFin) {
         List<Boleta> boletas = this.bolc.permisoXFechaXEmpleadoEntreFecha(empleado, fechaInicio, fechaFin);
         System.out.println("BOLETAS: "+boletas.size());
-        this.boletaXFechaList = boletas.stream().filter(bol -> FechaUtil.soloFecha(bol.getInicioFechaHora()).compareTo(FechaUtil.soloFecha(bol.getRetornoFechaHora())) < 0).collect(Collectors.toList());
-        this.boletaXHoraList = boletas.stream().filter(bol -> FechaUtil.soloFecha(bol.getInicioFechaHora()).compareTo(FechaUtil.soloFecha(bol.getRetornoFechaHora())) == 0).collect(Collectors.toList());
+        this.boletaXFechaList = boletas.stream().filter(bol -> {
+            if(bol.getInicioFechaHora() == null || bol.getRetornoFechaHora() == null){
+                return false;
+            }else{
+                return FechaUtil.soloFecha(bol.getInicioFechaHora()).compareTo(FechaUtil.soloFecha(bol.getRetornoFechaHora())) < 0;
+            }
+        }).collect(Collectors.toList());
+        this.boletaXFechaList = boletas.stream().filter(bol -> {
+            if(bol.getInicioFechaHora() == null || bol.getRetornoFechaHora() == null){
+                return false;
+            }else{
+                return FechaUtil.soloFecha(bol.getInicioFechaHora()).compareTo(FechaUtil.soloFecha(bol.getRetornoFechaHora())) == 0;
+            }
+        }).collect(Collectors.toList());
+//        this.boletaXHoraList = boletas.stream().filter(bol -> FechaUtil.soloFecha(bol.getInicioFechaHora()).compareTo(FechaUtil.soloFecha(bol.getRetornoFechaHora())) == 0).collect(Collectors.toList());
     }
 }
