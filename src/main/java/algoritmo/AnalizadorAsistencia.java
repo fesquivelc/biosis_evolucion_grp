@@ -485,14 +485,15 @@ public class AnalizadorAsistencia {
         List<Boleta> boletas = this.bolc.permisoXFechaXEmpleadoEntreFecha(empleado, fechaInicio, fechaFin);
         System.out.println("BOLETAS: "+boletas.size());
         this.boletaXFechaList = boletas.stream().filter(bol -> {
-            if(bol.getInicioFechaHora() == null || bol.getRetornoFechaHora() == null){
+            if(bol.getInicioFechaHora() == null || bol.getFinFechaHora() == null){
                 return false;
             }else{
+                
                 return FechaUtil.soloFecha(bol.getInicioFechaHora()).compareTo(FechaUtil.soloFecha(bol.getFinFechaHora())) < 0;
             }
         }).collect(Collectors.toList());
         this.boletaXFechaList = boletas.stream().filter(bol -> {
-            if(bol.getInicioFechaHora() == null || bol.getRetornoFechaHora() == null){
+            if(bol.getInicioFechaHora() == null || bol.getFinFechaHora() == null){
                 return false;
             }else{
                 return FechaUtil.soloFecha(bol.getInicioFechaHora()).compareTo(FechaUtil.soloFecha(bol.getFinFechaHora())) == 0;
