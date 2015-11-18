@@ -323,7 +323,9 @@ public class CRUDUsuario extends javax.swing.JInternalFrame {
         int fila = this.tblUsuarios.getSelectedRow();
         if (fila != -1) {
             this.accion = Controlador.MODIFICAR;
+            
             this.usuarioControlador.setSeleccionado(this.usuarioList.get(fila));
+            this.rolSeleccionado = this.usuarioControlador.getSeleccionado().getRol();
             this.mostrar(usuarioControlador.getSeleccionado());
             this.controles(accion);
             FormularioUtil.activarComponente(txtLogin, false);
