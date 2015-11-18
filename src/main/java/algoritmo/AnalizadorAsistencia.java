@@ -465,8 +465,7 @@ public class AnalizadorAsistencia {
             List<Boleta> permiso = this.boletaXHoraList
                     .stream()
                     .filter(perm
-                            -> FechaUtil.soloFecha(perm.getInicioFechaHora()).compareTo(soloFechaComparacion) <= 0
-                            && FechaUtil.soloFecha(perm.getFinFechaHora()).compareTo(soloFechaComparacion) >= 0
+                            -> FechaUtil.soloFecha(perm.getInicioFechaHora()).compareTo(soloFechaComparacion) == 0
                     )
                     .collect(Collectors.toList());
             return permiso;
