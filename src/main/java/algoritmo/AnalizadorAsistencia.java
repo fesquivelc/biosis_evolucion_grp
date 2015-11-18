@@ -488,14 +488,14 @@ public class AnalizadorAsistencia {
             if(bol.getInicioFechaHora() == null || bol.getRetornoFechaHora() == null){
                 return false;
             }else{
-                return FechaUtil.soloFecha(bol.getInicioFechaHora()).compareTo(FechaUtil.soloFecha(bol.getRetornoFechaHora())) < 0;
+                return FechaUtil.soloFecha(bol.getInicioFechaHora()).compareTo(FechaUtil.soloFecha(bol.getFinFechaHora())) < 0;
             }
         }).collect(Collectors.toList());
         this.boletaXFechaList = boletas.stream().filter(bol -> {
             if(bol.getInicioFechaHora() == null || bol.getRetornoFechaHora() == null){
                 return false;
             }else{
-                return FechaUtil.soloFecha(bol.getInicioFechaHora()).compareTo(FechaUtil.soloFecha(bol.getRetornoFechaHora())) == 0;
+                return FechaUtil.soloFecha(bol.getInicioFechaHora()).compareTo(FechaUtil.soloFecha(bol.getFinFechaHora())) == 0;
             }
         }).collect(Collectors.toList());
 //        this.boletaXHoraList = boletas.stream().filter(bol -> FechaUtil.soloFecha(bol.getInicioFechaHora()).compareTo(FechaUtil.soloFecha(bol.getRetornoFechaHora())) == 0).collect(Collectors.toList());
