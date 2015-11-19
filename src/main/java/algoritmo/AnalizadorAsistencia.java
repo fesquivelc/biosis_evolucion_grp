@@ -36,6 +36,8 @@ import java.util.stream.Collectors;
  * @author Francis
  */
 public class AnalizadorAsistencia {
+
+    private final boolean boletaExterna = false;
     /*
      VALORES PARA COMPARAR EN LA ASISTENCIA
      */
@@ -46,14 +48,15 @@ public class AnalizadorAsistencia {
     public static final int BOLETA_PERMISO = 11;
     public static final int FERIADO = 2;
     public static final int VACACION = 3;
-    static final int PERMISO_HORA = 4;
-    static final int ASISTENCIA = 5;
+    public static final int PERMISO_HORA = 4;
+    public static final int ASISTENCIA = 5;
     /*
      RESULTADOS DE ASISTENCIA
      */
     public static final int REGULAR = 0;
     public static final int TARDANZA = -1;
     public static final int FALTA = -2;
+    public static final int MARCACION_PENDIENTE = -3;
     /*
      LISTADOS QUE CONTIENEN LA INFORMACION TANTO DE FERIADOS, PERMISOS Y VACACIONES PARA EL EMPLEADO
      */
@@ -86,7 +89,9 @@ public class AnalizadorAsistencia {
 //        int tipoPermiso;
         empleadoList.stream().forEach(empleado -> {
             cargarSalidas(empleado, fechaInicio, fechaFin);
-            cargarBoletas(empleado, fechaInicio, fechaFin);
+            if (this.boletaExterna) {
+                cargarBoletas(empleado, fechaInicio, fechaFin);
+            }
             cargarVacaciones(empleado, fechaInicio, fechaFin);
             List<Contrato> contratos = contc.obtenerContratosXFechas(empleado, fechaInicio, fechaFin);
             Date desde1 = fechaInicio;
@@ -110,7 +115,7 @@ public class AnalizadorAsistencia {
                 System.out.println("EMPLEADO: " + empleado.getNombreCompleto() + " TURNOS: ");
                 turnos.stream().forEach(t -> System.out.println(String.format("ID: %s JORNADA: %s", t.getId(), t.getJornada().getNombre())));
                 while (iteradorDia.getTime().compareTo(hasta2) <= 0) {
-                    boletaXFecha = this.buscarBoletaXFecha(iteradorDia.getTime());
+                    boletaXFecha = this.boletaExterna ? this.buscarBoletaXFecha(iteradorDia.getTime()) : null;
                     if (boletaXFecha == null) {
                         vacacion = this.buscarVacacion(iteradorDia.getTime());
                         if (vacacion == null) {
@@ -217,7 +222,7 @@ public class AnalizadorAsistencia {
         permisoList.stream().forEach(perm -> {
             //RECORDAR QUE LOS TIPOS DE PERMISO SIN GOCE SON : 19,22,23,25,26
             int idMotivo = perm.getMotivo().getId().intValue();
-            System.out.println("MOTIVO: "+idMotivo);
+            System.out.println("MOTIVO: " + idMotivo);
             DetalleAsistencia detalleI = new DetalleAsistencia();
             detalleI.setBandera(true);
             detalleI.setDiaSiguiente(false); //POR REVISAR
@@ -417,7 +422,10 @@ public class AnalizadorAsistencia {
         turnos.stream().forEach(turno -> {
             Asistencia asistencia = new Asistencia();
             asistencia.setPermisoList(this.desglosar(this.buscarPermisoXHora(empleado, dia)));
-            asistencia.getPermisoList().addAll(this.desglosarBoleta(this.buscarBoletaXHora(empleado, dia)));
+            if (this.boletaExterna) {
+                asistencia.getPermisoList().addAll(this.desglosarBoleta(this.buscarBoletaXHora(empleado, dia)));
+            }
+
             asistencia.setFecha(dia);
             asistencia.setDetalleAsistenciaList(this.desglosar(turno));
             asistencia.setEmpleado(empleado);

@@ -41,6 +41,15 @@ public class RptAsistenciaDetallado {
     private boolean detalleFinal;
     private double minutosTardanza;
     private double minutosExtra;
+    private int mes;
+
+    public int getMes() {
+        return mes;
+    }
+
+    public void setMes(int mes) {
+        this.mes = mes;
+    }
 
     public double getMinutosTardanza() {
         return minutosTardanza;

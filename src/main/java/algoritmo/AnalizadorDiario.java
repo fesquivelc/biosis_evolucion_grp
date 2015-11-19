@@ -103,7 +103,9 @@ public class AnalizadorDiario {
 
                         if (permisoI.getHoraReferencia().compareTo(detalle.getHoraReferencia()) <= 0
                                 && permisoF.getHoraReferencia().compareTo(detalle.getHoraReferencia()) >= 0) {
-                            detalle.setPermiso(true);
+                            if(detalle.getHoraEvento() == null){
+                                detalle.setPermiso(true);
+                            }
                         }
                     }
                 }

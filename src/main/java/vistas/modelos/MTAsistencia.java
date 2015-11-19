@@ -34,7 +34,8 @@ public class MTAsistencia extends ModeloTabla<RptAsistenciaDetallado> {
 //        System.out.println("MARCACIONES TOTALES: "+asistencia.getMarcacionesTotales());
         if (asistencia.getTipo() == AnalizadorAsistencia.REGULAR
                 || asistencia.getTipo() == AnalizadorAsistencia.TARDANZA
-                || asistencia.getTipo() == AnalizadorAsistencia.FALTA) {
+                || asistencia.getTipo() == AnalizadorAsistencia.FALTA
+                || asistencia.getTipo() == AnalizadorAsistencia.MARCACION_PENDIENTE) {
             switch (columnIndex) {
                 case 0:
                     return asistencia.getEmpleado().getNroDocumento();
@@ -155,6 +156,8 @@ public class MTAsistencia extends ModeloTabla<RptAsistenciaDetallado> {
                 return "FERIADO";
             case AnalizadorAsistencia.VACACION: case AnalizadorAsistencia.BOLETA_VACACION:
                 return "VACACION";
+            case AnalizadorAsistencia.MARCACION_PENDIENTE:
+                return "M. PEND.";
             default:
                 return "";
         }

@@ -42,6 +42,7 @@ import vistas.mantenimientos.CRUDTipoPermiso;
 import vistas.mantenimientos.CRUDUsuario;
 import vistas.reportes.RptPermisos;
 import vistas.reportes.RptRegistroAsistencia;
+import vistas.reportes.RptTardanzasMes;
 import vistas.reportes.RptVacaciones;
 
 /**
@@ -109,6 +110,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
         mnuConfiguracion = new javax.swing.JMenu();
         mnuPeriodos = new javax.swing.JMenuItem();
         mnuSedesAreas = new javax.swing.JMenuItem();
@@ -357,6 +359,15 @@ public class Principal extends javax.swing.JFrame {
         });
         mnuReportes.add(jMenuItem3);
 
+        jMenuItem6.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jMenuItem6.setText("Reporte de tardanza mensual");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
+        mnuReportes.add(jMenuItem6);
+
         menuBar.add(mnuReportes);
 
         mnuConfiguracion.setMnemonic('h');
@@ -559,6 +570,12 @@ public class Principal extends javax.swing.JFrame {
         agregarAPanel(autorizacion, true);
     }//GEN-LAST:event_mnuHorasExtraActionPerformed
 
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        // TODO add your handling code here:
+        RptTardanzasMes tardanzasMes = new RptTardanzasMes();
+        agregarAPanel(tardanzasMes, true);
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAsignarPermiso;
@@ -571,6 +588,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JLabel lblJuvitec;
@@ -761,13 +779,13 @@ public class Principal extends javax.swing.JFrame {
         mnuAsignarVacaciones.setEnabled(asignarVacaciones);
         mnuHorasExtra.setEnabled(horasExtra);
         mnuSedesAreas.setEnabled(sedeArea);
-        
+
         mnuReportes.setEnabled(reportes);
 //        mnuUsuarios.setEnabled(configuracion);
         mnuConfiguracionBD.setEnabled(configuracion);
 //        mnuRolUsuario.setEnabled(configuracion);
         mnuControlUsuario.setEnabled(configuracion);
-        
+
         btnEmpleados.setEnabled(botonEmpleados);
         btnMarcaciones.setEnabled(botonMarcaciones);
         btnAsignarPermiso.setEnabled(botonAsignarPermiso);
