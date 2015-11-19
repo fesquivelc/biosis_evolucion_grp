@@ -137,7 +137,7 @@ public class AnalizadorAsistencia {
                             asistenciaList.add(this.generarAsistencia(empleado, iteradorDia.getTime(), vacacion));
                         }
                     } else {
-                         asistenciaList.add(this.generarAsistencia(empleado, iteradorDia.getTime(), boletaXFecha));
+                        asistenciaList.add(this.generarAsistencia(empleado, iteradorDia.getTime(), boletaXFecha));
                     }
 
                     iteradorDia.add(Calendar.DATE, 1);
@@ -209,14 +209,14 @@ public class AnalizadorAsistencia {
         });
         return desglose;
     }
-    
+
     private List<DetalleAsistencia> desglosarBoleta(List<Boleta> permisoList) {
         List<DetalleAsistencia> desglose = new ArrayList<>();
         Calendar cal = Calendar.getInstance();
         permisoList.stream().forEach(perm -> {
             //RECORDAR QUE LOS TIPOS DE PERMISO SIN GOCE SON : 19,22,23,25,26
             int idMotivo = perm.getMotivo().getId().intValue();
-            
+
             DetalleAsistencia detalleI = new DetalleAsistencia();
             detalleI.setBandera(true);
             detalleI.setDiaSiguiente(false); //POR REVISAR
@@ -392,6 +392,7 @@ public class AnalizadorAsistencia {
         asistencia.setFeriado(feriado);
         return asistencia;
     }
+
     private Asistencia generarAsistencia(Empleado empleado, Date dia, Boleta boletaXFecha) {
         //TENER EN CUENTA QUE 12 Y 13 SON VACACIONES
         int idMotivo = boletaXFecha.getMotivo().getId().intValue();
@@ -476,30 +477,30 @@ public class AnalizadorAsistencia {
     }
 
     private boolean isConGoce(int idMotivo) {
-            //RECORDAR QUE LOS TIPOS DE PERMISO SIN GOCE SON : 19,22,23,25,26
+        //RECORDAR QUE LOS TIPOS DE PERMISO SIN GOCE SON : 19,22,23,25,26
         return idMotivo == 19 || idMotivo == 22 || idMotivo == 23 || idMotivo == 25 || idMotivo == 26;
     }
 
     private void cargarBoletas(Empleado empleado, Date fechaInicio, Date fechaFin) {
         List<Boleta> boletas = this.bolc.permisoXFechaXEmpleadoEntreFecha(empleado, fechaInicio, fechaFin);
-        System.out.println("BOLETAS: "+boletas.size());
+        System.out.println("BOLETAS: " + boletas.size());
         this.boletaXFechaList = boletas.stream().filter(bol -> {
-            if(bol.getInicioFechaHora() == null || bol.getFinFechaHora() == null){
+            if (bol.getInicioFechaHora() == null || bol.getFinFechaHora() == null) {
                 return false;
-            }else{
-                
+            } else {
+
                 return FechaUtil.soloFecha(bol.getInicioFechaHora()).compareTo(FechaUtil.soloFecha(bol.getFinFechaHora())) < 0;
             }
         }).collect(Collectors.toList());
-        System.out.println("BOLETAS POR FECHA: "+boletaXFechaList.size());
-        this.boletaXFechaList = boletas.stream().filter(bol -> {
-            if(bol.getInicioFechaHora() == null || bol.getFinFechaHora() == null){
+        System.out.println("BOLETAS POR FECHA: " + boletaXFechaList.size());
+        this.boletaXHoraList = boletas.stream().filter(bol -> {
+            if (bol.getInicioFechaHora() == null || bol.getFinFechaHora() == null) {
                 return false;
-            }else{
+            } else {
                 return FechaUtil.soloFecha(bol.getInicioFechaHora()).compareTo(FechaUtil.soloFecha(bol.getFinFechaHora())) == 0;
             }
         }).collect(Collectors.toList());
-        System.out.println("BOLETAS POR HORA: "+boletaXFechaList.size());
+        System.out.println("BOLETAS POR FECHA: " + boletaXHoraList.size());
 //        this.boletaXHoraList = boletas.stream().filter(bol -> FechaUtil.soloFecha(bol.getInicioFechaHora()).compareTo(FechaUtil.soloFecha(bol.getRetornoFechaHora())) == 0).collect(Collectors.toList());
     }
 }
