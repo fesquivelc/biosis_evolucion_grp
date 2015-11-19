@@ -217,7 +217,7 @@ public class AnalizadorAsistencia {
         permisoList.stream().forEach(perm -> {
             //RECORDAR QUE LOS TIPOS DE PERMISO SIN GOCE SON : 19,22,23,25,26
             int idMotivo = perm.getMotivo().getId().intValue();
-
+            System.out.println("MOTIVO: "+idMotivo);
             DetalleAsistencia detalleI = new DetalleAsistencia();
             detalleI.setBandera(true);
             detalleI.setDiaSiguiente(false); //POR REVISAR
@@ -479,7 +479,7 @@ public class AnalizadorAsistencia {
 
     private boolean isConGoce(int idMotivo) {
         //RECORDAR QUE LOS TIPOS DE PERMISO SIN GOCE SON : 19,22,23,25,26
-        return idMotivo == 19 || idMotivo == 22 || idMotivo == 23 || idMotivo == 25 || idMotivo == 26;
+        return !(idMotivo == 19 || idMotivo == 22 || idMotivo == 23 || idMotivo == 25 || idMotivo == 26);
     }
 
     private void cargarBoletas(Empleado empleado, Date fechaInicio, Date fechaFin) {
