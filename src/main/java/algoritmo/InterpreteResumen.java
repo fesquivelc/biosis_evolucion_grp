@@ -89,14 +89,14 @@ public class InterpreteResumen implements Interprete<RptAsistenciaResumen> {
                     }
                 } else {
                     switch (asistencia.getResultado()) {
-                        case AnalizadorAsistencia.PERMISO_FECHA:
+                        case AnalizadorAsistencia.PERMISO_FECHA: case AnalizadorAsistencia.BOLETA_PERMISO:
                             if (asistencia.getPermiso().getTipoPermiso().getTipoDescuento() == 'C') {
                                 numeroDiasPermisoConGoce++;
                             } else {
                                 numeroDiasPermisoSinGoce++;
                             }
                             break;
-                        case AnalizadorAsistencia.VACACION:
+                        case AnalizadorAsistencia.VACACION: case AnalizadorAsistencia.BOLETA_VACACION:
                             numeroDiasVacaciones++;
                             break;
                         case AnalizadorAsistencia.FERIADO:
