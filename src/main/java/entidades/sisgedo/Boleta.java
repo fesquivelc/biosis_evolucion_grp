@@ -27,6 +27,10 @@ public class Boleta implements Serializable {
     @Id
     @Column(name = "idPapeleta")
     private Long id;
+    @Column(name = "activo")
+    private char activo;
+    @Column(name = "tipoPapeleta")
+    private int tipo;
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "fechaAutoriza")
     private Date aprobacionFechaHora;
@@ -45,6 +49,22 @@ public class Boleta implements Serializable {
     @ManyToOne(targetEntity = UsuarioSISGEDO.class, optional = true)
     @JoinColumn(name = "loginUsuario", referencedColumnName = "idUsuario")
     private UsuarioSISGEDO usuario;
+
+    public int getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(int tipo) {
+        this.tipo = tipo;
+    }
+
+    public char getActivo() {
+        return activo;
+    }
+
+    public void setActivo(char activo) {
+        this.activo = activo;
+    }
 
     public Long getId() {
         return id;
@@ -101,6 +121,12 @@ public class Boleta implements Serializable {
     public void setUsuario(UsuarioSISGEDO usuario) {
         this.usuario = usuario;
     }
+
+    @Override
+    public String toString() {
+        return "Boleta{" + "id=" + id + ", aprobacionFechaHora=" + aprobacionFechaHora + ", inicioFechaHora=" + inicioFechaHora + ", finFechaHora=" + finFechaHora + ", retornoFechaHora=" + retornoFechaHora + ", motivo=" + motivo + ", usuario=" + usuario + '}';
+    }
+    
     
     
 }

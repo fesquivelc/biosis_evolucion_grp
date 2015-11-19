@@ -160,6 +160,7 @@ public class AnalizadorAsistencia {
             detalle1.setHoraReferenciaDesde(detJorn.getEntradaDesde());
             detalle1.setHoraReferenciaHasta(detJorn.getEntradaHasta());
             detalle1.setHoraReferenciaTolerancia(detJorn.getEntradaTolerancia());
+            System.out.println(String.format("-- ENTRADA -- REFERENCIA: %s DESDE: %s HASTA: %s TOLERANCIA: %s", detalle1.getHoraReferencia(), detalle1.getHoraReferenciaDesde(), detalle1.getHoraReferenciaHasta(), detalle1.getHoraReferenciaTolerancia()));
             detalle1.setTipo('A');
 
             DetalleAsistencia detalle2 = new DetalleAsistencia();
@@ -216,7 +217,7 @@ public class AnalizadorAsistencia {
         permisoList.stream().forEach(perm -> {
             //RECORDAR QUE LOS TIPOS DE PERMISO SIN GOCE SON : 19,22,23,25,26
             int idMotivo = perm.getMotivo().getId().intValue();
-
+            System.out.println("MOTIVO: "+idMotivo);
             DetalleAsistencia detalleI = new DetalleAsistencia();
             detalleI.setBandera(true);
             detalleI.setDiaSiguiente(false); //POR REVISAR
@@ -330,7 +331,7 @@ public class AnalizadorAsistencia {
     }
 
     private boolean isDiaLaboral(Date fecha, Turno turno) {
-        System.out.println(String.format("TIPO TURNO: ", turno.getTipo()));
+        System.out.println(String.format("TIPO TURNO: %s", turno.getTipo()));
         if (turno.getTipo() == 'S') {
             Calendar cal = Calendar.getInstance();
             cal.setTime(fecha);
@@ -478,28 +479,30 @@ public class AnalizadorAsistencia {
 
     private boolean isConGoce(int idMotivo) {
         //RECORDAR QUE LOS TIPOS DE PERMISO SIN GOCE SON : 19,22,23,25,26
-        return idMotivo == 19 || idMotivo == 22 || idMotivo == 23 || idMotivo == 25 || idMotivo == 26;
+        return !(idMotivo == 19 || idMotivo == 22 || idMotivo == 23 || idMotivo == 25 || idMotivo == 26);
     }
 
     private void cargarBoletas(Empleado empleado, Date fechaInicio, Date fechaFin) {
-        List<Boleta> boletas = this.bolc.permisoXFechaXEmpleadoEntreFecha(empleado, fechaInicio, fechaFin);
-        System.out.println("BOLETAS: " + boletas.size());
-        this.boletaXFechaList = boletas.stream().filter(bol -> {
-            if (bol.getInicioFechaHora() == null || bol.getFinFechaHora() == null) {
-                return false;
-            } else {
-
-                return FechaUtil.soloFecha(bol.getInicioFechaHora()).compareTo(FechaUtil.soloFecha(bol.getFinFechaHora())) < 0;
-            }
-        }).collect(Collectors.toList());
+//        List<Boleta> boletas = this.bolc.permisoXFechaXEmpleadoEntreFecha(empleado, fechaInicio, fechaFin);
+//        System.out.println("BOLETAS: " + boletas.size());
+        this.boletaXFechaList = this.bolc.permisoXFechaXEmpleadoEntreFecha(empleado, fechaInicio, fechaFin);
+//        this.boletaXFechaList = boletas.stream().filter(bol -> {
+//            if (bol.getInicioFechaHora() == null || bol.getFinFechaHora() == null) {
+//                return false;
+//            } else {
+//
+//                return FechaUtil.soloFecha(bol.getInicioFechaHora()).compareTo(FechaUtil.soloFecha(bol.getFinFechaHora())) < 0;
+//            }
+//        }).collect(Collectors.toList());
         System.out.println("BOLETAS POR FECHA: " + boletaXFechaList.size());
-        this.boletaXHoraList = boletas.stream().filter(bol -> {
-            if (bol.getInicioFechaHora() == null || bol.getFinFechaHora() == null) {
-                return false;
-            } else {
-                return FechaUtil.soloFecha(bol.getInicioFechaHora()).compareTo(FechaUtil.soloFecha(bol.getFinFechaHora())) == 0;
-            }
-        }).collect(Collectors.toList());
+        this.boletaXHoraList = this.bolc.permisoXHoraXEmpleadoEntreFecha(empleado, fechaInicio, fechaFin);
+//        this.boletaXHoraList = boletas.stream().filter(bol -> {
+//            if (bol.getInicioFechaHora() == null || bol.getFinFechaHora() == null) {
+//                return false;
+//            } else {
+//                return FechaUtil.soloFecha(bol.getInicioFechaHora()).compareTo(FechaUtil.soloFecha(bol.getFinFechaHora())) == 0;
+//            }
+//        }).collect(Collectors.toList());
         System.out.println("BOLETAS POR FECHA: " + boletaXHoraList.size());
 //        this.boletaXHoraList = boletas.stream().filter(bol -> FechaUtil.soloFecha(bol.getInicioFechaHora()).compareTo(FechaUtil.soloFecha(bol.getRetornoFechaHora())) == 0).collect(Collectors.toList());
     }

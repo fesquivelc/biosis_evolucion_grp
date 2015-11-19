@@ -31,15 +31,20 @@ public class BoletaControlador extends Controlador<Boleta>{
     }
     
     public List<Boleta> permisoXFechaXEmpleadoEntreFecha(Empleado empleado, Date fechaInicio, Date fechaFin){
-        String jpql = "SELECT b FROM Boleta b WHERE "
-                + "b.retornoFechaHora IS NOT NULL AND "
-                + "((b.retornoFechaHora >= :fechaHoraInicio AND "
-                + "b.inicioFechaHora <= :fechaHoraInicio) OR (b.inicioFechaHora >= :fechaHoraInicio AND b.inicioFechaHora <= :fechaHoraFin)) AND "
-                + "b.usuario.numeroDocumento = :empleado";
+        String jpql = "SELECT b FROM Boleta b WHERE b.activo = 'A' AND b.tipo = 2 AND b.usuario.numeroDocumento = :empleado AND ((:inicio <= b.inicioFechaHora AND :fin >= b.inicioFechaHora) OR (b.inicioFechaHora <= :inicio AND :inicio <= b.finFechaHora))";
         Map<String,Object> parametros = new HashMap<>();
         parametros.put("empleado", empleado.getNroDocumento());
-        parametros.put("fechaHoraInicio", FechaUtil.soloFecha(fechaInicio));
-        parametros.put("fechaHoraFin", FechaUtil.unirFechaHora(fechaFin,HerramientaGeneral.horaFinal));
+        parametros.put("inicio", FechaUtil.soloFecha(fechaInicio));
+        parametros.put("fin", FechaUtil.unirFechaHora(fechaFin,HerramientaGeneral.horaFinal));
+        return this.getDao().buscar(jpql, parametros);
+    }
+    
+    public List<Boleta> permisoXHoraXEmpleadoEntreFecha(Empleado empleado, Date fechaInicio, Date fechaFin){
+        String jpql = "SELECT b FROM Boleta b WHERE b.activo = 'C' AND b.tipo = 1 AND b.usuario.numeroDocumento = :empleado AND ((:inicio <= b.inicioFechaHora AND :fin >= b.inicioFechaHora) OR (b.inicioFechaHora <= :inicio AND :inicio <= b.retornoFechaHora))";
+        Map<String,Object> parametros = new HashMap<>();
+        parametros.put("empleado", empleado.getNroDocumento());
+        parametros.put("inicio", FechaUtil.soloFecha(fechaInicio));
+        parametros.put("fin", FechaUtil.unirFechaHora(fechaFin,HerramientaGeneral.horaFinal));
         return this.getDao().buscar(jpql, parametros);
     }
     

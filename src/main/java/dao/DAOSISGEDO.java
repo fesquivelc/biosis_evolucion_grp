@@ -50,21 +50,21 @@ public class DAOSISGEDO<T> extends DAOBiosis<T>{
 //            properties.put("javax.persistence.jdbc.driver", driver);
 //            properties.put("javax.persistence.jdbc.url", url);
 //            properties.put("hibernate.show_sql", "true");
-            
-            properties.put("javax.persistence.jdbc.user", "kRRHH");
-            properties.put("javax.persistence.jdbc.password", "Pl4n1ll0n");
+            System.out.println(String.format("URL: %s USUARIO: %s PASSWORD: %s DRIVER: %s", url,usuario,password,driver));
+            properties.put("javax.persistence.jdbc.user", usuario.trim());
+            properties.put("javax.persistence.jdbc.password", password.trim());
             properties.put("javax.persistence.jdbc.driver", driver);
-            properties.put("javax.persistence.jdbc.url", "jdbc:mysql://172.16.8.253:3306/gestiondoc?zeroDateTimeBehavior=convertToNull");
+            properties.put("javax.persistence.jdbc.url", url.trim());
 //            properties.put("hibernate.show_sql", "true");
 //            properties.put("javax.persistence.schema-generation.database.action", "none");
             properties.put("javax.persistence.schema-generation.database.action", "none");
 
-//            try {
-            EntityManagerFactory emf = Persistence.createEntityManagerFactory(this.PUSISGEDO, properties);
-            emSISGEDO = emf.createEntityManager();
-//            } catch (Exception e) {
-//                System.out.println("EM: "+e.getCause().getMessage()+" "+e.getMessage());
-//            }
+            try {
+                EntityManagerFactory emf = Persistence.createEntityManagerFactory(this.PUSISGEDO, properties);
+                emSISGEDO = emf.createEntityManager();
+            } catch (Exception e) {
+                System.out.println("EM: " + e.getCause().getMessage() + " " + e.getMessage()+ " "+e.getLocalizedMessage());
+            }
 
         }
         return emSISGEDO;

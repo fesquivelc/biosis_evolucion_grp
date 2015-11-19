@@ -128,8 +128,8 @@ public class InterpreteResumen implements Interprete<RptAsistenciaResumen> {
             DetalleAsistencia detalle = detalleAsistenciaList.get(i);
 
             if (detalle.getHoraEvento() == null) {
-            } else {
-                System.out.println("HORA EVENTO: "+detalle.getHoraEvento()+" HORA TOLERANCIA "+detalle.getHoraReferenciaTolerancia());
+            } else if(detalle.isBandera()){
+                System.out.println("HORA EVENTO: "+detalle.getHoraEvento()+" HORA TOLERANCIA "+detalle.getHoraReferenciaTolerancia()+" BANDERA: "+detalle.isBandera());
                 tardanza += tardanzaMin(FechaUtil.soloHora(detalle.getHoraEvento()), FechaUtil.soloHora(detalle.getHoraReferenciaTolerancia()));
             }
         }
