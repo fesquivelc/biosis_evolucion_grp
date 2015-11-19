@@ -70,33 +70,41 @@ public class InterpreteResumen implements Interprete<RptAsistenciaResumen> {
                 if (asistencia.getResultado() == AnalizadorAsistencia.ASISTENCIA) {
                     Long marcacionesMaximas = asistencia.getDetalleAsistenciaList().stream().filter(d -> d.getHoraReferencia() != null).count();
                     int tipo = this.obtenerTipo(asistencia.getDetalleAsistenciaList(), marcacionesMaximas.intValue());
-                    
-                    if(tipo == AnalizadorAsistencia.FALTA){
+
+                    if (tipo == AnalizadorAsistencia.FALTA) {
                         numeroDiasFalta++;
-                    }else if(tipo == AnalizadorAsistencia.TARDANZA){
+                    } else if (tipo == AnalizadorAsistencia.TARDANZA) {
                         tardanza += minutosTardanza(asistencia.getDetalleAsistenciaList(), marcacionesMaximas.intValue());
                     }
-                    
-                    if(asistencia.getPermisoList() != null){
+
+                    if (asistencia.getPermisoList() != null) {
                         minutosPermisoConGoce += this.minutosPermisos(asistencia.getPermisoList().stream().filter(perm -> perm.isPermisoConGoce()).collect(Collectors.toList()));
-                        System.out.println("MINUTOS CON GOCE "+minutosPermisoConGoce);
+                        System.out.println("MINUTOS CON GOCE " + minutosPermisoConGoce);
                         minutosPermisoSinGoce += this.minutosPermisos(asistencia.getPermisoList().stream().filter(perm -> !perm.isPermisoConGoce()).collect(Collectors.toList()));
-                        System.out.println("MINUTOS CON GOCE "+minutosPermisoSinGoce);
+                        System.out.println("MINUTOS CON GOCE " + minutosPermisoSinGoce);
                     }
-                    
-                    if(tipo == AnalizadorAsistencia.TARDANZA || tipo == AnalizadorAsistencia.REGULAR){
+
+                    if (tipo == AnalizadorAsistencia.TARDANZA || tipo == AnalizadorAsistencia.REGULAR) {
                         horasLaboradas += obtenerHorasLaboradas(asistencia.getDetalleAsistenciaList());
                     }
                 } else {
                     switch (asistencia.getResultado()) {
-                        case AnalizadorAsistencia.PERMISO_FECHA: case AnalizadorAsistencia.BOLETA_PERMISO:
+                        case AnalizadorAsistencia.PERMISO_FECHA:
                             if (asistencia.getPermiso().getTipoPermiso().getTipoDescuento() == 'C') {
                                 numeroDiasPermisoConGoce++;
                             } else {
                                 numeroDiasPermisoSinGoce++;
                             }
                             break;
-                        case AnalizadorAsistencia.VACACION: case AnalizadorAsistencia.BOLETA_VACACION:
+                        case AnalizadorAsistencia.BOLETA_PERMISO:
+                            if (isConGoce(asistencia.getBoleta().getMotivo().getId().intValue())) {
+                                numeroDiasPermisoConGoce++;
+                            } else {
+                                numeroDiasPermisoSinGoce++;
+                            }
+                            break;
+                        case AnalizadorAsistencia.VACACION:
+                        case AnalizadorAsistencia.BOLETA_VACACION:
                             numeroDiasVacaciones++;
                             break;
                         case AnalizadorAsistencia.FERIADO:
@@ -122,14 +130,19 @@ public class InterpreteResumen implements Interprete<RptAsistenciaResumen> {
         return resumen;
     }
     
-    private double minutosTardanza(List<DetalleAsistencia> detalleAsistenciaList, int conteo){
+    private boolean isConGoce(int idMotivo) {
+        //RECORDAR QUE LOS TIPOS DE PERMISO SIN GOCE SON : 19,22,23,25,26
+        return !(idMotivo == 19 || idMotivo == 22 || idMotivo == 23 || idMotivo == 25 || idMotivo == 26);
+    }
+
+    private double minutosTardanza(List<DetalleAsistencia> detalleAsistenciaList, int conteo) {
         double tardanza = 0;
         for (int i = 0; i < conteo; i++) {
             DetalleAsistencia detalle = detalleAsistenciaList.get(i);
 
             if (detalle.getHoraEvento() == null) {
-            } else if(detalle.isBandera()){
-                System.out.println("HORA EVENTO: "+detalle.getHoraEvento()+" HORA TOLERANCIA "+detalle.getHoraReferenciaTolerancia()+" BANDERA: "+detalle.isBandera());
+            } else if (detalle.isBandera()) {
+                System.out.println("HORA EVENTO: " + detalle.getHoraEvento() + " HORA TOLERANCIA " + detalle.getHoraReferenciaTolerancia() + " BANDERA: " + detalle.isBandera());
                 tardanza += tardanzaMin(FechaUtil.soloHora(detalle.getHoraEvento()), FechaUtil.soloHora(detalle.getHoraReferenciaTolerancia()));
             }
         }
@@ -172,36 +185,36 @@ public class InterpreteResumen implements Interprete<RptAsistenciaResumen> {
             return 0.0;
         }
     }
-    
-    private double minutosPermisos(List<DetalleAsistencia> detalles){
+
+    private double minutosPermisos(List<DetalleAsistencia> detalles) {
         double total = 0;
         int posicion = 0;
-        while(posicion < detalles.size()){
+        while (posicion < detalles.size()) {
             DetalleAsistencia permisoI = detalles.get(posicion);
-            DetalleAsistencia permisoF = detalles.get(posicion+1);
-            
-            total += (permisoF.getHoraReferencia().getTime() - permisoI.getHoraReferencia().getTime()) / (60*1000);
-            
+            DetalleAsistencia permisoF = detalles.get(posicion + 1);
+
+            total += (permisoF.getHoraReferencia().getTime() - permisoI.getHoraReferencia().getTime()) / (60 * 1000);
+
             posicion += 2;
         }
         return total;
     }
-    
-    private double obtenerHorasLaboradas(List<DetalleAsistencia> detalles){
+
+    private double obtenerHorasLaboradas(List<DetalleAsistencia> detalles) {
         double totalHoras = 0;
-        
+
         int posicion = 0;
-        while(posicion < detalles.size()){
+        while (posicion < detalles.size()) {
             DetalleAsistencia ingreso = detalles.get(posicion);
-            DetalleAsistencia salida = detalles.get(posicion+1);
-            
-            if(!(ingreso.isPermiso() || salida.isPermiso())){
-                totalHoras += (salida.getHoraEvento().getTime() - ingreso.getHoraEvento().getTime()) / (60*1000*60);
+            DetalleAsistencia salida = detalles.get(posicion + 1);
+
+            if (!(ingreso.isPermiso() || salida.isPermiso())) {
+                totalHoras += (salida.getHoraEvento().getTime() - ingreso.getHoraEvento().getTime()) / (60 * 1000 * 60);
             }
-            
+
             posicion += 2;
         }
-        
+
         return totalHoras;
     }
 }
