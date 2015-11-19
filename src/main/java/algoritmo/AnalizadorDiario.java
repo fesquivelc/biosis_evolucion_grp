@@ -70,6 +70,7 @@ public class AnalizadorDiario {
          Buscamos las marcaciones referentes a la asistencia
          */
         this.getAsistencia().getDetalleAsistenciaList().stream().forEach((detalle) -> {
+            System.out.println(String.format("-- DETALLE TOLERANCIA -- REFERENCIA: %s TOLERANCIA: %s BANDERA: %s", detalle.getHoraReferencia(), detalle.getHoraReferenciaTolerancia(), detalle.isBandera()));
             Marcacion marcacion
                     = this.buscarMarcacion(
                             detalle.isDiaSiguiente() ? diaSiguiente : diaInicio, detalle.getHoraReferenciaDesde(),
