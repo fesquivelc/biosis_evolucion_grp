@@ -40,6 +40,7 @@ import vistas.mantenimientos.CRUDJornada;
 import vistas.mantenimientos.CRUDPeriodo;
 import vistas.mantenimientos.CRUDTipoPermiso;
 import vistas.mantenimientos.CRUDUsuario;
+import vistas.reportes.RptNoMarcan;
 import vistas.reportes.RptPermisos;
 import vistas.reportes.RptRegistroAsistencia;
 import vistas.reportes.RptTardanzasMes;
@@ -111,6 +112,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
         mnuConfiguracion = new javax.swing.JMenu();
         mnuPeriodos = new javax.swing.JMenuItem();
         mnuSedesAreas = new javax.swing.JMenuItem();
@@ -368,6 +370,15 @@ public class Principal extends javax.swing.JFrame {
         });
         mnuReportes.add(jMenuItem6);
 
+        jMenuItem7.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jMenuItem7.setText("Reporte de empleados que no realizan marcación");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
+        mnuReportes.add(jMenuItem7);
+
         menuBar.add(mnuReportes);
 
         mnuConfiguracion.setMnemonic('h');
@@ -576,6 +587,12 @@ public class Principal extends javax.swing.JFrame {
         agregarAPanel(tardanzasMes, true);
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        // TODO add your handling code here:
+        RptNoMarcan noMarcan = new RptNoMarcan();
+        agregarAPanel(noMarcan,true);
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAsignarPermiso;
@@ -589,6 +606,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JLabel lblJuvitec;
