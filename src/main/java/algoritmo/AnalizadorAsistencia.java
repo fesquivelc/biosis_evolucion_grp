@@ -217,7 +217,7 @@ public class AnalizadorAsistencia {
         permisoList.stream().forEach(perm -> {
             //RECORDAR QUE LOS TIPOS DE PERMISO SIN GOCE SON : 19,22,23,25,26
             int idMotivo = perm.getMotivo().getId().intValue();
-            System.out.println("MOTIVO: "+idMotivo);
+            System.out.println("MOTIVO: " + idMotivo);
             DetalleAsistencia detalleI = new DetalleAsistencia();
             detalleI.setBandera(true);
             detalleI.setDiaSiguiente(false); //POR REVISAR
@@ -486,6 +486,14 @@ public class AnalizadorAsistencia {
 //        List<Boleta> boletas = this.bolc.permisoXFechaXEmpleadoEntreFecha(empleado, fechaInicio, fechaFin);
 //        System.out.println("BOLETAS: " + boletas.size());
         this.boletaXFechaList = this.bolc.permisoXFechaXEmpleadoEntreFecha(empleado, fechaInicio, fechaFin);
+//        System.out.println("TAMAÑO BOLETAS FECHA: "+this.boletaXFechaList.size());
+//        for (int i = 0 ; i<boletaXFechaList.size(); i++) {
+//            if (boletaXFechaList.get(i).getFinFechaHora() == null || boletaXFechaList.get(i).getInicioFechaHora() == null) {
+//                this.boletaXFechaList.remove(i);
+//            }
+//        }
+//        System.out.println("TAMAÑO BOLETAS FECHA: "+this.boletaXFechaList.size());
+//        System.out.println("BOLETA ES NULL? "+this.boletaXFechaList.get(0).getFinFechaHora()+" - "+this.boletaXFechaList.get(0).getInicioFechaHora());
 //        this.boletaXFechaList = boletas.stream().filter(bol -> {
 //            if (bol.getInicioFechaHora() == null || bol.getFinFechaHora() == null) {
 //                return false;
