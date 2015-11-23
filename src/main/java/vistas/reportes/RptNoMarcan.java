@@ -40,6 +40,7 @@ import javax.swing.BoxLayout;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import org.jdesktop.beansbinding.AutoBinding;
 import org.jdesktop.beansbinding.BindingGroup;
 import org.jdesktop.observablecollections.ObservableCollections;
@@ -51,6 +52,7 @@ import javax.swing.JPanel;
 import org.jdesktop.swingbinding.JTableBinding;
 import principal.Main;
 import utiles.HerramientaGeneral;
+import vistas.dialogos.DlgMarcacionesDiarias;
 import vistas.modelos.MTNoMarcan;
 
 /**
@@ -119,6 +121,7 @@ public class RptNoMarcan extends javax.swing.JInternalFrame {
         tabDetallado = new javax.swing.JPanel();
         pnlOpciones = new javax.swing.JPanel();
         btnImprimir = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         tblAsistenciaDetallado = new org.jdesktop.swingx.JXTable();
         pnlCerrarTab = new javax.swing.JPanel();
@@ -343,6 +346,14 @@ public class RptNoMarcan extends javax.swing.JInternalFrame {
         });
         pnlOpciones.add(btnImprimir);
 
+        jButton4.setText("Ver marcaciones en el día");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+        pnlOpciones.add(jButton4);
+
         tabDetallado.add(pnlOpciones, java.awt.BorderLayout.PAGE_END);
 
         tblAsistenciaDetallado.setModel(new javax.swing.table.DefaultTableModel(
@@ -482,6 +493,16 @@ public class RptNoMarcan extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_dcFechaInicioMouseReleased
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        int fila = this.tblAsistenciaDetallado.getSelectedRow();
+        if(fila != -1){
+            RptNoMarca elemento = this.noMarcanList.get(fila);
+            DlgMarcacionesDiarias marcaciones = new DlgMarcacionesDiarias(elemento.getEmpleado(), elemento.getFecha(), JOptionPane.getFrameForComponent(this));
+            marcaciones.setVisible(true);
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
     private Departamento oficinaSeleccionada;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -495,6 +516,7 @@ public class RptNoMarcan extends javax.swing.JInternalFrame {
     private javax.swing.ButtonGroup grpSeleccion;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JPanel pnlBotones;
