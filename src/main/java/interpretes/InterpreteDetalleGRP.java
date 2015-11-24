@@ -118,8 +118,9 @@ public class InterpreteDetalleGRP implements Interprete<RptAsistenciaDetallado> 
                         contador = 0;
                         minutosTardanza = 0;
                     }
+                    contadorDetalles++;
                 }
-                contadorDetalles++;
+                
             } else {
 
                 detalleAsistencia = new RptAsistenciaDetallado();
