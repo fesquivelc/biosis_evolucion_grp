@@ -103,7 +103,7 @@ public class InterpreteTardanzaMensual implements Interprete<RptTardanzaMensual>
         }
 
         if (marcacionesPendientes == conteo) {
-            return AnalizadorAsistencia.FALTA;
+            return AnalizadorAsistencia.INASISTENCIA;
         } else if (hayTardanza) {
             return AnalizadorAsistencia.TARDANZA;
         } else {

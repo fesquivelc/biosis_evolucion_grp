@@ -55,8 +55,8 @@ public class AnalizadorAsistencia {
      */
     public static final int REGULAR = 0;
     public static final int TARDANZA = -1;
-    public static final int FALTA = -2;
-    public static final int MARCACION_PENDIENTE = -3;
+    public static final int INASISTENCIA = -2;
+    public static final int INCONSISTENCIA = -3;
     /*
      LISTADOS QUE CONTIENEN LA INFORMACION TANTO DE FERIADOS, PERMISOS Y VACACIONES PARA EL EMPLEADO
      */
@@ -181,6 +181,7 @@ public class AnalizadorAsistencia {
         });
         return desglose;
     }
+
     /*
     
      */
@@ -198,7 +199,7 @@ public class AnalizadorAsistencia {
             cal.setTime(perm.getHoraInicio());
             cal.add(Calendar.MINUTE, 40); //VARIABLE
             detalleI.setHoraReferenciaHasta(cal.getTime());
-            detalleI.setTipo('P');
+            detalleI.setTipo('B');
             detalleI.setPermisoConGoce(perm.getTipoPermiso().getTipoDescuento() == 'C');
 
             DetalleAsistencia detalleF = new DetalleAsistencia();
@@ -209,7 +210,7 @@ public class AnalizadorAsistencia {
             detalleF.setHoraReferenciaDesde(cal.getTime());
             detalleF.setMotivo(perm.getTipoPermiso().getNombre());
             detalleF.setPermisoConGoce(perm.getTipoPermiso().getTipoDescuento() == 'C');
-
+            detalleF.setTipo('B');
             desglose.add(detalleI);
             desglose.add(detalleF);
         });
@@ -231,7 +232,7 @@ public class AnalizadorAsistencia {
             cal.setTime(FechaUtil.soloHora(perm.getInicioFechaHora()));
             cal.add(Calendar.MINUTE, 40); //VARIABLE
             detalleI.setHoraReferenciaHasta(cal.getTime());
-            detalleI.setTipo('P');
+            detalleI.setTipo('S');
             detalleI.setPermisoConGoce(isConGoce(idMotivo));
 
             DetalleAsistencia detalleF = new DetalleAsistencia();
@@ -242,6 +243,7 @@ public class AnalizadorAsistencia {
             detalleF.setHoraReferenciaDesde(cal.getTime());
             detalleF.setMotivo(perm.getMotivo().getDescripcion());
             detalleF.setPermisoConGoce(isConGoce(idMotivo));
+            detalleI.setTipo('S');
 
             desglose.add(detalleI);
             desglose.add(detalleF);
@@ -286,12 +288,12 @@ public class AnalizadorAsistencia {
                     .filter(vac
                             -> {
                         if (vac.getFechaInicio().compareTo(soloFechaComparacion) <= 0
-                        && vac.getFechaFin().compareTo(soloFechaComparacion) >= 0) {
+                                && vac.getFechaFin().compareTo(soloFechaComparacion) >= 0) {
                             if (vac.isHayReprogramacion()) {
                                 return dia.compareTo(vac.getFechaInterrupcion()) < 0;
                             } else if (vac.isHayInterrupcion()) {
                                 return dia.compareTo(vac.getInterrupcionVacacion().getFechaInicio()) < 0
-                                || dia.compareTo(vac.getInterrupcionVacacion().getFechaFin()) > 0;
+                                        || dia.compareTo(vac.getInterrupcionVacacion().getFechaFin()) > 0;
                             } else {
                                 return true;
                             }

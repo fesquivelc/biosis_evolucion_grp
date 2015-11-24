@@ -71,7 +71,7 @@ public class InterpreteResumen implements Interprete<RptAsistenciaResumen> {
                     Long marcacionesMaximas = asistencia.getDetalleAsistenciaList().stream().filter(d -> d.getHoraReferencia() != null).count();
                     int tipo = this.obtenerTipo(asistencia.getDetalleAsistenciaList(), marcacionesMaximas.intValue());
 
-                    if (tipo == AnalizadorAsistencia.FALTA) {
+                    if (tipo == AnalizadorAsistencia.INASISTENCIA) {
                         numeroDiasFalta++;
                     } else if (tipo == AnalizadorAsistencia.TARDANZA) {
                         tardanza += minutosTardanza(asistencia.getDetalleAsistenciaList(), marcacionesMaximas.intValue());
@@ -169,7 +169,7 @@ public class InterpreteResumen implements Interprete<RptAsistenciaResumen> {
         }
 
         if (marcacionesPendientes > 0) {
-            return AnalizadorAsistencia.FALTA;
+            return AnalizadorAsistencia.INASISTENCIA;
         } else if (hayTardanza) {
             return AnalizadorAsistencia.TARDANZA;
         } else {

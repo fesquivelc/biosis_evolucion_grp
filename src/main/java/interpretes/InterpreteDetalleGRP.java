@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package algoritmo; 
+package interpretes;
 
+import algoritmo.*;
 import com.personal.utiles.FechaUtil;
 import entidades.asistencia.Asistencia;
 import entidades.asistencia.DetalleAsistencia;
@@ -20,7 +21,7 @@ import utiles.HerramientaGeneral;
  *
  * @author Francis
  */
-public class InterpreteDetalleSUNARP implements Interprete<RptAsistenciaDetallado> {
+public class InterpreteDetalleGRP implements Interprete<RptAsistenciaDetallado> {
 
     /*
      EN ESTE INTÉRPRETE SE TOMA COMO FALTA CON EL SÓLO HECHO QUE EL EMPLEADO NO HAYA
@@ -42,13 +43,14 @@ public class InterpreteDetalleSUNARP implements Interprete<RptAsistenciaDetallad
             String regimenLaboral = regLab == null ? "" : regLab.getNombre();
             cal.setTime(asistencia.getFecha());
             if (asistencia.getResultado() == AnalizadorAsistencia.ASISTENCIA) {
-                
+
                 Long marcacionesMaximas = asistencia.getDetalleAsistenciaList().stream().filter(d -> d.getHoraReferencia() != null).count();
-                int tipo = this.obtenerTipo(asistencia.getDetalleAsistenciaList(), marcacionesMaximas.intValue());
+                int tipo = this.obtenerTipo(asistencia.getDetalleAsistenciaList(), asistencia.getPermisoList(), marcacionesMaximas.intValue());
                 int contador = 0;
                 int marcacionContador = 0;
+                int contadorDetalles = 0;
                 double minutosTardanza = 0;
-                
+
                 for (DetalleAsistencia detalle : asistencia.getDetalleAsistenciaList()) {
                     marcacionContador++;
                     if (contador == 0) {
@@ -61,11 +63,11 @@ public class InterpreteDetalleSUNARP implements Interprete<RptAsistenciaDetallad
                         detalleAsistencia.setRegimenLaboral(regimenLaboral);
                     }
 
-                    if (tipo == AnalizadorAsistencia.TARDANZA || tipo == AnalizadorAsistencia.INCONSISTENCIA) {
-                        
-                        if(detalle.isBandera() && detalle.getHoraReferenciaTolerancia() != null && !detalle.isPermiso() && detalle.getHoraEvento() != null){
-                            System.out.println("BANDERA: "+detalle.getHoraReferencia());
-                            
+                    if (contadorDetalles == 0 && (tipo == AnalizadorAsistencia.TARDANZA || tipo == AnalizadorAsistencia.INCONSISTENCIA)) {
+
+                        if (detalle.isBandera() && detalle.getHoraReferenciaTolerancia() != null && !detalle.isPermiso() && detalle.getHoraEvento() != null) {
+                            System.out.println("BANDERA: " + detalle.getHoraReferencia());
+
                             minutosTardanza = minutosTardanza + this.tardanzaMin(detalle.getHoraEvento(), detalle.getHoraReferenciaTolerancia());
                         }
                     }
@@ -103,10 +105,10 @@ public class InterpreteDetalleSUNARP implements Interprete<RptAsistenciaDetallad
 //                    detalleAsistencia.getHoraEvento()[contador] = detalle.getHoraEvento();
                     detalleAsistencia.setMarcacionesTotales(marcacionesMaximas.intValue());
                     detalleAsistencia.setMes(cal.get(Calendar.MONTH));
-                    System.out.println("MES: "+cal.get(Calendar.MONTH));
+                    System.out.println("MES: " + cal.get(Calendar.MONTH));
                     contador++;
                     detalleAsistencia.setDetalleFinal(marcacionContador == marcacionesMaximas.intValue());
-                    if(contador == marcacionesMaximas.intValue() && tipo != AnalizadorAsistencia.INASISTENCIA && !detalle.isPermiso() && detalle.getHoraEvento() != null){
+                    if (contador == marcacionesMaximas.intValue() && tipo != AnalizadorAsistencia.INASISTENCIA && !detalle.isPermiso() && detalle.getHoraEvento() != null) {
                         detalleAsistencia.setMinutosExtra(this.tardanzaMin(detalle.getHoraEvento(), detalle.getHoraReferencia()));
                     }
                     if (contador == 4 || contador == marcacionesMaximas.intValue()) {
@@ -117,8 +119,9 @@ public class InterpreteDetalleSUNARP implements Interprete<RptAsistenciaDetallad
                         minutosTardanza = 0;
                     }
                 }
+                contadorDetalles++;
             } else {
-                
+
                 detalleAsistencia = new RptAsistenciaDetallado();
 //                cal.setTime(asistencia.getFecha());
                 detalleAsistencia.setMes(cal.get(Calendar.MONTH));
@@ -145,7 +148,8 @@ public class InterpreteDetalleSUNARP implements Interprete<RptAsistenciaDetallad
             } else {
                 horaFin = detalle.getHoraReferencia();
 
-                permisos += String.format(" %s - %s: %s ",
+                permisos += String.format(" (%s) %s - %s: %s ",
+                        detalle.getTipo(),
                         HerramientaGeneral.formatoHoraMinuto.format(horaInicio),
                         HerramientaGeneral.formatoHoraMinuto.format(horaFin),
                         detalle.getMotivo());
@@ -172,34 +176,57 @@ public class InterpreteDetalleSUNARP implements Interprete<RptAsistenciaDetallad
         return detalles;
     }
 
-    private int obtenerTipo(List<DetalleAsistencia> detalleAsistenciaList, int conteo) {
+    private int obtenerTipo(List<DetalleAsistencia> detalleAsistenciaList, List<DetalleAsistencia> permisoList, int conteo) {
 
 //        System.out.println("CONTEO: "+conteo.intValue());
         int marcacionesPendientes = 0;
         boolean hayTardanza = false;
-        for (int i = 0; i < conteo; i++) {
-            DetalleAsistencia detalle = detalleAsistenciaList.get(i);
+        DetalleAsistencia entrada = detalleAsistenciaList.get(0);
+        DetalleAsistencia salida = detalleAsistenciaList.get(detalleAsistenciaList.size() - 1);
 
-            if (detalle.getHoraEvento() == null) {
-                if (!detalle.isPermiso()) {
-                    marcacionesPendientes++;
+        if ((entrada.getHoraEvento() == null && !entrada.isPermiso())
+                || (salida.getHoraEvento() == null && !salida.isPermiso())) {
+            /*
+            COMPROBAMOS SI EXISTE ALGUNA INCONSISTENCIA
+            
+            POLÍTICAS DE INCONSISTENCIA
+            
+            SERÁ UNA INCONSISTENCIA SI EXISTE UNA O MÁS MARCACIONES FALTANTES
+            Y/O EXISTEN PERMISOS ASIGNADOS A DICHO EMPLEADO
+             */
+            if (permisoList != null) {
+                if (!permisoList.isEmpty()) {
+                    return AnalizadorAsistencia.INCONSISTENCIA;
                 }
+            }
+
+            if (conteo > 2) {
+                for (int i = 1; i < detalleAsistenciaList.size() - 1; i++) {
+                    DetalleAsistencia refrigerio = detalleAsistenciaList.get(i);
+                    if (refrigerio.getHoraEvento() != null) {
+                        return AnalizadorAsistencia.INCONSISTENCIA;
+                    }
+
+                }
+                return AnalizadorAsistencia.INASISTENCIA;
             } else {
-                hayTardanza
-                        = hayTardanza
-                        || detalle.isBandera() && tardanzaMin(FechaUtil.soloHora(detalle.getHoraEvento()), FechaUtil.soloHora(detalle.getHoraReferenciaTolerancia())) > 1;
+                return AnalizadorAsistencia.INASISTENCIA;
+            }
+        } else {
+            //COMPROBAMOS SI ES REGULAR O TARDANZA
+            /*
+            POLÍTICAS DE TARDANZAS
+            SÓLO SE CONTABILIZAN LAS TARDANZAS DEL INICIO
+             */
+            hayTardanza = (!entrada.isPermiso() && tardanzaMin(FechaUtil.soloHora(entrada.getHoraEvento()), FechaUtil.soloHora(entrada.getHoraReferenciaTolerancia())) > 1);
+
+            if (hayTardanza) {
+                return AnalizadorAsistencia.TARDANZA;
+            } else {
+                return AnalizadorAsistencia.REGULAR;
             }
         }
 
-        if (marcacionesPendientes == conteo) {
-            return AnalizadorAsistencia.INASISTENCIA;
-        } else if(marcacionesPendientes > 0){
-            return AnalizadorAsistencia.INCONSISTENCIA;
-        } else if (hayTardanza) {
-            return AnalizadorAsistencia.TARDANZA;
-        } else {
-            return AnalizadorAsistencia.REGULAR;
-        }
     }
 
     private String obtenerMotivo(int tipo, Asistencia asistencia) {
@@ -218,15 +245,15 @@ public class InterpreteDetalleSUNARP implements Interprete<RptAsistenciaDetallad
     }
 
     private double tardanzaMin(Date evento, Date tolerancia) {
-        System.out.println("HORA EVENTO: "+evento+" TOLERANCIA: "+tolerancia);
+        System.out.println("HORA EVENTO: " + evento + " TOLERANCIA: " + tolerancia);
         if (tolerancia.before(evento)) {
             double tardanza = (FechaUtil.soloHora(evento).getTime() - FechaUtil.soloHora(tolerancia).getTime()) / (60 * 1000);
-            if(tardanza >= 1){
+            if (tardanza >= 1) {
                 return tardanza;
-            }else{
+            } else {
                 return 0.0;
             }
-            
+
         } else {
             return 0.0;
         }

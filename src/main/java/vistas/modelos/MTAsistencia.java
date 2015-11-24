@@ -34,8 +34,8 @@ public class MTAsistencia extends ModeloTabla<RptAsistenciaDetallado> {
 //        System.out.println("MARCACIONES TOTALES: "+asistencia.getMarcacionesTotales());
         if (asistencia.getTipo() == AnalizadorAsistencia.REGULAR
                 || asistencia.getTipo() == AnalizadorAsistencia.TARDANZA
-                || asistencia.getTipo() == AnalizadorAsistencia.FALTA
-                || asistencia.getTipo() == AnalizadorAsistencia.MARCACION_PENDIENTE) {
+                || asistencia.getTipo() == AnalizadorAsistencia.INASISTENCIA
+                || asistencia.getTipo() == AnalizadorAsistencia.INCONSISTENCIA) {
             switch (columnIndex) {
                 case 0:
                     return asistencia.getEmpleado().getNroDocumento();
@@ -148,16 +148,16 @@ public class MTAsistencia extends ModeloTabla<RptAsistenciaDetallado> {
                 return "REGULAR";
             case AnalizadorAsistencia.TARDANZA:
                 return "TARDANZA";
-            case AnalizadorAsistencia.FALTA:
-                return "FALTA";
+            case AnalizadorAsistencia.INASISTENCIA:
+                return "INASISTENCIA";
             case AnalizadorAsistencia.PERMISO_FECHA: case AnalizadorAsistencia.BOLETA_PERMISO:
                 return "PERMISO";
             case AnalizadorAsistencia.FERIADO:
                 return "FERIADO";
             case AnalizadorAsistencia.VACACION: case AnalizadorAsistencia.BOLETA_VACACION:
                 return "VACACION";
-            case AnalizadorAsistencia.MARCACION_PENDIENTE:
-                return "M. PEND.";
+            case AnalizadorAsistencia.INCONSISTENCIA:
+                return "INCONSISTENCIA";
             default:
                 return "";
         }

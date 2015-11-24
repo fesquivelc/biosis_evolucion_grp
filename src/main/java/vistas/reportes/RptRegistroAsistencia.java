@@ -2,8 +2,6 @@ package vistas.reportes;
 
 import algoritmo.AnalizadorAsistencia;
 import algoritmo.Interprete;
-import algoritmo.InterpreteDetalle;
-import algoritmo.InterpreteDetalleSUNARP;
 import algoritmo.InterpreteResumen;
 import controladores.DetalleGrupoControlador;
 import controladores.EmpleadoControlador;
@@ -23,8 +21,8 @@ import entidades.asistencia.Asistencia;
 import entidades.escalafon.AreaEmpleado;
 import entidades.escalafon.Departamento;
 import entidades.escalafon.Empleado;
-import entidades.escalafon.FichaLaboral;
 import entidades.reportes.RptAsistenciaDetallado;
+import interpretes.InterpreteDetalleGRP;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Font;
@@ -71,7 +69,7 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
     private final EmpleadoControlador ec;
     private final File archivo = new File("reportes/reporte_asistencia_detallado_SUNARP.jasper");
     private final Font fuente;
-    private final Interprete interprete = new InterpreteDetalleSUNARP();
+    private final Interprete interprete = new InterpreteDetalleGRP();
     private final AreaEmpleadoControlador aempc = new AreaEmpleadoControlador();
     
 

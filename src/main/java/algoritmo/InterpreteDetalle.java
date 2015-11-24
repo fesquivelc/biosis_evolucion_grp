@@ -101,7 +101,7 @@ public class InterpreteDetalle implements Interprete<RptAsistenciaDetallado> {
 
                     contador++;
                     detalleAsistencia.setDetalleFinal(marcacionContador == marcacionesMaximas.intValue());
-                    if(contador == marcacionesMaximas.intValue() && tipo != AnalizadorAsistencia.FALTA && !detalle.isPermiso()){
+                    if(contador == marcacionesMaximas.intValue() && tipo != AnalizadorAsistencia.INASISTENCIA && !detalle.isPermiso()){
                         detalleAsistencia.setMinutosExtra(this.tardanzaMin(detalle.getHoraEvento(), detalle.getHoraReferencia()));
                     }
                     if (contador == 4 || contador == marcacionesMaximas.intValue()) {
@@ -184,7 +184,7 @@ public class InterpreteDetalle implements Interprete<RptAsistenciaDetallado> {
         }
 
         if (marcacionesPendientes > 0) {
-            return AnalizadorAsistencia.FALTA;
+            return AnalizadorAsistencia.INASISTENCIA;
         } else if (hayTardanza) {
             return AnalizadorAsistencia.TARDANZA;
         } else {
