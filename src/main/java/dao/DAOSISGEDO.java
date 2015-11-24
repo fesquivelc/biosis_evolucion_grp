@@ -52,7 +52,7 @@ public class DAOSISGEDO<T> extends DAOBiosis<T>{
 //            properties.put("hibernate.show_sql", "true");
             System.out.println(String.format("URL: %s USUARIO: %s PASSWORD: %s DRIVER: %s", url,usuario,password,driver));
             properties.put("javax.persistence.jdbc.user", usuario.trim());
-            properties.put("javax.persistence.jdbc.password", password.trim());
+            properties.put("javax.persistence.jdbc.password", Encriptador.decrypt(password.trim()));
             properties.put("javax.persistence.jdbc.driver", driver);
             properties.put("javax.persistence.jdbc.url", url.trim());
 //            properties.put("hibernate.show_sql", "true");

@@ -130,6 +130,7 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
         jButton4 = new javax.swing.JButton();
         btnImprimir = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         tblAsistenciaDetallado = new org.jdesktop.swingx.JXTable();
         pnlCerrarTab = new javax.swing.JPanel();
@@ -415,6 +416,9 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
         });
         pnlOpciones.add(jButton3);
 
+        jButton5.setText("Marcación manual");
+        pnlOpciones.add(jButton5);
+
         tabDetallado.add(pnlOpciones, java.awt.BorderLayout.PAGE_END);
 
         tblAsistenciaDetallado.setModel(new javax.swing.table.DefaultTableModel(
@@ -589,6 +593,7 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JPanel pnlBotones;
