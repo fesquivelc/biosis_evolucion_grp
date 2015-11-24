@@ -37,7 +37,7 @@ import java.util.stream.Collectors;
  */
 public class AnalizadorAsistencia {
 
-    private final boolean boletaExterna = false;
+    private final boolean boletaExterna = true;
     /*
      VALORES PARA COMPARAR EN LA ASISTENCIA
      */
@@ -495,8 +495,9 @@ public class AnalizadorAsistencia {
     private void cargarBoletas(Empleado empleado, Date fechaInicio, Date fechaFin) {
 //        List<Boleta> boletas = this.bolc.permisoXFechaXEmpleadoEntreFecha(empleado, fechaInicio, fechaFin);
 //        System.out.println("BOLETAS: " + boletas.size());
-        System.out.println("TAMAÑO BOLETAS FECHA A: "+this.boletaXFechaList.size());
+        
         this.boletaXFechaList = this.bolc.permisoXFechaXEmpleadoEntreFecha(empleado, fechaInicio, fechaFin);
+        System.out.println("TAMAÑO BOLETAS FECHA A: "+this.boletaXFechaList.size());
         for (int i = 0 ; i<boletaXFechaList.size(); i++) {
             if (boletaXFechaList.get(i).getFinFechaHora() == null || boletaXFechaList.get(i).getInicioFechaHora() == null) {
                 this.boletaXFechaList.remove(i);
