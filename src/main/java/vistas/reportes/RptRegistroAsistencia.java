@@ -2,7 +2,6 @@ package vistas.reportes;
 
 import algoritmo.AnalizadorAsistencia;
 import algoritmo.Interprete;
-import algoritmo.InterpreteResumen;
 import controladores.DetalleGrupoControlador;
 import controladores.EmpleadoControlador;
 import controladores.GrupoHorarioControlador;
@@ -23,6 +22,7 @@ import entidades.escalafon.Departamento;
 import entidades.escalafon.Empleado;
 import entidades.reportes.RptAsistenciaDetallado;
 import interpretes.InterpreteDetalleGRP;
+import interpretes.InterpreteResumenGRP;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Font;
@@ -817,7 +817,7 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
     }
 
     private List<Asistencia> asistenciaList;
-    private Interprete interpreteResumen = new InterpreteResumen();
+    private Interprete interpreteResumen = new InterpreteResumenGRP();
     
     private void generarReporte() {
         List<Empleado> empleados = obtenerDNI();
