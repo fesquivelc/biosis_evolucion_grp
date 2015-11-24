@@ -243,7 +243,7 @@ public class AnalizadorAsistencia {
             detalleF.setHoraReferenciaDesde(cal.getTime());
             detalleF.setMotivo(perm.getMotivo().getDescripcion());
             detalleF.setPermisoConGoce(isConGoce(idMotivo));
-            detalleI.setTipo('S');
+            detalleF.setTipo('S');
 
             desglose.add(detalleI);
             desglose.add(detalleF);
