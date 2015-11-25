@@ -57,6 +57,7 @@
   <persistence-unit name="biostar-PU" transaction-type="RESOURCE_LOCAL">
     <provider>org.hibernate.ejb.HibernatePersistence</provider>
     <class>entidades.biostar.Evento</class>
+    <class>entidades.biostar.Reader</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://127.0.0.1\MSS2005EX;databaseName=BDreloj"/>
       <property name="javax.persistence.jdbc.password" value="Elhacker12"/>

@@ -7,29 +7,24 @@ package controladores.biostar;
 
 import controladores.Controlador;
 import dao.DAOBiostar;
-import entidades.biostar.Evento;
-import java.util.List;
+import entidades.biostar.Reader;
 
 /**
  *
  * @author RyuujiMD
  */
-public class EventoControlador extends Controlador<Evento>{
+public class ReaderControlador extends Controlador<Reader>{
     
-    private EventoControlador() {
-        super(Evento.class, new DAOBiostar<Evento>(Evento.class));
+    private ReaderControlador() {
+        super(Reader.class, new DAOBiostar<Reader>(Reader.class));
     }
     
-    public static EventoControlador getInstance() {
+    public static ReaderControlador getInstance() {
         return EventoControladorHolder.INSTANCE;
     }
     
     private static class EventoControladorHolder {
 
-        private static final EventoControlador INSTANCE = new EventoControlador();
+        private static final ReaderControlador INSTANCE = new ReaderControlador();
     }
-
-    
-    
-    
 }

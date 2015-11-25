@@ -242,7 +242,7 @@ public class AnalizadorAsistencia {
             detalleF.setHoraReferenciaDesde(cal.getTime());
             detalleF.setMotivo(perm.getMotivo().getDescripcion());
             detalleF.setPermisoConGoce(isConGoce(idMotivo));
-            detalleI.setTipo('S');
+            detalleF.setTipo('S');
 
             desglose.add(detalleI);
             desglose.add(detalleF);
@@ -473,9 +473,8 @@ public class AnalizadorAsistencia {
     private List<Boleta> buscarBoletaXHora(Empleado empleado, Date dia) {
 
         try {
-            System.out.println("DIA: " + dia);
+            
             Date soloFechaComparacion = FechaUtil.soloFecha(dia);
-            System.out.println("TAMAÃ‘O: " + this.boletaXHoraList.size());
 
             for (int i = 0; i < this.boletaXHoraList.size(); i++) {
                 if (this.boletaXHoraList.get(i).getInicioFechaHora() == null || this.boletaXHoraList.get(i).getRetornoFechaHora() == null) {
