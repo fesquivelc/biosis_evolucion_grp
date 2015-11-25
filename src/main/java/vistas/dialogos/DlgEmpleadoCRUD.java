@@ -1644,9 +1644,11 @@ public class DlgEmpleadoCRUD extends javax.swing.JDialog {
 
 //        boolean x = dcFechaFin.getDate().after(dcFechaInicio.getDate());
         if (tipo.equals("Contrato")) {
-            if (FechaUtil.soloFecha(dcFechaFin.getDate()).compareTo(FechaUtil.soloFecha(dcFechaInicio.getDate())) <= 0) {
-                mensajeError += "- La fecha de fin debe ser mayor a la fecha de inicio\n";
-                errores++;
+            if (dcFechaFin.getDate() != null) {
+                if (FechaUtil.soloFecha(dcFechaFin.getDate()).compareTo(FechaUtil.soloFecha(dcFechaInicio.getDate())) <= 0) {
+                    mensajeError += "- La fecha de fin debe ser mayor a la fecha de inicio\n";
+                    errores++;
+                }
             }
         } else if (tipo.equals("Area")) {
             if (FechaUtil.soloFecha(dtFechaFin.getDate()).compareTo(FechaUtil.soloFecha(dtFechaInicio.getDate())) <= 0) {

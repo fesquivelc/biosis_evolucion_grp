@@ -185,7 +185,6 @@ public class AnalizadorAsistencia {
     /*
     
      */
-
     private List<DetalleAsistencia> desglosar(List<Permiso> permisoList) {
         List<DetalleAsistencia> desglose = new ArrayList<>();
         Calendar cal = Calendar.getInstance();
@@ -257,7 +256,7 @@ public class AnalizadorAsistencia {
 
     private void cargarFeriados(Date fechaInicio, Date fechaFin) {
         this.feriadoList = ferc.buscarXFechas(fechaInicio, fechaFin);
-        System.out.println("TAMAÑO FERIADOS: " + this.feriadoList.size());
+        System.out.println("TAMAÃ‘O FERIADOS: " + this.feriadoList.size());
     }
 
     private void cargarSalidas(Empleado empleado, Date fechaInicio, Date fechaFin) {
@@ -267,7 +266,7 @@ public class AnalizadorAsistencia {
     private Feriado buscarFeriado(Date dia) {
         Date diaSoloFecha = FechaUtil.soloFecha(dia);
         try {
-//            System.out.println("TAMAÑO FERIADOS: "+this.feriadoList.size());
+//            System.out.println("TAMAÃ‘O FERIADOS: "+this.feriadoList.size());
             Feriado feriado = this.feriadoList
                     .stream()
                     .filter(fer -> fer.getFechaInicio().compareTo(diaSoloFecha) <= 0 && fer.getFechaFin().compareTo(diaSoloFecha) >= 0)
@@ -288,12 +287,12 @@ public class AnalizadorAsistencia {
                     .filter(vac
                             -> {
                         if (vac.getFechaInicio().compareTo(soloFechaComparacion) <= 0
-                                && vac.getFechaFin().compareTo(soloFechaComparacion) >= 0) {
+                        && vac.getFechaFin().compareTo(soloFechaComparacion) >= 0) {
                             if (vac.isHayReprogramacion()) {
                                 return dia.compareTo(vac.getFechaInterrupcion()) < 0;
                             } else if (vac.isHayInterrupcion()) {
                                 return dia.compareTo(vac.getInterrupcionVacacion().getFechaInicio()) < 0
-                                        || dia.compareTo(vac.getInterrupcionVacacion().getFechaFin()) > 0;
+                                || dia.compareTo(vac.getInterrupcionVacacion().getFechaFin()) > 0;
                             } else {
                                 return true;
                             }
@@ -413,11 +412,11 @@ public class AnalizadorAsistencia {
     }
 
     /*
-     Genera un registro de asistencia para el análisis de los turnos
+     Genera un registro de asistencia para el anÃ¡lisis de los turnos
      */
     private List<Asistencia> generarAsistencia(Empleado empleado, Date dia, List<Turno> turnos) {
         /*
-         Debemos realizar un análisis por turno buscando los permisos de cada uno
+         Debemos realizar un anÃ¡lisis por turno buscando los permisos de cada uno
          */
         List<Asistencia> asistenciaList = new ArrayList<>();
 
@@ -472,14 +471,25 @@ public class AnalizadorAsistencia {
     }
 
     private List<Boleta> buscarBoletaXHora(Empleado empleado, Date dia) {
+
         try {
+            System.out.println("DIA: " + dia);
             Date soloFechaComparacion = FechaUtil.soloFecha(dia);
+            System.out.println("TAMAÃ‘O: " + this.boletaXHoraList.size());
+
+            for (int i = 0; i < this.boletaXHoraList.size(); i++) {
+                if (this.boletaXHoraList.get(i).getInicioFechaHora() == null || this.boletaXHoraList.get(i).getRetornoFechaHora() == null) {
+                    this.boletaXHoraList.remove(i);
+                }
+            }
+
             List<Boleta> permiso = this.boletaXHoraList
                     .stream()
                     .filter(perm
                             -> FechaUtil.soloFecha(perm.getInicioFechaHora()).compareTo(soloFechaComparacion) == 0
                     )
                     .collect(Collectors.toList());
+
             return permiso;
         } catch (NoSuchElementException e) {
             System.out.println("NO HAY BOLETAS POR FECHA EN ESTA FECHA");
@@ -495,15 +505,15 @@ public class AnalizadorAsistencia {
     private void cargarBoletas(Empleado empleado, Date fechaInicio, Date fechaFin) {
 //        List<Boleta> boletas = this.bolc.permisoXFechaXEmpleadoEntreFecha(empleado, fechaInicio, fechaFin);
 //        System.out.println("BOLETAS: " + boletas.size());
-        
+
         this.boletaXFechaList = this.bolc.permisoXFechaXEmpleadoEntreFecha(empleado, fechaInicio, fechaFin);
-        System.out.println("TAMAÑO BOLETAS FECHA A: "+this.boletaXFechaList.size());
-        for (int i = 0 ; i<boletaXFechaList.size(); i++) {
+        System.out.println("TAMAÃ‘O BOLETAS FECHA A: " + this.boletaXFechaList.size());
+        for (int i = 0; i < boletaXFechaList.size(); i++) {
             if (boletaXFechaList.get(i).getFinFechaHora() == null || boletaXFechaList.get(i).getInicioFechaHora() == null) {
                 this.boletaXFechaList.remove(i);
             }
         }
-        System.out.println("TAMAÑO BOLETAS FECHA D: "+this.boletaXFechaList.size());
+        System.out.println("TAMAÃ‘O BOLETAS FECHA D: " + this.boletaXFechaList.size());
 //        this.boletaXFechaList = boletas.stream().filter(bol -> {
 //            if (bol.getInicioFechaHora() == null || bol.getFinFechaHora() == null) {
 //                return false;
@@ -514,6 +524,16 @@ public class AnalizadorAsistencia {
 //        }).collect(Collectors.toList());
         System.out.println("BOLETAS POR FECHA: " + boletaXFechaList.size());
         this.boletaXHoraList = this.bolc.permisoXHoraXEmpleadoEntreFecha(empleado, fechaInicio, fechaFin);
+        for (int i = 0; i < this.boletaXHoraList.size(); i++) {
+            if (this.boletaXHoraList.get(i).getInicioFechaHora() == null || this.boletaXHoraList.get(i).getRetornoFechaHora() == null || this.boletaXHoraList.get(i).getMotivo() == null) {
+                this.boletaXHoraList.remove(i);
+                System.out.println("Encontro null...");
+            }
+        }
+
+//        for (int i = 0; i<boletaXHoraList.size();i++ ){
+//            System.out.println("DATOS HORA :"+ boletaXFechaList.get(i).getInicioFechaHora() );
+//        }
 //        this.boletaXHoraList = boletas.stream().filter(bol -> {
 //            if (bol.getInicioFechaHora() == null || bol.getFinFechaHora() == null) {
 //                return false;
@@ -521,7 +541,7 @@ public class AnalizadorAsistencia {
 //                return FechaUtil.soloFecha(bol.getInicioFechaHora()).compareTo(FechaUtil.soloFecha(bol.getFinFechaHora())) == 0;
 //            }
 //        }).collect(Collectors.toList());
-        System.out.println("BOLETAS POR FECHA: " + boletaXHoraList.size());
+        System.out.println("BOLETAS POR HORA: " + boletaXHoraList.size());
 //        this.boletaXHoraList = boletas.stream().filter(bol -> FechaUtil.soloFecha(bol.getInicioFechaHora()).compareTo(FechaUtil.soloFecha(bol.getRetornoFechaHora())) == 0).collect(Collectors.toList());
     }
 }

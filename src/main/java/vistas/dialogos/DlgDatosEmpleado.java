@@ -381,11 +381,12 @@ public class DlgDatosEmpleado extends javax.swing.JDialog {
         List<Contrato> contratos = cc.buscarXNombrexFechaASC(empleado);
         if(!contratos.isEmpty()){
             contratoVigente = contratos.get(0);
+            dtFechaContrato.setDate(empleado.getContratoList().get(0).getFechaInicio());
         }
         
         
         txtRegimenLaboral.setText(contratoVigente.getRegimenLaboral() == null ? "" : contratoVigente.getRegimenLaboral().getNombre());
-        dtFechaContrato.setDate(empleado.getContratoList().get(0).getFechaInicio());
+                
         txtCodigoModular.setText(empleado.getFichaLaboral().getCodigoTrabajador());
         
         AreaEmpleado areaVigente = new AreaEmpleado();

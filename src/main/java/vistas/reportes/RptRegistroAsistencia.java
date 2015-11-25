@@ -128,9 +128,9 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
         tabDetallado = new javax.swing.JPanel();
         pnlOpciones = new javax.swing.JPanel();
         jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
         btnImprimir = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         tblAsistenciaDetallado = new org.jdesktop.swingx.JXTable();
         pnlCerrarTab = new javax.swing.JPanel();
@@ -398,6 +398,9 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
         });
         pnlOpciones.add(jButton4);
 
+        jButton5.setText("Marcación manual");
+        pnlOpciones.add(jButton5);
+
         btnImprimir.setFont(new java.awt.Font("SansSerif", 0, 13)); // NOI18N
         btnImprimir.setText("Imprimir");
         btnImprimir.addActionListener(new java.awt.event.ActionListener() {
@@ -415,9 +418,6 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
             }
         });
         pnlOpciones.add(jButton3);
-
-        jButton5.setText("Marcación manual");
-        pnlOpciones.add(jButton5);
 
         tabDetallado.add(pnlOpciones, java.awt.BorderLayout.PAGE_END);
 
