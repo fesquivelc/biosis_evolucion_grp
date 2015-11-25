@@ -32,9 +32,9 @@ public class DAOBiostar<T> extends DAOBiosis {
 
     @Override
     public EntityManager getEntityManager() {
-        if(super.getEntityManager().isOpen()){
-            super.getEntityManager().close();
-        }
+//        if(super.getEntityManager().isOpen()){
+//            super.getEntityManager().close();
+//        }
         
         if (emBiostar == null) {
             Properties configuracion = PropertiesUtil.cargarProperties("config/biostar-config.properties");
