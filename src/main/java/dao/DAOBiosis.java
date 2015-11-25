@@ -96,7 +96,7 @@ public class DAOBiosis<T> {
             getEntityManager().clear();
             return true;
         } catch (Exception e) {
-            LOG.error("ERROR EN EL GUARDADO: " + e.getLocalizedMessage() + " " + e.getMessage());
+            LOG.error("ERROR EN EL GUARDADO: " + e.getLocalizedMessage() + " " + e.getMessage()+ " "+e.getCause());
             em = null;
             return false;
         }

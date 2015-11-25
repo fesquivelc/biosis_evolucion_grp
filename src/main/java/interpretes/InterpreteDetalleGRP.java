@@ -120,7 +120,7 @@ public class InterpreteDetalleGRP implements Interprete<RptAsistenciaDetallado> 
                     }
                     contadorDetalles++;
                 }
-                
+
             } else {
 
                 detalleAsistencia = new RptAsistenciaDetallado();
@@ -185,40 +185,7 @@ public class InterpreteDetalleGRP implements Interprete<RptAsistenciaDetallado> 
         DetalleAsistencia entrada = detalleAsistenciaList.get(0);
         DetalleAsistencia salida = detalleAsistenciaList.get(detalleAsistenciaList.size() - 1);
 
-        if ((entrada.getHoraEvento() == null && !entrada.isPermiso())
-                || (salida.getHoraEvento() == null && !salida.isPermiso())) {
-            /*
-            COMPROBAMOS SI EXISTE ALGUNA INCONSISTENCIA
-            
-            POLÍTICAS DE INCONSISTENCIA
-            
-            SERÁ UNA INCONSISTENCIA SI EXISTE UNA O MÁS MARCACIONES FALTANTES
-            Y/O EXISTEN PERMISOS ASIGNADOS A DICHO EMPLEADO
-             */
-            if (permisoList != null) {
-                if (!permisoList.isEmpty()) {
-                    return AnalizadorAsistencia.INCONSISTENCIA;
-                }
-            }
-
-            if (conteo > 2) {
-                for (int i = 1; i < detalleAsistenciaList.size() - 1; i++) {
-                    DetalleAsistencia refrigerio = detalleAsistenciaList.get(i);
-                    if (refrigerio.getHoraEvento() != null) {
-                        return AnalizadorAsistencia.INCONSISTENCIA;
-                    }
-
-                }
-                return AnalizadorAsistencia.INASISTENCIA;
-            } else {
-                return AnalizadorAsistencia.INASISTENCIA;
-            }
-        } else {
-            //COMPROBAMOS SI ES REGULAR O TARDANZA
-            /*
-            POLÍTICAS DE TARDANZAS
-            SÓLO SE CONTABILIZAN LAS TARDANZAS DEL INICIO
-             */
+        if ((entrada.getHoraEvento() != null || entrada.isPermiso()) && (salida.getHoraEvento() != null || salida.isPermiso())) {
             hayTardanza = (!entrada.isPermiso() && tardanzaMin(FechaUtil.soloHora(entrada.getHoraEvento()), FechaUtil.soloHora(entrada.getHoraReferenciaTolerancia())) > 1);
 
             if (hayTardanza) {
@@ -226,8 +193,76 @@ public class InterpreteDetalleGRP implements Interprete<RptAsistenciaDetallado> 
             } else {
                 return AnalizadorAsistencia.REGULAR;
             }
+        } else {
+            if ((entrada.getHoraEvento() == null && !entrada.isPermiso()) && (salida.getHoraEvento() == null && !salida.isPermiso())) {
+                /*
+                 PUEDE SER FALTA, SE HA DE COMPROBAR INCONSISTENCIA
+                 */
+                if (permisoList != null) {
+                    if (!permisoList.isEmpty()) {
+                        return AnalizadorAsistencia.INCONSISTENCIA;
+                    }
+                }
+
+                if (conteo > 2) {
+                    for (int i = 1; i < detalleAsistenciaList.size() - 1; i++) {
+                        DetalleAsistencia refrigerio = detalleAsistenciaList.get(i);
+                        if (refrigerio.getHoraEvento() != null) {
+                            return AnalizadorAsistencia.INCONSISTENCIA;
+                        }
+
+                    }
+                    return AnalizadorAsistencia.INASISTENCIA;
+                } else {
+                    return AnalizadorAsistencia.INASISTENCIA;
+                }
+            } else {
+                return AnalizadorAsistencia.INCONSISTENCIA;
+            }
         }
 
+//        if ((entrada.getHoraEvento() == null && !entrada.isPermiso())
+//                && (salida.getHoraEvento() == null && !salida.isPermiso())) {
+//            /*
+//             COMPROBAMOS SI EXISTE ALGUNA INCONSISTENCIA
+//            
+//             POLÍTICAS DE INCONSISTENCIA
+//            
+//             SERÁ UNA INCONSISTENCIA SI EXISTE UNA O MÁS MARCACIONES FALTANTES
+//             Y/O EXISTEN PERMISOS ASIGNADOS A DICHO EMPLEADO
+//             */
+//            if (permisoList != null) {
+//                if (!permisoList.isEmpty()) {
+//                    return AnalizadorAsistencia.INCONSISTENCIA;
+//                }
+//            }
+//
+//            if (conteo > 2) {
+//                for (int i = 1; i < detalleAsistenciaList.size() - 1; i++) {
+//                    DetalleAsistencia refrigerio = detalleAsistenciaList.get(i);
+//                    if (refrigerio.getHoraEvento() != null) {
+//                        return AnalizadorAsistencia.INCONSISTENCIA;
+//                    }
+//
+//                }
+//                return AnalizadorAsistencia.INASISTENCIA;
+//            } else {
+//                return AnalizadorAsistencia.INASISTENCIA;
+//            }
+//        } else {
+//            //COMPROBAMOS SI ES REGULAR O TARDANZA
+//            /*
+//             POLÍTICAS DE TARDANZAS
+//             SÓLO SE CONTABILIZAN LAS TARDANZAS DEL INICIO
+//             */
+//            hayTardanza = (!entrada.isPermiso() && tardanzaMin(FechaUtil.soloHora(entrada.getHoraEvento()), FechaUtil.soloHora(entrada.getHoraReferenciaTolerancia())) > 1);
+//
+//            if (hayTardanza) {
+//                return AnalizadorAsistencia.TARDANZA;
+//            } else {
+//                return AnalizadorAsistencia.REGULAR;
+//            }
+//        }
     }
 
     private String obtenerMotivo(int tipo, Asistencia asistencia) {
@@ -239,7 +274,11 @@ public class InterpreteDetalleGRP implements Interprete<RptAsistenciaDetallado> 
             case AnalizadorAsistencia.PERMISO_FECHA:
                 return asistencia.getPermiso().getDocumento();
             case AnalizadorAsistencia.BOLETA_PERMISO:
-                return asistencia.getBoleta().getMotivo().getDescripcion();
+            case AnalizadorAsistencia.BOLETA_VACACION:
+                if (asistencia.getBoleta().getMotivo() == null) {
+                    return "-- SIN MOTIVO --";
+                }
+                return asistencia.getBoleta().getMotivo().getDescripcion().toUpperCase();
             default:
                 return "";
         }

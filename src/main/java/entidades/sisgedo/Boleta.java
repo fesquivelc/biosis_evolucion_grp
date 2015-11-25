@@ -43,8 +43,8 @@ public class Boleta implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "fechaRetorno")
     private Date retornoFechaHora;
-    @ManyToOne(targetEntity = Motivo.class,optional = false)
-    @JoinColumn(name = "idMotivo", referencedColumnName = "idmotivo")
+    @ManyToOne(targetEntity = Motivo.class,optional = true)
+    @JoinColumn(name = "idMotivo", referencedColumnName = "idmotivo",nullable = true)
     private Motivo motivo;
     @ManyToOne(targetEntity = UsuarioSISGEDO.class, optional = true)
     @JoinColumn(name = "loginUsuario", referencedColumnName = "idUsuario")

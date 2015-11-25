@@ -2,6 +2,7 @@ package vistas.reportes;
 
 import algoritmo.AnalizadorAsistencia;
 import algoritmo.Interprete;
+import com.personal.utiles.FechaUtil;
 import controladores.DetalleGrupoControlador;
 import controladores.EmpleadoControlador;
 import controladores.GrupoHorarioControlador;
@@ -17,10 +18,12 @@ import com.personal.utiles.ReporteUtil.Formato;
 import controladores.AreaEmpleadoControlador;
 import controladores.MarcacionControlador;
 import entidades.asistencia.Asistencia;
+import entidades.asistencia.DetalleAsistencia;
 import entidades.escalafon.AreaEmpleado;
 import entidades.escalafon.Departamento;
 import entidades.escalafon.Empleado;
 import entidades.reportes.RptAsistenciaDetallado;
+import entidades.reportes.RptMarcacion;
 import interpretes.InterpreteDetalleGRP;
 import interpretes.InterpreteResumenGRP;
 import java.awt.BorderLayout;
@@ -52,6 +55,7 @@ import javax.swing.JPanel;
 import org.jdesktop.swingbinding.JTableBinding;
 import principal.Main;
 import utiles.HerramientaGeneral;
+import vistas.dialogos.DlgAgregarMarcacion;
 import vistas.dialogos.DlgMarcacionesDiarias;
 import vistas.modelos.MTAsistencia;
 
@@ -71,7 +75,6 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
     private final Font fuente;
     private final Interprete interprete = new InterpreteDetalleGRP();
     private final AreaEmpleadoControlador aempc = new AreaEmpleadoControlador();
-    
 
     public RptRegistroAsistencia() {
         initComponents();
@@ -417,6 +420,11 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
         pnlOpciones.add(jButton3);
 
         jButton5.setText("Marcación manual");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
         pnlOpciones.add(jButton5);
 
         tabDetallado.add(pnlOpciones, java.awt.BorderLayout.PAGE_END);
@@ -536,7 +544,7 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
 
     private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
         // TODO add your handling code here:
-        if(!this.asistenciaDetalleList.isEmpty()){
+        if (!this.asistenciaDetalleList.isEmpty()) {
             imprimir();
         }
 //        Formato formato = obtenerFormato();
@@ -557,22 +565,55 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        if(!this.asistenciaDetalleList.isEmpty()){
+        if (!this.asistenciaDetalleList.isEmpty()) {
             imprimirResumen();
         }
-        
+
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
         int fila = this.tblAsistenciaDetallado.getSelectedRow();
-        if(fila != -1){
+        if (fila != -1) {
             RptAsistenciaDetallado detalle = this.asistenciaDetalleList.get(fila);
             System.out.println(String.format("DETALLE: %s %s", detalle.getEmpleado(), detalle.getFecha()));
             DlgMarcacionesDiarias marcaciones = new DlgMarcacionesDiarias(detalle.getEmpleado(), detalle.getFecha(), JOptionPane.getFrameForComponent(this));
             marcaciones.setVisible(true);
         }
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        int fila = this.tblAsistenciaDetallado.getSelectedRow();
+        if (fila != -1) {
+            RptAsistenciaDetallado rptAsistenciaDetallado = this.asistenciaDetalleList.get(fila);
+            List<RptMarcacion> marcacionList = new ArrayList<>();
+            this.asistenciaList.stream()
+                    .filter(a -> FechaUtil.soloFecha(a.getFecha()).equals(FechaUtil.soloFecha(rptAsistenciaDetallado.getFecha())))
+                    .forEach(a -> {
+                        List<DetalleAsistencia> detalleXAsistencia = a.getDetalleAsistenciaList();
+                        detalleXAsistencia.stream().filter((detalle) -> (detalle.getHoraEvento() == null && !detalle.isPermiso())).map((detalle) -> {
+                            RptMarcacion rptMarcacion = new RptMarcacion();
+                            rptMarcacion.setEmpleado(a.getEmpleado());
+                            rptMarcacion.setFecha(a.getFecha());
+                            rptMarcacion.setReferencia(detalle.getHoraReferencia());
+                            rptMarcacion.setTolerancia(detalle.getHoraReferenciaTolerancia());
+                            return rptMarcacion;
+                        }).forEach((rptMarcacion) -> {
+                            marcacionList.add(rptMarcacion);
+                        });
+                    });
+            if (!marcacionList.isEmpty()) {
+                System.out.println("MARCACION LIST: "+marcacionList.size());
+                DlgAgregarMarcacion agregarMarcacion = new DlgAgregarMarcacion(marcacionList, this, true);
+                agregarMarcacion.setVisible(true);
+                this.generarReporte();
+            }else{
+                JOptionPane.showMessageDialog(this, "No existen eventos por subsanar", "Mensaje del sistema", JOptionPane.INFORMATION_MESSAGE);
+            }
+
+        }
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     private Departamento oficinaSeleccionada;
 
@@ -665,8 +706,6 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
         bindeo.addBinding(binding2);
         bindeo.addBinding(binding3);
         bindeo.bind();
-        
-        
 
         DefaultListCellRenderer renderGrupo = new DefaultListCellRenderer() {
 
@@ -694,7 +733,7 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
             }
 
         };
-        
+
 //        tblAsistenciaDetallado.setDefaultRenderer(Date.class, new DefaultTableCellRenderer(){
 //            @Override
 //            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
@@ -705,7 +744,6 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
 //            }
 //            
 //        });
-
         cboPeriodo.setRenderer(renderPeriodo);
         cboPeriodo1.setRenderer(renderPeriodo);
         cboGrupoHorario.setRenderer(renderGrupo);
@@ -720,15 +758,15 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
         Map<String, Object> parametros = this.obtenerParametros();
         Component report = reporteador.obtenerReporte(this.asistenciaDetalleList, archivo, parametros);
 //        pnlTab.removeTabAt(0);
-        pnlTab.add("Vista previa "+pnlTab.getTabCount(), report);
-        pnlTab.setSelectedIndex(pnlTab.getTabCount()-1);
+        pnlTab.add("Vista previa " + pnlTab.getTabCount(), report);
+        pnlTab.setSelectedIndex(pnlTab.getTabCount() - 1);
     }
 
     private Map<String, Object> obtenerParametros() {
         Calendar cal = Calendar.getInstance();
 
         String usuario = UsuarioActivo.getUsuario().getLogin();
-        
+
         Date[] fechas = this.obtenerFechasLimite();
         Map<String, Object> parametros = new HashMap<>();
         parametros.put("usuario", usuario);
@@ -738,7 +776,7 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
         parametros.put("reporte_logo", Main.REPORTE_LOGO);
         parametros.put("reporte_institucion", Main.REPORTE_INSTITUCION);
         parametros.put("reporte_usuario", UsuarioActivo.getUsuario().getLogin());
-        parametros.put("rangoValor", String.format("%s - %s", HerramientaGeneral.formatoFecha.format(fechas[0]),HerramientaGeneral.formatoFecha.format(fechas[1])));
+        parametros.put("rangoValor", String.format("%s - %s", HerramientaGeneral.formatoFecha.format(fechas[0]), HerramientaGeneral.formatoFecha.format(fechas[1])));
 //        parametros.put("mostrar_he", chkHFH.isSelected());
 
         return parametros;
@@ -750,9 +788,9 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
 
         List<Empleado> lista = new ArrayList<>();
         Date fechas[] = this.obtenerFechasLimite();
-        if(radTodos.isSelected()){
+        if (radTodos.isSelected()) {
             lista = this.ec.buscarTodos();
-        }else if (radGrupo.isSelected()) {
+        } else if (radGrupo.isSelected()) {
             obtenerGrupo();
             List<DetalleGrupoHorario> detalleGrupo = dgc.buscarXGrupo(grupoSeleccionado);
             for (DetalleGrupoHorario detalle : detalleGrupo) {
@@ -762,9 +800,9 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
             for (Empleado empleado : empleadoList) {
                 lista.add(empleado);
             }
-        } else if (radOficina.isSelected()) {   
+        } else if (radOficina.isSelected()) {
             List<AreaEmpleado> areaEmpleadoList = aempc.buscarXEmpleadoXFecha(oficinaSeleccionada, fechas[0], fechas[1]);
-            for(AreaEmpleado areaEmpleado : areaEmpleadoList){
+            for (AreaEmpleado areaEmpleado : areaEmpleadoList) {
                 lista.add(areaEmpleado.getEmpleado());
             }
 //            List<FichaLaboral> fichas = oficinaSeleccionada.getFichaLaboralList();
@@ -814,30 +852,29 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
         String reporte = "";
         File archivo = new File(reporte);
         Map<String, Object> parametros = this.obtenerParametros();
-        if(formato != Formato.PDF){
+        if (formato != Formato.PDF) {
             parametros.put("MOSTRAR_TITULO", false);
-        }        
+        }
         reporteador.setConn(pc.getDao().getConexion());
         reporteador.exportarReporte(archivo, parametros, formato, ruta);
     }
 
     private List<Asistencia> asistenciaList;
     private Interprete interpreteResumen = new InterpreteResumenGRP();
-    
+
     private void generarReporte() {
         List<Empleado> empleados = obtenerDNI();
         Date[] fechasLimite = this.obtenerFechasLimite();
         asistenciaList = analisis.analizarAsistencia(empleados, fechasLimite[0], fechasLimite[1]);
-        System.out.println("ASISTENCIA LISt: "+asistenciaList.size());
+        System.out.println("ASISTENCIA LISt: " + asistenciaList.size());
         List<RptAsistenciaDetallado> asistenciaDetallado = interprete.interpretar(asistenciaList);
-        System.out.println("LUEGO DE INTERPRETAR: "+asistenciaDetallado.size());
+        System.out.println("LUEGO DE INTERPRETAR: " + asistenciaDetallado.size());
         this.asistenciaDetalleList.clear();
-        this.asistenciaDetalleList.addAll(asistenciaDetallado.stream().sorted((a1,a2) ->
-        {            
+        this.asistenciaDetalleList.addAll(asistenciaDetallado.stream().sorted((a1, a2) -> {
             int comparacion = a1.getRegimenLaboral().compareTo(a2.getRegimenLaboral());
-            if(comparacion == 0){
+            if (comparacion == 0) {
                 comparacion = a1.getEmpleado().getNombreCompleto().compareTo(a2.getEmpleado().getNombreCompleto());
-                if(comparacion == 0){
+                if (comparacion == 0) {
                     comparacion = a1.getFecha().compareTo(a2.getFecha());
                 }
             }
@@ -871,50 +908,50 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
             cal.set(anio, 11, 31);
             fechaFin = cal.getTime();
         }
-        
+
         fechas[0] = fechaInicio;
         fechas[1] = fechaFin;
-        
+
         return fechas;
     }
-    
-    private Component nuevoTab(Component reporte){
+
+    private Component nuevoTab(Component reporte) {
         JPanel pnlPrincipal = new JPanel();
         pnlPrincipal.setLayout(new BorderLayout());
-        
+
         JPanel pnlCerrar = new JPanel();
         pnlCerrar.setLayout(new BoxLayout(pnlCerrar, BoxLayout.LINE_AXIS));
-        
+
         JButton boton = new JButton();
         boton.setText("Cerrar pestaña");
         boton.setFont(fuente);
         boton.addActionListener((java.awt.event.ActionEvent evt) -> {
             cerrarTabActivo();
         });
-        
+
         pnlCerrar.add(boton);
-        
+
         pnlPrincipal.add(pnlCerrar, BorderLayout.NORTH);
         pnlPrincipal.add(reporte, BorderLayout.CENTER);
-        
+
         return pnlPrincipal;
     }
-    
-    private void cerrarTabActivo(){
+
+    private void cerrarTabActivo() {
         int tabIndex = this.pnlTab.getSelectedIndex();
-        if(tabIndex > 0){
+        if (tabIndex > 0) {
             this.pnlTab.remove(tabIndex);
         }
-        
+
     }
 
     private void imprimirResumen() {
         File resumenFile = new File("reportes/reporte_asistencia_resumen.jasper");
-        
+
         Map<String, Object> parametros = this.obtenerParametros();
         Component report = reporteador.obtenerReporte(interpreteResumen.interpretar(asistenciaList), resumenFile, parametros);
 //        pnlTab.removeTabAt(0);
-        pnlTab.add("Resumen "+pnlTab.getTabCount(), report);
-        pnlTab.setSelectedIndex(pnlTab.getTabCount()-1);
+        pnlTab.add("Resumen " + pnlTab.getTabCount(), report);
+        pnlTab.setSelectedIndex(pnlTab.getTabCount() - 1);
     }
 }
