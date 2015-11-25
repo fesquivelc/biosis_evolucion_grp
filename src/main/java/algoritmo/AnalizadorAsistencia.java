@@ -507,13 +507,13 @@ public class AnalizadorAsistencia {
 //        System.out.println("BOLETAS: " + boletas.size());
 
         this.boletaXFechaList = this.bolc.permisoXFechaXEmpleadoEntreFecha(empleado, fechaInicio, fechaFin);
-        System.out.println("TAMAÃ‘O BOLETAS FECHA A: " + this.boletaXFechaList.size());
+        System.out.println("TAMAÑO BOLETAS FECHA A: " + this.boletaXFechaList.size());
         for (int i = 0; i < boletaXFechaList.size(); i++) {
             if (boletaXFechaList.get(i).getFinFechaHora() == null || boletaXFechaList.get(i).getInicioFechaHora() == null) {
                 this.boletaXFechaList.remove(i);
             }
         }
-        System.out.println("TAMAÃ‘O BOLETAS FECHA D: " + this.boletaXFechaList.size());
+        System.out.println("TAMAÑO BOLETAS FECHA D: " + this.boletaXFechaList.size());
 //        this.boletaXFechaList = boletas.stream().filter(bol -> {
 //            if (bol.getInicioFechaHora() == null || bol.getFinFechaHora() == null) {
 //                return false;
