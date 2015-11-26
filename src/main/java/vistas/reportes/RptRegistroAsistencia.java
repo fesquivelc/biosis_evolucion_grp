@@ -131,9 +131,9 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
         tabDetallado = new javax.swing.JPanel();
         pnlOpciones = new javax.swing.JPanel();
         jButton4 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
         btnImprimir = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         tblAsistenciaDetallado = new org.jdesktop.swingx.JXTable();
         pnlCerrarTab = new javax.swing.JPanel();
@@ -212,7 +212,7 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
         cboPeriodo1.setFont(new java.awt.Font("SansSerif", 0, 11)); // NOI18N
         cboPeriodo1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         pnlRango.add(cboPeriodo1, gridBagConstraints);
@@ -413,6 +413,15 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
         });
         pnlOpciones.add(jButton4);
 
+        jButton6.setFont(new java.awt.Font("SansSerif", 1, 11)); // NOI18N
+        jButton6.setText("Marcación manual");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+        pnlOpciones.add(jButton6);
+
         btnImprimir.setFont(new java.awt.Font("SansSerif", 1, 11)); // NOI18N
         btnImprimir.setText("Imprimir");
         btnImprimir.addActionListener(new java.awt.event.ActionListener() {
@@ -430,15 +439,6 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
             }
         });
         pnlOpciones.add(jButton3);
-
-        jButton5.setFont(new java.awt.Font("SansSerif", 1, 11)); // NOI18N
-        jButton5.setText("Marcación manual");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
-            }
-        });
-        pnlOpciones.add(jButton5);
 
         tabDetallado.add(pnlOpciones, java.awt.BorderLayout.PAGE_END);
 
@@ -648,7 +648,7 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JPanel pnlBotones;

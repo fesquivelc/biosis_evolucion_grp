@@ -69,10 +69,12 @@ public class InterpreteResumenGRP implements Interprete<RptAsistenciaResumen> {
                     asistenciaResumen.setEmpleado(empleado);
                 }
                 if (asistencia.getResultado() == AnalizadorAsistencia.ASISTENCIA) {
+                    System.out.println("ES UNA ASISTENCIA");
                     Long marcacionesMaximas = asistencia.getDetalleAsistenciaList().stream().filter(d -> d.getHoraReferencia() != null).count();
-                    int tipo = this.obtenerTipo(asistencia.getDetalleAsistenciaList(), marcacionesMaximas.intValue());
+                    int tipo = this.obtenerTipo(asistencia.getDetalleAsistenciaList(), marcacionesMaximas.intValue(), asistencia.getPermisoList());
 
                     if (tipo == AnalizadorAsistencia.INASISTENCIA) {
+                        System.out.println("ES UNA FALTA");
                         numeroDiasFalta++;
                     } else if (tipo == AnalizadorAsistencia.TARDANZA || tipo == AnalizadorAsistencia.INCONSISTENCIA) {
                         tardanza += minutosTardanza(asistencia.getDetalleAsistenciaList(), marcacionesMaximas.intValue());
@@ -156,31 +158,71 @@ public class InterpreteResumenGRP implements Interprete<RptAsistenciaResumen> {
         return tardanza;
     }
 
-    private int obtenerTipo(List<DetalleAsistencia> detalleAsistenciaList, int conteo) {
+    private int obtenerTipo(List<DetalleAsistencia> detalleAsistenciaList, int conteo,List<DetalleAsistencia> permisoList) {
 
 //        System.out.println("CONTEO: "+conteo.intValue());
+//        int marcacionesPendientes = 0;
+//        boolean hayTardanza = false;
+//        for (int i = 0; i < conteo; i++) {
+//            DetalleAsistencia detalle = detalleAsistenciaList.get(i);
+//
+//            if (detalle.getHoraEvento() == null) {
+//                if (!detalle.isPermiso()) {
+//                    marcacionesPendientes++;
+//                }
+//            } else {
+//                hayTardanza
+//                        = hayTardanza
+//                        || detalle.isBandera() && tardanzaMin(FechaUtil.soloHora(detalle.getHoraEvento()), FechaUtil.soloHora(detalle.getHoraReferenciaTolerancia())) > 1;
+//            }
+//        }
+//
+//        if (marcacionesPendientes > 0) {
+//            return AnalizadorAsistencia.INASISTENCIA;
+//        } else if (hayTardanza) {
+//            return AnalizadorAsistencia.TARDANZA;
+//        } else {
+//            return AnalizadorAsistencia.REGULAR;
+//        }
         int marcacionesPendientes = 0;
         boolean hayTardanza = false;
-        for (int i = 0; i < conteo; i++) {
-            DetalleAsistencia detalle = detalleAsistenciaList.get(i);
+        DetalleAsistencia entrada = detalleAsistenciaList.get(0);
+        DetalleAsistencia salida = detalleAsistenciaList.get(detalleAsistenciaList.size() - 1);
 
-            if (detalle.getHoraEvento() == null) {
-                if (!detalle.isPermiso()) {
-                    marcacionesPendientes++;
+        if ((entrada.getHoraEvento() != null || entrada.isPermiso()) && (salida.getHoraEvento() != null || salida.isPermiso())) {
+            hayTardanza = (!entrada.isPermiso() && tardanzaMin(FechaUtil.soloHora(entrada.getHoraEvento()), FechaUtil.soloHora(entrada.getHoraReferenciaTolerancia())) > 1);
+
+            if (hayTardanza) {
+                return AnalizadorAsistencia.TARDANZA;
+            } else {
+                return AnalizadorAsistencia.REGULAR;
+            }
+        } else {
+            if ((entrada.getHoraEvento() == null && !entrada.isPermiso()) && (salida.getHoraEvento() == null && !salida.isPermiso())) {
+                /*
+                 PUEDE SER FALTA, SE HA DE COMPROBAR INCONSISTENCIA
+                 */
+                if (permisoList != null) {
+                    if (!permisoList.isEmpty()) {
+                        return AnalizadorAsistencia.INCONSISTENCIA;
+                    }
+                }
+
+                if (conteo > 2) {
+                    for (int i = 1; i < detalleAsistenciaList.size() - 1; i++) {
+                        DetalleAsistencia refrigerio = detalleAsistenciaList.get(i);
+                        if (refrigerio.getHoraEvento() != null) {
+                            return AnalizadorAsistencia.INCONSISTENCIA;
+                        }
+
+                    }
+                    return AnalizadorAsistencia.INASISTENCIA;
+                } else {
+                    return AnalizadorAsistencia.INASISTENCIA;
                 }
             } else {
-                hayTardanza
-                        = hayTardanza
-                        || detalle.isBandera() && tardanzaMin(FechaUtil.soloHora(detalle.getHoraEvento()), FechaUtil.soloHora(detalle.getHoraReferenciaTolerancia())) > 1;
+                return AnalizadorAsistencia.INCONSISTENCIA;
             }
-        }
-
-        if (marcacionesPendientes > 0) {
-            return AnalizadorAsistencia.INASISTENCIA;
-        } else if (hayTardanza) {
-            return AnalizadorAsistencia.TARDANZA;
-        } else {
-            return AnalizadorAsistencia.REGULAR;
         }
     }
 
@@ -209,22 +251,42 @@ public class InterpreteResumenGRP implements Interprete<RptAsistenciaResumen> {
 
     private double obtenerHorasLaboradas(List<DetalleAsistencia> detalles) {
         double totalHoras = 0;
-
+        System.out.println("ENTRO A HORAS LABORADAS");
         int posicion = 0;
         while (posicion < detalles.size()) {
+            System.out.println("ENTRO AL WHILE");
             DetalleAsistencia ingreso = detalles.get(posicion);
             DetalleAsistencia salida = detalles.get(posicion + 1);
             
             if (!(ingreso.isPermiso() || salida.isPermiso())) {
-                long salidaMilis = salida.getHoraEvento() == null ? salida.getHoraReferencia().getTime() : salida.getHoraEvento().getTime();
-                long ingresoMilis = ingreso.getHoraEvento() == null ? ingreso.getHoraReferencia().getTime() : ingreso.getHoraEvento().getTime();
-                totalHoras += (salidaMilis - ingresoMilis);
+                System.out.println("ESTA OBTENIENDO HORAS");
+                long salidaMilis; 
+//                        = salida.getHoraEvento() == null ? salida.getHoraReferencia().getTime() : salida.getHoraEvento().getTime();
+                long ingresoMilis; 
+//                        = ingreso.getHoraEvento() == null ? ingreso.getHoraReferencia().getTime() : ingreso.getHoraEvento().getTime();
+                if(salida.getHoraEvento() == null){
+                    salidaMilis = salida.getHoraReferencia().getTime();
+                }else if(FechaUtil.soloHora(salida.getHoraEvento()).compareTo(salida.getHoraReferencia())>0){
+                    salidaMilis = salida.getHoraReferencia().getTime();
+                }else{
+                    salidaMilis = FechaUtil.soloHora(salida.getHoraEvento()).getTime();
+                }
+                if(ingreso.getHoraEvento() == null){
+                    ingresoMilis = ingreso.getHoraReferencia().getTime();
+                }else if(FechaUtil.soloHora(ingreso.getHoraEvento()).compareTo(ingreso.getHoraReferencia())<0){
+                    ingresoMilis = ingreso.getHoraReferencia().getTime();
+                }else{
+                    ingresoMilis = FechaUtil.soloHora(ingreso.getHoraEvento()).getTime();
+                }
                 
+                totalHoras += (salidaMilis - ingresoMilis);
+                Date ingresod = new Date(ingresoMilis);
+                Date salidad = new Date(salidaMilis);
+                System.out.println("CONTEO DE: "+ingresod+" - "+salidad);
             }
 
             posicion += 2;
         }
-
         return totalHoras / (60 * 1000 * 60);
     }
 }

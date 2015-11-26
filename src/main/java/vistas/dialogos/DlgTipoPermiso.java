@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package vistas.dialogos;
-
+ 
 import controladores.Controlador;
 import controladores.TipoPermisoControlador;
 import entidades.TipoPermiso;

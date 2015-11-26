@@ -122,7 +122,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem5 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("SISTEMA DE CONTROL DE ASISTENCIA DE PERSONAL - BIOSIS - SAN MARCOS");
+        setTitle("SISTEMA DE CONTROL DE ASISTENCIA DE PERSONAL - BIOSIS - GOBIERNO REGIONAL PIURA");
         setIconImage(new javax.swing.ImageIcon("iconos/logo.png").getImage());
 
         desktopPane.setDragMode(javax.swing.JDesktopPane.OUTLINE_DRAG_MODE);
