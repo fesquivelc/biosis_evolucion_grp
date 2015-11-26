@@ -27,7 +27,7 @@ import utiles.Encriptador;
  * @author gabriel
  * @param <T>
  */
-public class DAOBiosis<T> {
+public class DAOBiosis<T> implements DAO<T> {
 
     protected String PU = "biosis-PU";
     protected static EntityManager em;
@@ -42,6 +42,7 @@ public class DAOBiosis<T> {
         this.clase = null;
     }
 
+    @Override
     public EntityManager getEntityManager() {
         if (em == null) {
             Properties configuracion = PropertiesUtil.cargarProperties("config/biosis-config.properties");
@@ -61,8 +62,8 @@ public class DAOBiosis<T> {
             properties.put("javax.persistence.schema-generation.database.action", "none");
 
 //            try {
-                EntityManagerFactory emf = Persistence.createEntityManagerFactory(this.PU, properties);
-                em = emf.createEntityManager();
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory(this.PU, properties);
+            em = emf.createEntityManager();
 //            } catch (Exception e) {
 //                System.out.println("EM: " + e.getCause().getMessage() + " " + e.getMessage());
 //            }
@@ -71,6 +72,7 @@ public class DAOBiosis<T> {
         return em;
     }
 
+    @Override
     public Connection getConexion() {
         Session sesion = (Session) getEntityManager().getDelegate();
         SessionFactoryImpl sessionFactory = (SessionFactoryImpl) sesion.getSessionFactory();
@@ -88,7 +90,8 @@ public class DAOBiosis<T> {
 
     }
 
-    public boolean guardar(T objeto) {
+    @Override
+    public Boolean guardar(T objeto) {
         try {
             getEntityManager().getTransaction().begin();
             getEntityManager().persist(objeto);
@@ -96,19 +99,20 @@ public class DAOBiosis<T> {
             getEntityManager().clear();
             return true;
         } catch (Exception e) {
-            LOG.error("ERROR EN EL GUARDADO: " + e.getLocalizedMessage() + " " + e.getMessage()+ " "+e.getCause());
+            LOG.error("ERROR EN EL GUARDADO: " + e.getLocalizedMessage() + " " + e.getMessage() + " " + e.getCause());
             em = null;
             return false;
         }
 
     }
 
-    public boolean guardarLote(List<T> lote) {
+    @Override
+    public Boolean guardarLote(List<T> lote) {
         try {
             getEntityManager().getTransaction().begin();
-            for (T objeto : lote) {
+            lote.stream().forEach((objeto) -> {
                 getEntityManager().persist(objeto);
-            }
+            });
             getEntityManager().getTransaction().commit();
             return true;
         } catch (Exception e) {
@@ -118,7 +122,8 @@ public class DAOBiosis<T> {
         }
     }
 
-    public boolean modificar(T objeto) {
+    @Override
+    public Boolean modificar(T objeto) {
         try {
             getEntityManager().getTransaction().begin();
             getEntityManager().merge(objeto);
@@ -132,7 +137,8 @@ public class DAOBiosis<T> {
 
     }
 
-    public boolean eliminar(T objeto) {
+    @Override
+    public Boolean eliminar(T objeto) {
         try {
             getEntityManager().getTransaction().begin();
             getEntityManager().remove(objeto);
@@ -145,22 +151,25 @@ public class DAOBiosis<T> {
         }
     }
 
+    @Override
     public List<T> buscar(String queryJPQL) {
         return this.buscar(queryJPQL, null, -1, -1);
     }
 
+    @Override
     public List<T> buscar(String queryJPQL, Map<String, Object> parametros) {
         return this.buscar(queryJPQL, parametros, -1, -1);
     }
 
+    @Override
     public List<T> buscar(String queryJPQL, Map<String, Object> parametros, int inicio, int tamanio) {
         try {
             Query query = getEntityManager().createQuery(queryJPQL);
 
             if (parametros != null) {
-                for (Map.Entry<String, Object> entry : parametros.entrySet()) {
+                parametros.entrySet().stream().forEach((entry) -> {
                     query.setParameter(entry.getKey(), entry.getValue());
-                }
+                });
             }
 
             if (inicio != -1) {
@@ -182,14 +191,15 @@ public class DAOBiosis<T> {
 
     }
 
+    @Override
     public int contar(String queryJPQL, Map<String, Object> parametros) {
         try {
             Query query = getEntityManager().createQuery(queryJPQL);
 
             if (parametros != null) {
-                for (Map.Entry<String, Object> entry : parametros.entrySet()) {
+                parametros.entrySet().stream().forEach((entry) -> {
                     query.setParameter(entry.getKey(), entry.getValue());
-                }
+                });
             }
 
             Long conteo = (Long) query.getSingleResult();
@@ -203,12 +213,14 @@ public class DAOBiosis<T> {
 
     }
 
+    @Override
     public List<T> buscarTodos() {
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(clase));
         return getEntityManager().createQuery(cq).getResultList();
     }
 
+    @Override
     public int contar() {
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         javax.persistence.criteria.Root<T> rt = cq.from(clase);
@@ -217,6 +229,7 @@ public class DAOBiosis<T> {
         return ((Long) q.getSingleResult()).intValue();
     }
 
+    @Override
     public T buscarPorId(Object id) {
         return getEntityManager().find(clase, id);
     }

@@ -6,6 +6,7 @@
 
 package controladores;
 
+import dao.DAO;
 import dao.DAOBiosis;
 import java.util.List;
 import java.util.logging.Level;
@@ -17,7 +18,7 @@ import java.util.logging.Logger;
  * @param <T>
  */
 public abstract class Controlador<T>{
-    private final DAOBiosis<T> dao;
+    private final DAO<T> dao;
     public static final int NUEVO = 1;
     public static final int MODIFICAR = 2;
     public static final int ELIMINAR = 3;
@@ -32,7 +33,7 @@ public abstract class Controlador<T>{
         this.seleccionado = seleccionado;
     }        
 
-    public DAOBiosis<T> getDao() {
+    public DAO<T> getDao() {
         return dao;
     }
 
@@ -41,37 +42,72 @@ public abstract class Controlador<T>{
         this.dao = new DAOBiosis<>(clase);
     }        
     
-    public Controlador(Class<T> clase, DAOBiosis<T> dao){
+    public Controlador(Class<T> clase, DAO<T> dao){
         this.seleccionadoClass = clase;
         this.dao = dao;
     }
 
     public boolean guardar(T objeto) {
-        return this.dao.guardar(objeto);
+        try {
+            return this.dao.guardar(objeto);
+        } catch (Exception ex) {
+            Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
     }
     
     public boolean guardarLote(List<T> lote){
-        return this.dao.guardarLote(lote);
+        try {
+            return this.dao.guardarLote(lote);
+        } catch (Exception ex) {
+            Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
     }
 
     public boolean modificar(T objeto) {
-        return this.dao.modificar(objeto);
+        try {
+            return this.dao.modificar(objeto);
+        } catch (Exception ex) {
+            Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
     }
 
     public boolean eliminar(T objeto) {
-        return this.dao.eliminar(objeto);
+        try {
+            return this.dao.eliminar(objeto);
+        } catch (Exception ex) {
+            Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
     }
     
     public List<T> buscarTodos(){
-        return this.dao.buscarTodos();
+        try {
+            return this.dao.buscarTodos();
+        } catch (Exception ex) {
+            Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
     }
     
     public T buscarPorId(Object id){
-        return this.dao.buscarPorId(id);
+        try {
+            return this.dao.buscarPorId(id);
+        } catch (Exception ex) {
+            Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
     }
     
     public List<T> buscar(String nombre){
-        return this.dao.buscar(nombre);
+        try {
+            return this.dao.buscar(nombre);
+        } catch (Exception ex) {
+            Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
     }
     
     public int conteo(){
@@ -88,12 +124,15 @@ public abstract class Controlador<T>{
     
     
     public boolean accion(int accion) {
-        if (accion == Controlador.NUEVO) {
-            return this.guardar(seleccionado);
-        } else if (accion == Controlador.MODIFICAR) {
-            return this.modificar(seleccionado);
-        } else if (accion == Controlador.ELIMINAR) {
-            return this.eliminar(seleccionado);
+        switch (accion) {
+            case Controlador.NUEVO:
+                return this.guardar(seleccionado);
+            case Controlador.MODIFICAR:
+                return this.modificar(seleccionado);
+            case Controlador.ELIMINAR:
+                return this.eliminar(seleccionado);
+            default:
+                break;
         }
         return false;
     }
