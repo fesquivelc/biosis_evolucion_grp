@@ -155,7 +155,7 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
         pnlRango.setBorder(javax.swing.BorderFactory.createTitledBorder("Rango"));
         pnlRango.setLayout(new java.awt.GridBagLayout());
 
-        radPorFecha.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        radPorFecha.setFont(new java.awt.Font("SansSerif", 0, 11)); // NOI18N
         radPorFecha.setSelected(true);
         radPorFecha.setText("Por fechas:");
         radPorFecha.addActionListener(new java.awt.event.ActionListener() {
@@ -167,7 +167,7 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         pnlRango.add(radPorFecha, gridBagConstraints);
 
-        radMes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        radMes.setFont(new java.awt.Font("SansSerif", 0, 11)); // NOI18N
         radMes.setText("Por mes:");
         radMes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -180,7 +180,7 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         pnlRango.add(radMes, gridBagConstraints);
 
-        radAnio.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        radAnio.setFont(new java.awt.Font("SansSerif", 0, 11)); // NOI18N
         radAnio.setText("Por año:");
         radAnio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -195,10 +195,12 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         pnlRango.add(cboMes, gridBagConstraints);
 
-        cboPeriodo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cboPeriodo.setFont(new java.awt.Font("SansSerif", 0, 11)); // NOI18N
         cboPeriodo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -207,22 +209,28 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         pnlRango.add(cboPeriodo, gridBagConstraints);
 
-        cboPeriodo1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cboPeriodo1.setFont(new java.awt.Font("SansSerif", 0, 11)); // NOI18N
         cboPeriodo1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         pnlRango.add(cboPeriodo1, gridBagConstraints);
+
+        dcFechaInicio.setFont(new java.awt.Font("SansSerif", 0, 11)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.weightx = 0.1;
         pnlRango.add(dcFechaInicio, gridBagConstraints);
+
+        dcFechaFin.setFont(new java.awt.Font("SansSerif", 0, 11)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.weightx = 0.1;
         pnlRango.add(dcFechaFin, gridBagConstraints);
@@ -238,7 +246,7 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
         pnlEmpleados.setBorder(javax.swing.BorderFactory.createTitledBorder("Selección de empleados"));
         pnlEmpleados.setLayout(new java.awt.GridBagLayout());
 
-        radGrupo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        radGrupo.setFont(new java.awt.Font("SansSerif", 0, 11)); // NOI18N
         radGrupo.setText("Por grupo horario:");
         radGrupo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -251,7 +259,7 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         pnlEmpleados.add(radGrupo, gridBagConstraints);
 
-        radPersonalizado.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        radPersonalizado.setFont(new java.awt.Font("SansSerif", 0, 11)); // NOI18N
         radPersonalizado.setText("Personalizado:");
         radPersonalizado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -264,7 +272,7 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         pnlEmpleados.add(radPersonalizado, gridBagConstraints);
 
-        cboGrupoHorario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cboGrupoHorario.setFont(new java.awt.Font("SansSerif", 0, 11)); // NOI18N
         cboGrupoHorario.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cboGrupoHorario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -277,7 +285,7 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         pnlEmpleados.add(cboGrupoHorario, gridBagConstraints);
 
-        tblTabla.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tblTabla.setFont(new java.awt.Font("SansSerif", 0, 11)); // NOI18N
         jScrollPane1.setViewportView(tblTabla);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -289,6 +297,7 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
         gridBagConstraints.weighty = 0.1;
         pnlEmpleados.add(jScrollPane1, gridBagConstraints);
 
+        btnAgregar.setFont(new java.awt.Font("SansSerif", 0, 11)); // NOI18N
         btnAgregar.setText("+");
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -301,6 +310,7 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         pnlEmpleados.add(btnAgregar, gridBagConstraints);
 
+        btnQuitar.setFont(new java.awt.Font("SansSerif", 0, 11)); // NOI18N
         btnQuitar.setText("-");
         btnQuitar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -313,7 +323,7 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         pnlEmpleados.add(btnQuitar, gridBagConstraints);
 
-        radOficina.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        radOficina.setFont(new java.awt.Font("SansSerif", 0, 11)); // NOI18N
         radOficina.setText("Por oficina:");
         radOficina.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -327,13 +337,14 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
         pnlEmpleados.add(radOficina, gridBagConstraints);
 
         txtOficina.setEditable(false);
-        txtOficina.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtOficina.setFont(new java.awt.Font("SansSerif", 0, 11)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         pnlEmpleados.add(txtOficina, gridBagConstraints);
 
+        btnOficina.setFont(new java.awt.Font("SansSerif", 0, 11)); // NOI18N
         btnOficina.setText("...");
         btnOficina.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -345,7 +356,7 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
         gridBagConstraints.gridy = 2;
         pnlEmpleados.add(btnOficina, gridBagConstraints);
 
-        radTodos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        radTodos.setFont(new java.awt.Font("SansSerif", 0, 11)); // NOI18N
         radTodos.setSelected(true);
         radTodos.setText("Todos");
         radTodos.addActionListener(new java.awt.event.ActionListener() {
@@ -369,7 +380,7 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
 
         pnlBotones.setLayout(new java.awt.GridBagLayout());
 
-        jButton2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton2.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         jButton2.setText("GENERAR REPORTE");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -393,6 +404,7 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
 
         pnlOpciones.setLayout(new java.awt.GridLayout(1, 0, 5, 0));
 
+        jButton4.setFont(new java.awt.Font("SansSerif", 1, 11)); // NOI18N
         jButton4.setText("Ver marcaciones en el día");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -401,7 +413,7 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
         });
         pnlOpciones.add(jButton4);
 
-        btnImprimir.setFont(new java.awt.Font("SansSerif", 0, 13)); // NOI18N
+        btnImprimir.setFont(new java.awt.Font("SansSerif", 1, 11)); // NOI18N
         btnImprimir.setText("Imprimir");
         btnImprimir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -410,7 +422,7 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
         });
         pnlOpciones.add(btnImprimir);
 
-        jButton3.setFont(new java.awt.Font("SansSerif", 0, 13)); // NOI18N
+        jButton3.setFont(new java.awt.Font("SansSerif", 1, 11)); // NOI18N
         jButton3.setText("Imprimir Resumen");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -419,6 +431,7 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
         });
         pnlOpciones.add(jButton3);
 
+        jButton5.setFont(new java.awt.Font("SansSerif", 1, 11)); // NOI18N
         jButton5.setText("Marcación manual");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -440,6 +453,7 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblAsistenciaDetallado.setFont(new java.awt.Font("SansSerif", 0, 11)); // NOI18N
         tblAsistenciaDetallado.setHorizontalScrollEnabled(true);
         jScrollPane4.setViewportView(tblAsistenciaDetallado);
 

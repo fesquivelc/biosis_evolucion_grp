@@ -16,15 +16,18 @@ import javax.persistence.EntityManager;
  * @param <T>
  */
 public interface DAO<T> {
-    public EntityManager getEntityManager() throws Exception;
-    public Connection getConexion() throws Exception;
-    public Boolean crear(T objeto) throws Exception;
-    public Boolean eliminar(T objeto) throws Exception;
-    public Boolean actualizar(T objeto) throws Exception;
-    public Boolean guardarLote(List<T> objeto) throws Exception;
-    public List<T> buscar(String queryJPQL, Map<String, Object> parametros, int inicio, int tamanio) throws Exception;
-    public int contar(String queryJPQL, Map<String, Object> parametros) throws Exception;
-    public List<T> buscarTodos(Class<T> clase) throws Exception;
-    public T buscarPorId(Object id, Class<T> clase) throws Exception;
+    public EntityManager getEntityManager();
+    public Connection getConexion();
+    public Boolean guardar(T objeto);
+    public Boolean eliminar(T objeto);
+    public Boolean modificar(T objeto);
+    public Boolean guardarLote(List<T> objeto);
+    public List<T> buscarTodos();
+    public List<T> buscar(String queryJPQL);
+    public List<T> buscar(String queryJPQL, Map<String, Object> parametros);
+    public List<T> buscar(String queryJPQL, Map<String, Object> parametros, int inicio, int tamanio);
+    public int contar();
+    public int contar(String queryJPQL, Map<String, Object> parametros);
+    public T buscarPorId(Object id);
     
 }

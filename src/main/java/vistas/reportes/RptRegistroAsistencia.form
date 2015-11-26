@@ -55,7 +55,7 @@
         <Component class="javax.swing.JRadioButton" name="radPorFecha">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="14" style="0"/>
+              <Font name="SansSerif" size="11" style="0"/>
             </Property>
             <Property name="selected" type="boolean" value="true"/>
             <Property name="text" type="java.lang.String" value="Por fechas:"/>
@@ -72,7 +72,7 @@
         <Component class="javax.swing.JRadioButton" name="radMes">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="14" style="0"/>
+              <Font name="SansSerif" size="11" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Por mes:"/>
           </Properties>
@@ -88,7 +88,7 @@
         <Component class="javax.swing.JRadioButton" name="radAnio">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="14" style="0"/>
+              <Font name="SansSerif" size="11" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Por a&#xf1;o:"/>
           </Properties>
@@ -104,14 +104,14 @@
         <Component class="com.toedter.calendar.JMonthChooser" name="cboMes">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
-              <GridBagConstraints gridX="1" gridY="1" gridWidth="1" gridHeight="1" fill="0" ipadX="0" ipadY="0" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="21" weightX="0.0" weightY="0.0"/>
+              <GridBagConstraints gridX="1" gridY="1" gridWidth="2" gridHeight="1" fill="2" ipadX="0" ipadY="0" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="21" weightX="0.0" weightY="0.0"/>
             </Constraint>
           </Constraints>
         </Component>
         <Component class="javax.swing.JComboBox" name="cboPeriodo">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="14" style="0"/>
+              <Font name="SansSerif" size="11" style="0"/>
             </Property>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="4">
@@ -131,7 +131,7 @@
         <Component class="javax.swing.JComboBox" name="cboPeriodo1">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="14" style="0"/>
+              <Font name="SansSerif" size="11" style="0"/>
             </Property>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="4">
@@ -144,21 +144,31 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
-              <GridBagConstraints gridX="2" gridY="1" gridWidth="2" gridHeight="1" fill="0" ipadX="0" ipadY="0" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="21" weightX="0.0" weightY="0.0"/>
+              <GridBagConstraints gridX="3" gridY="1" gridWidth="1" gridHeight="1" fill="0" ipadX="0" ipadY="0" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="21" weightX="0.0" weightY="0.0"/>
             </Constraint>
           </Constraints>
         </Component>
         <Component class="com.toedter.calendar.JDateChooser" name="dcFechaInicio">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="SansSerif" size="11" style="0"/>
+            </Property>
+          </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
-              <GridBagConstraints gridX="1" gridY="0" gridWidth="1" gridHeight="1" fill="0" ipadX="0" ipadY="0" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="21" weightX="0.0" weightY="0.0"/>
+              <GridBagConstraints gridX="1" gridY="0" gridWidth="1" gridHeight="1" fill="2" ipadX="0" ipadY="0" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="21" weightX="0.1" weightY="0.0"/>
             </Constraint>
           </Constraints>
         </Component>
         <Component class="com.toedter.calendar.JDateChooser" name="dcFechaFin">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="SansSerif" size="11" style="0"/>
+            </Property>
+          </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
-              <GridBagConstraints gridX="3" gridY="0" gridWidth="1" gridHeight="1" fill="0" ipadX="0" ipadY="0" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="21" weightX="0.1" weightY="0.0"/>
+              <GridBagConstraints gridX="2" gridY="0" gridWidth="1" gridHeight="1" fill="2" ipadX="0" ipadY="0" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="21" weightX="0.1" weightY="0.0"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -183,7 +193,7 @@
         <Component class="javax.swing.JRadioButton" name="radGrupo">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="14" style="0"/>
+              <Font name="SansSerif" size="11" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Por grupo horario:"/>
           </Properties>
@@ -199,7 +209,7 @@
         <Component class="javax.swing.JRadioButton" name="radPersonalizado">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="14" style="0"/>
+              <Font name="SansSerif" size="11" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Personalizado:"/>
           </Properties>
@@ -215,7 +225,7 @@
         <Component class="javax.swing.JComboBox" name="cboGrupoHorario">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="14" style="0"/>
+              <Font name="SansSerif" size="11" style="0"/>
             </Property>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="4">
@@ -250,7 +260,7 @@
             <Component class="org.jdesktop.swingx.JXTable" name="tblTabla">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Tahoma" size="14" style="0"/>
+                  <Font name="SansSerif" size="11" style="0"/>
                 </Property>
               </Properties>
             </Component>
@@ -258,6 +268,9 @@
         </Container>
         <Component class="javax.swing.JButton" name="btnAgregar">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="SansSerif" size="11" style="0"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="+"/>
           </Properties>
           <Events>
@@ -271,6 +284,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnQuitar">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="SansSerif" size="11" style="0"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="-"/>
           </Properties>
           <Events>
@@ -285,7 +301,7 @@
         <Component class="javax.swing.JRadioButton" name="radOficina">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="14" style="0"/>
+              <Font name="SansSerif" size="11" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Por oficina:"/>
           </Properties>
@@ -302,7 +318,7 @@
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="14" style="0"/>
+              <Font name="SansSerif" size="11" style="0"/>
             </Property>
           </Properties>
           <Constraints>
@@ -313,6 +329,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnOficina">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="SansSerif" size="11" style="0"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="..."/>
           </Properties>
           <Events>
@@ -327,7 +346,7 @@
         <Component class="javax.swing.JRadioButton" name="radTodos">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="14" style="0"/>
+              <Font name="SansSerif" size="11" style="0"/>
             </Property>
             <Property name="selected" type="boolean" value="true"/>
             <Property name="text" type="java.lang.String" value="Todos"/>
@@ -355,7 +374,7 @@
         <Component class="javax.swing.JButton" name="jButton2">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="14" style="0"/>
+              <Font name="SansSerif" size="12" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="GENERAR REPORTE"/>
           </Properties>
@@ -414,6 +433,9 @@
                   <SubComponents>
                     <Component class="javax.swing.JButton" name="jButton4">
                       <Properties>
+                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                          <Font name="SansSerif" size="11" style="1"/>
+                        </Property>
                         <Property name="text" type="java.lang.String" value="Ver marcaciones en el d&#xed;a"/>
                       </Properties>
                       <Events>
@@ -423,7 +445,7 @@
                     <Component class="javax.swing.JButton" name="btnImprimir">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                          <Font name="SansSerif" size="13" style="0"/>
+                          <Font name="SansSerif" size="11" style="1"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Imprimir"/>
                       </Properties>
@@ -434,7 +456,7 @@
                     <Component class="javax.swing.JButton" name="jButton3">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                          <Font name="SansSerif" size="13" style="0"/>
+                          <Font name="SansSerif" size="11" style="1"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Imprimir Resumen"/>
                       </Properties>
@@ -444,6 +466,9 @@
                     </Component>
                     <Component class="javax.swing.JButton" name="jButton5">
                       <Properties>
+                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                          <Font name="SansSerif" size="11" style="1"/>
+                        </Property>
                         <Property name="text" type="java.lang.String" value="Marcaci&#xf3;n manual"/>
                       </Properties>
                       <Events>
@@ -473,6 +498,9 @@
                             <Column editable="true" title="Title 3" type="java.lang.Object"/>
                             <Column editable="true" title="Title 4" type="java.lang.Object"/>
                           </Table>
+                        </Property>
+                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                          <Font name="SansSerif" size="11" style="0"/>
                         </Property>
                         <Property name="horizontalScrollEnabled" type="boolean" value="true"/>
                       </Properties>

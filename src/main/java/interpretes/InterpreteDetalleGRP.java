@@ -109,7 +109,8 @@ public class InterpreteDetalleGRP implements Interprete<RptAsistenciaDetallado> 
                     contador++;
                     detalleAsistencia.setDetalleFinal(marcacionContador == marcacionesMaximas.intValue());
                     if (contador == marcacionesMaximas.intValue() && tipo != AnalizadorAsistencia.INASISTENCIA && !detalle.isPermiso() && detalle.getHoraEvento() != null) {
-                        detalleAsistencia.setMinutosExtra(this.tardanzaMin(detalle.getHoraEvento(), detalle.getHoraReferencia()));
+                        double minutosExtra = this.tardanzaMin(detalle.getHoraEvento(), detalle.getHoraReferencia());
+                        detalleAsistencia.setMinutosExtra(minutosExtra >= 120 ? minutosExtra : 0);
                     }
                     if (contador == 4 || contador == marcacionesMaximas.intValue()) {
                         detalleAsistencia.setMinutosTardanza(minutosTardanza);

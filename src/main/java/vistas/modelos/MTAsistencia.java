@@ -24,7 +24,7 @@ public class MTAsistencia extends ModeloTabla<RptAsistenciaDetallado> {
     public MTAsistencia(List<RptAsistenciaDetallado> datos) {
         super(datos);
         this.formatoDecimal = new DecimalFormat("#.00");
-        this.nombreColumnas = new String[]{"DNI", "Empleado", "Fecha", "Horario", "Asistencia", "Entrada", "Salida", "Entrada", "Salida", "Descripción", "Tardanza", "Extra"};
+        this.nombreColumnas = new String[]{"DNI", "Empleado", "Fecha", "Horario", "Asistencia", "Entrada", "Salida", "Entrada", "Salida", "Descripción", "Tardanza (min)", "Extra (min)"};
     }
 
     @Override
@@ -87,8 +87,6 @@ public class MTAsistencia extends ModeloTabla<RptAsistenciaDetallado> {
                     return this.obtenerTipo(asistencia.getTipo());
                 case 9:
                     return asistencia.getPermisos();
-                case 10:
-                    return asistencia.getMinutosTardanza();
                 default:
                     return null;
             }

@@ -8,11 +8,6 @@ package algoritmo;
 import entidades.asistencia.Asistencia;
 import java.util.List;
 
-/**
- *
- * @author Francis
- * @param <T> Representa el objeto de la asistencia que se va a retornar, depende de <strong>CADA CASO EN PARTICULAR</strong>
- */
 public interface Interprete<T> {
     List<T> interpretar(List<Asistencia> registroAsistencia);
 }
