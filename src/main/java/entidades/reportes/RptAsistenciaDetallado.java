@@ -40,8 +40,17 @@ public class RptAsistenciaDetallado {
     private int marcacionesTotales;
     private boolean detalleFinal;
     private double minutosTardanza;
+    private double minutosTardanzaRefrigerio;
     private double minutosExtra;
     private int mes;
+
+    public double getMinutosTardanzaRefrigerio() {
+        return minutosTardanzaRefrigerio;
+    }
+
+    public void setMinutosTardanzaRefrigerio(double minutosTardanzaRefrigerio) {
+        this.minutosTardanzaRefrigerio = minutosTardanzaRefrigerio;
+    }
 
     public int getMes() {
         return mes;

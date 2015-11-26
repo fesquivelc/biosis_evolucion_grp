@@ -49,7 +49,8 @@ public class InterpreteDetalleGRP implements Interprete<RptAsistenciaDetallado> 
                 int contador = 0;
                 int marcacionContador = 0;
                 int contadorDetalles = 0;
-                double minutosTardanza = 0;
+                double minutosTardanzaEntrada = 0;
+                double minutosTardanzaRefrigerio = 0;
 
                 for (DetalleAsistencia detalle : asistencia.getDetalleAsistenciaList()) {
                     marcacionContador++;
@@ -63,15 +64,33 @@ public class InterpreteDetalleGRP implements Interprete<RptAsistenciaDetallado> 
                         detalleAsistencia.setRegimenLaboral(regimenLaboral);
                     }
 
-                    if (contadorDetalles == 0 && (tipo == AnalizadorAsistencia.TARDANZA || tipo == AnalizadorAsistencia.INCONSISTENCIA)) {
+                    if (tipo == AnalizadorAsistencia.TARDANZA || tipo == AnalizadorAsistencia.INCONSISTENCIA) {
+                        System.out.println(String.format("FECHA: %s BANDERA: %s DETALLE => (HR: %s HT: %s HE: %s) CONTADOR: %s",
+                                HerramientaGeneral.formatoFecha.format(asistencia.getFecha()), detalle.isBandera(), detalle.getHoraReferencia(), detalle.getHoraReferenciaTolerancia(), detalle.getHoraEvento(), contadorDetalles));
+                        if (detalle.isBandera() && detalle.getHoraEvento() != null) {
+                            System.out.println("CONTADOR DETALLES = " + contadorDetalles);
+                            if (contadorDetalles == 0) {
+                                minutosTardanzaEntrada = minutosTardanzaEntrada + this.tardanzaMin(detalle.getHoraEvento(), detalle.getHoraReferenciaTolerancia());
+                            }
+                        }
 
-                        if (detalle.isBandera() && detalle.getHoraReferenciaTolerancia() != null && !detalle.isPermiso() && detalle.getHoraEvento() != null) {
-                            System.out.println("BANDERA: " + detalle.getHoraReferencia());
-
-                            minutosTardanza = minutosTardanza + this.tardanzaMin(detalle.getHoraEvento(), detalle.getHoraReferenciaTolerancia());
+                    } else {
+                        if (detalle.isBandera() && detalle.getHoraEvento() != null) {
+                            if (contador > 0) {
+                                minutosTardanzaRefrigerio = minutosTardanzaRefrigerio + this.tardanzaMin(detalle.getHoraEvento(), detalle.getHoraReferenciaTolerancia());
+                                System.out.println("-- MINUTOS TARDANZA REFRIGERIO -- " + minutosTardanzaRefrigerio);
+                            }
                         }
                     }
 
+//                    if (contadorDetalles == 0 && (tipo == AnalizadorAsistencia.TARDANZA || tipo == AnalizadorAsistencia.INCONSISTENCIA)) {
+//
+//                        if (detalle.isBandera() && detalle.getHoraReferenciaTolerancia() != null && !detalle.isPermiso() && detalle.getHoraEvento() != null) {
+//                            System.out.println("BANDERA: " + detalle.getHoraReferencia());
+//
+//                            minutosTardanza = minutosTardanza + this.tardanzaMin(detalle.getHoraEvento(), detalle.getHoraReferenciaTolerancia());
+//                        }
+//                    }
                     switch (contador) {
                         case 0:
                             detalleAsistencia.setEnPermiso1(detalle.isPermiso());
@@ -113,13 +132,18 @@ public class InterpreteDetalleGRP implements Interprete<RptAsistenciaDetallado> 
                         detalleAsistencia.setMinutosExtra(minutosExtra >= 120 ? minutosExtra : 0);
                     }
                     if (contador == 4 || contador == marcacionesMaximas.intValue()) {
-                        detalleAsistencia.setMinutosTardanza(minutosTardanza);
+                        detalleAsistencia.setMinutosTardanza(minutosTardanzaEntrada);
+                        System.out.println("MINUTOS TARDANZA REFRIGERIO: " + minutosTardanzaRefrigerio);
+                        detalleAsistencia.setMinutosTardanzaRefrigerio(minutosTardanzaRefrigerio);
                         registro.add(detalleAsistencia);
 //                        detalleAsistencia = null;
                         contador = 0;
-                        minutosTardanza = 0;
+                        minutosTardanzaEntrada = 0;
+                        minutosTardanzaRefrigerio = 0;
                     }
+//                    System.out.println("-- CONTADOR DETALLES ANTES: "+contadorDetalles);
                     contadorDetalles++;
+//                    System.out.println("-- CONTADOR DETALLES DESPUES: "+contadorDetalles);
                 }
 
             } else {
@@ -279,7 +303,7 @@ public class InterpreteDetalleGRP implements Interprete<RptAsistenciaDetallado> 
                 if (asistencia.getBoleta().getMotivo() == null) {
                     return "(S) -- SIN MOTIVO --";
                 }
-                return "(S) "+asistencia.getBoleta().getMotivo().getDescripcion().toUpperCase();
+                return "(S) " + asistencia.getBoleta().getMotivo().getDescripcion().toUpperCase();
             default:
                 return "";
         }

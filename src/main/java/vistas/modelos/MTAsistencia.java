@@ -24,7 +24,7 @@ public class MTAsistencia extends ModeloTabla<RptAsistenciaDetallado> {
     public MTAsistencia(List<RptAsistenciaDetallado> datos) {
         super(datos);
         this.formatoDecimal = new DecimalFormat("#.00");
-        this.nombreColumnas = new String[]{"DNI", "Empleado", "Fecha", "Horario", "Asistencia", "Entrada", "Salida", "Entrada", "Salida", "Descripción", "Tardanza (min)", "Extra (min)"};
+        this.nombreColumnas = new String[]{"DNI", "Empleado", "Fecha", "Horario", "Asistencia", "Entrada", "Salida", "Entrada", "Salida", "Descripción", "Tardanza (min)", "Tardanza Refrigerio (min)", "Extra (min)"};
     }
 
     @Override
@@ -67,8 +67,10 @@ public class MTAsistencia extends ModeloTabla<RptAsistenciaDetallado> {
                     return asistencia.getPermisos().trim();
                 case 10:
                     return String.format("%.2f", asistencia.getMinutosTardanza());
-
                 case 11:
+                    return String.format("%.2f", asistencia.getMinutosTardanzaRefrigerio());
+
+                case 12:
                     return String.format("%.2f", asistencia.getMinutosExtra());
 
                 default:
@@ -148,11 +150,13 @@ public class MTAsistencia extends ModeloTabla<RptAsistenciaDetallado> {
                 return "TARDANZA";
             case AnalizadorAsistencia.INASISTENCIA:
                 return "INASISTENCIA";
-            case AnalizadorAsistencia.PERMISO_FECHA: case AnalizadorAsistencia.BOLETA_PERMISO:
+            case AnalizadorAsistencia.PERMISO_FECHA:
+            case AnalizadorAsistencia.BOLETA_PERMISO:
                 return "PERMISO";
             case AnalizadorAsistencia.FERIADO:
                 return "FERIADO";
-            case AnalizadorAsistencia.VACACION: case AnalizadorAsistencia.BOLETA_VACACION:
+            case AnalizadorAsistencia.VACACION:
+            case AnalizadorAsistencia.BOLETA_VACACION:
                 return "VACACION";
             case AnalizadorAsistencia.INCONSISTENCIA:
                 return "INCONSISTENCIA";
