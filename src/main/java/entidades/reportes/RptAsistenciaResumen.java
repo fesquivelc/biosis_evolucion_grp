@@ -19,6 +19,7 @@ public class RptAsistenciaResumen {
     private int numeroVacaciones;
     private double horasLaboradas;
     private double minutosTardanza;
+    private double minutosTardanzaRefrigerio;
     private double minutosPermisoConGoce;
     private double minutosPermisoSinGoce;
     private int numeroDiasPermisoConGoce;
@@ -26,6 +27,14 @@ public class RptAsistenciaResumen {
 
     public double getHorasLaboradas() {
         return horasLaboradas;
+    }
+
+    public double getMinutosTardanzaRefrigerio() {
+        return minutosTardanzaRefrigerio;
+    }
+
+    public void setMinutosTardanzaRefrigerio(double minutosTardanzaRefrigerio) {
+        this.minutosTardanzaRefrigerio = minutosTardanzaRefrigerio;
     }
 
     public void setHorasLaboradas(double horasLaboradas) {

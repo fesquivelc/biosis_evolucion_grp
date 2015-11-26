@@ -33,6 +33,7 @@ public class InterpreteResumenGRP implements Interprete<RptAsistenciaResumen> {
             double minutosPermisoConGoce = 0;
             double minutosPermisoSinGoce = 0;
             double tardanza = 0;
+            double tardanzaRefrigerio = 0;
             int numeroDiasFalta = 0;
             int numeroDiasPermisoConGoce = 0;
             int numeroDiasPermisoSinGoce = 0;
@@ -46,6 +47,7 @@ public class InterpreteResumenGRP implements Interprete<RptAsistenciaResumen> {
                     asistenciaResumen.setMinutosPermisoConGoce(minutosPermisoConGoce);
                     asistenciaResumen.setMinutosPermisoSinGoce(minutosPermisoSinGoce);
                     asistenciaResumen.setMinutosTardanza(tardanza);
+                    asistenciaResumen.setMinutosTardanzaRefrigerio(tardanzaRefrigerio);
                     asistenciaResumen.setNumeroDiasFalta(numeroDiasFalta);
                     asistenciaResumen.setNumeroDiasPermisoConGoce(numeroDiasPermisoConGoce);
                     asistenciaResumen.setNumeroDiasPermisoSinGoce(numeroDiasPermisoSinGoce);
@@ -78,6 +80,7 @@ public class InterpreteResumenGRP implements Interprete<RptAsistenciaResumen> {
                         numeroDiasFalta++;
                     } else if (tipo == AnalizadorAsistencia.TARDANZA || tipo == AnalizadorAsistencia.INCONSISTENCIA) {
                         tardanza += minutosTardanza(asistencia.getDetalleAsistenciaList(), marcacionesMaximas.intValue());
+                        tardanzaRefrigerio += minutosTardanzaRefrigerio(asistencia.getDetalleAsistenciaList());
                     }
 
                     if (asistencia.getPermisoList() != null) {
@@ -121,6 +124,7 @@ public class InterpreteResumenGRP implements Interprete<RptAsistenciaResumen> {
             asistenciaResumen.setMinutosPermisoConGoce(minutosPermisoConGoce);
             asistenciaResumen.setMinutosPermisoSinGoce(minutosPermisoSinGoce);
             asistenciaResumen.setMinutosTardanza(tardanza);
+            asistenciaResumen.setMinutosTardanzaRefrigerio(tardanzaRefrigerio);
             asistenciaResumen.setNumeroDiasFalta(numeroDiasFalta);
             asistenciaResumen.setNumeroDiasPermisoConGoce(numeroDiasPermisoConGoce);
             asistenciaResumen.setNumeroDiasPermisoSinGoce(numeroDiasPermisoSinGoce);
@@ -146,15 +150,17 @@ public class InterpreteResumenGRP implements Interprete<RptAsistenciaResumen> {
             System.out.println("HORA EVENTO: " + detalleEntrada.getHoraEvento() + " HORA TOLERANCIA " + detalleEntrada.getHoraReferenciaTolerancia() + " BANDERA: " + detalleEntrada.isBandera());
             tardanza += tardanzaMin(FechaUtil.soloHora(detalleEntrada.getHoraEvento()), FechaUtil.soloHora(detalleEntrada.getHoraReferenciaTolerancia()));
         }
-//        for (int i = 0; i < conteo; i++) {
-//            DetalleAsistencia detalle = detalleAsistenciaList.get(i);
-//
-//            if (detalle.getHoraEvento() == null) {
-//            } else if (detalle.isBandera()) {
-//                System.out.println("HORA EVENTO: " + detalle.getHoraEvento() + " HORA TOLERANCIA " + detalle.getHoraReferenciaTolerancia() + " BANDERA: " + detalle.isBandera());
-//                tardanza += tardanzaMin(FechaUtil.soloHora(detalle.getHoraEvento()), FechaUtil.soloHora(detalle.getHoraReferenciaTolerancia()));
-//            }
-//        }
+        return tardanza;
+    }
+    
+    private double minutosTardanzaRefrigerio(List<DetalleAsistencia> detalleAsistenciaList) {
+        double tardanza = 0;
+        for(int i = 1; i < detalleAsistenciaList.size(); i++){
+            DetalleAsistencia detalleEntrada = detalleAsistenciaList.get(i);
+            if(detalleEntrada.isBandera() && detalleEntrada.getHoraEvento() != null){
+                tardanza += tardanzaMin(FechaUtil.soloHora(detalleEntrada.getHoraEvento()), FechaUtil.soloHora(detalleEntrada.getHoraReferenciaTolerancia()));
+            }
+        }
         return tardanza;
     }
 
