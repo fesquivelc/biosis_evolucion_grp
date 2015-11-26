@@ -214,14 +214,17 @@ public class InterpreteResumenGRP implements Interprete<RptAsistenciaResumen> {
         while (posicion < detalles.size()) {
             DetalleAsistencia ingreso = detalles.get(posicion);
             DetalleAsistencia salida = detalles.get(posicion + 1);
-
+            
             if (!(ingreso.isPermiso() || salida.isPermiso())) {
-                totalHoras += (salida.getHoraEvento().getTime() - ingreso.getHoraEvento().getTime()) / (60 * 1000 * 60);
+                long salidaMilis = salida.getHoraEvento() == null ? salida.getHoraReferencia().getTime() : salida.getHoraEvento().getTime();
+                long ingresoMilis = ingreso.getHoraEvento() == null ? ingreso.getHoraReferencia().getTime() : ingreso.getHoraEvento().getTime();
+                totalHoras += (salidaMilis - ingresoMilis);
+                
             }
 
             posicion += 2;
         }
 
-        return totalHoras;
+        return totalHoras / (60 * 1000 * 60);
     }
 }

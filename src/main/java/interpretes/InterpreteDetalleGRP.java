@@ -276,9 +276,9 @@ public class InterpreteDetalleGRP implements Interprete<RptAsistenciaDetallado> 
             case AnalizadorAsistencia.BOLETA_PERMISO:
             case AnalizadorAsistencia.BOLETA_VACACION:
                 if (asistencia.getBoleta().getMotivo() == null) {
-                    return "-- SIN MOTIVO --";
+                    return "(S) -- SIN MOTIVO --";
                 }
-                return asistencia.getBoleta().getMotivo().getDescripcion().toUpperCase();
+                return "(S) "+asistencia.getBoleta().getMotivo().getDescripcion().toUpperCase();
             default:
                 return "";
         }
