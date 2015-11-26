@@ -402,6 +402,11 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
         pnlOpciones.add(jButton4);
 
         jButton5.setText("Marcación manual");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed1(evt);
+            }
+        });
         pnlOpciones.add(jButton5);
 
         btnImprimir.setFont(new java.awt.Font("SansSerif", 0, 13)); // NOI18N
@@ -421,14 +426,6 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
             }
         });
         pnlOpciones.add(jButton3);
-
-        jButton5.setText("Marcación manual");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
-            }
-        });
-        pnlOpciones.add(jButton5);
 
         tabDetallado.add(pnlOpciones, java.awt.BorderLayout.PAGE_END);
 
@@ -585,7 +582,7 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void jButton5ActionPerformed1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed1
         // TODO add your handling code here:
         int fila = this.tblAsistenciaDetallado.getSelectedRow();
         if (fila != -1) {
@@ -616,7 +613,7 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
             }
 
         }
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_jButton5ActionPerformed1
 
     private Departamento oficinaSeleccionada;
 
@@ -867,6 +864,7 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
 
     private void generarReporte() {
         List<Empleado> empleados = obtenerDNI();
+//        this.tblAsistenciaDetallado.removeAll();
         Date[] fechasLimite = this.obtenerFechasLimite();
         asistenciaList = analisis.analizarAsistencia(empleados, fechasLimite[0], fechasLimite[1]);
         System.out.println("ASISTENCIA LISt: " + asistenciaList.size());

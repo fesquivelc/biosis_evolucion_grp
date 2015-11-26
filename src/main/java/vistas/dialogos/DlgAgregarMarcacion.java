@@ -49,6 +49,9 @@ public class DlgAgregarMarcacion extends javax.swing.JDialog {
     public DlgAgregarMarcacion(List<RptMarcacion> marcacionList, JInternalFrame owner, boolean modal) {
         super(JOptionPane.getFrameForComponent(owner), modal);
         initComponents();
+        //MIENTRAS PERSISTE EL ERROR -->
+        this.jButton2.setEnabled(false);
+        //FIN
         this.readerc = ReaderControlador.getInstance();
         this.eventoc = EventoControlador.getInstance();
         this.marcacionList = ObservableCollections.observableList(new ArrayList<>());
@@ -205,6 +208,7 @@ public class DlgAgregarMarcacion extends javax.swing.JDialog {
         /*
          CREAMOS ENTIDADES EVENTO Y GUARDAMOS
          */
+        System.out.println("ENTRO AL GUARDAR");
         List<Evento> eventoList = new ArrayList<>();
         for (RptMarcacion rptMarcacion : this.marcacionList) {
             if (rptMarcacion.getEvento() != null) {

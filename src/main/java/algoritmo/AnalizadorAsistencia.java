@@ -37,7 +37,7 @@ import java.util.stream.Collectors;
  */
 public class AnalizadorAsistencia {
 
-    private final boolean boletaExterna = false;
+    private final boolean boletaExterna = true;
     /*
      VALORES PARA COMPARAR EN LA ASISTENCIA
      */
