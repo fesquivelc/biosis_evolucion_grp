@@ -16,7 +16,7 @@ import entidades.biostar.Reader;
 public class ReaderControlador extends Controlador<Reader>{
     
     private ReaderControlador() {
-        super(Reader.class, new DAOBiostar<Reader>(Reader.class));
+        super(Reader.class, new DAOBiostar<>(Reader.class));
     }
     
     public static ReaderControlador getInstance() {
