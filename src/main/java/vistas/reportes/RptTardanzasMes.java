@@ -72,6 +72,7 @@ public class RptTardanzasMes extends javax.swing.JInternalFrame {
         inicializar();
         bindeoSalvaje();
         controles();
+        pnlExportar.setVisible(false);
     }
 
     /**

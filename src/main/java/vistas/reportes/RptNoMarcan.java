@@ -408,7 +408,10 @@ public class RptNoMarcan extends javax.swing.JInternalFrame {
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
         DlgEmpleado dialogo = new DlgEmpleado(this);
-        dialogo.setVisible(true);
+        Empleado empleado = dialogo.getSeleccionado();
+        if(!empleadoList.contains(empleado)){
+            empleadoList.add(empleado);
+        }
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void radPorFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radPorFechaActionPerformed

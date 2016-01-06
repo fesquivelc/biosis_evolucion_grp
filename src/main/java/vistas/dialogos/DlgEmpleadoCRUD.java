@@ -1008,9 +1008,9 @@ public class DlgEmpleadoCRUD extends javax.swing.JDialog {
     }
     private void btnAgregarCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarCActionPerformed
         // TODO add your handling code here:
-        if (!hayErroresLaborales("Contrato")) {
-            Agregar();
-        }
+//        if (!hayErroresLaborales("Contrato")) {
+        Agregar();
+//        }
     }//GEN-LAST:event_btnAgregarCActionPerformed
     AreaEmpleado areaF;
     List<AreaEmpleado> listaAreaEmpleadoG = new ArrayList();
@@ -1028,9 +1028,9 @@ public class DlgEmpleadoCRUD extends javax.swing.JDialog {
     }
     private void btnAgregarAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarAActionPerformed
         // TODO add your handling code here:
-        if (!hayErroresLaborales("Area")) {
-            AgregarArea();
-        }
+//        if (!hayErroresLaborales("Area")) {
+        AgregarArea();
+//        }
 
     }//GEN-LAST:event_btnAgregarAActionPerformed
 
@@ -1041,7 +1041,7 @@ public class DlgEmpleadoCRUD extends javax.swing.JDialog {
 //        areaBusqueda.setVisible(true);
         areaF.setDepartamento(areaBusqueda.getArea());
         if (areaF.getDepartamento() != null) {
-            this.txtArea.setText(this.areaF.getDepartamento().getNombre().toUpperCase());
+            this.txtArea.setText(this.areaF.getDepartamento().getNombre().toUpperCase().trim());
         }
     }//GEN-LAST:event_jButton5ActionPerformed
 
@@ -1116,9 +1116,10 @@ public class DlgEmpleadoCRUD extends javax.swing.JDialog {
     }
     private void btnModDatosCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModDatosCActionPerformed
         // TODO add your handling code here:
-        if (!hayErroresLaborales("Contrato")) {
-            Modificar();
-        }
+//        if (!hayErroresLaborales("Contrato")) {
+        Modificar();
+        listarContratos();
+//        }
 
     }//GEN-LAST:event_btnModDatosCActionPerformed
 
@@ -1137,9 +1138,9 @@ public class DlgEmpleadoCRUD extends javax.swing.JDialog {
     }
     private void btnModAreasAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModAreasAActionPerformed
         // TODO add your handling code here:
-        if (!hayErroresLaborales("Area")) {
-            ModificarArea();
-        }
+//        if (!hayErroresLaborales("Area")) {
+        ModificarArea();
+        listarArea();
     }//GEN-LAST:event_btnModAreasAActionPerformed
 
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
@@ -1177,7 +1178,7 @@ public class DlgEmpleadoCRUD extends javax.swing.JDialog {
 
             ea.setSeleccionado(lista.get(fila));
             AreaEmpleado areaEmpleados = ea.getSeleccionado();
-
+            this.areaF = areaEmpleados;
             txtArea.setText(areaEmpleados.getDepartamento().getNombre());
             dcFechaInicio.setDate(areaEmpleados.getFechaInicio());
             dcFechaFin.setDate(areaEmpleados.getFechaFin());
@@ -1590,7 +1591,6 @@ public class DlgEmpleadoCRUD extends javax.swing.JDialog {
             errores++;
         }
 
-
         if (errores > 0) {
             JOptionPane.showMessageDialog(this, mensajeError, "Mensaje del sistema", JOptionPane.WARNING_MESSAGE);
         }
@@ -1651,9 +1651,11 @@ public class DlgEmpleadoCRUD extends javax.swing.JDialog {
                 }
             }
         } else if (tipo.equals("Area")) {
-            if (FechaUtil.soloFecha(dtFechaFin.getDate()).compareTo(FechaUtil.soloFecha(dtFechaInicio.getDate())) <= 0) {
-                mensajeError += "- La fecha de fin debe ser mayor a la fecha de inicio\n";
-                errores++;
+            if (dtFechaFin.getDate() != null) {
+                if (FechaUtil.soloFecha(dtFechaFin.getDate()).compareTo(FechaUtil.soloFecha(dtFechaInicio.getDate())) <= 0) {
+                    mensajeError += "- La fecha de fin debe ser mayor a la fecha de inicio\n";
+                    errores++;
+                }
             }
 
         }

@@ -158,9 +158,9 @@ public class DlgFeriado extends javax.swing.JDialog {
         feriado.setFechaInicio((Date)spFechaInicio.getValue());
         feriado.setFechaFin((Date)spFechaFin.getValue());
         feriado.setNombre(txtNombre.getText());
-        if(accion == Controlador.NUEVO){
-            periodo.getFeriadoList().add(feriado);
-        }
+//        if(accion == Controlador.NUEVO){
+//            periodo.getFeriadoList().add(feriado);
+//        }
         
         this.dispose();
     }//GEN-LAST:event_btnGuardarActionPerformed

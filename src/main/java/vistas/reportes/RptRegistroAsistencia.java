@@ -618,11 +618,11 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
                         });
                     });
             if (!marcacionList.isEmpty()) {
-                System.out.println("MARCACION LIST: "+marcacionList.size());
+                System.out.println("MARCACION LIST: " + marcacionList.size());
                 DlgAgregarMarcacion agregarMarcacion = new DlgAgregarMarcacion(marcacionList, this, true);
                 agregarMarcacion.setVisible(true);
                 this.generarReporte();
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(this, "No existen eventos por subsanar", "Mensaje del sistema", JOptionPane.INFORMATION_MESSAGE);
             }
 
@@ -829,8 +829,11 @@ public class RptRegistroAsistencia extends javax.swing.JInternalFrame {
     }
 
     public void agregarEmpleado(Empleado empleado) {
-        empleadoList.add(empleado);
-        tblTabla.packAll();
+        if (!empleadoList.contains(empleado)) {
+            empleadoList.add(empleado);
+            tblTabla.packAll();
+        }
+
     }
 
     private GrupoHorarioControlador gc = new GrupoHorarioControlador();
