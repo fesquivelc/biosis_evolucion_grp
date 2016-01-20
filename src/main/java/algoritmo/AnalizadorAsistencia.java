@@ -444,8 +444,11 @@ public class AnalizadorAsistencia {
         Calendar cal = Calendar.getInstance();
         cal.setTime(hasta1);
         cal.add(Calendar.DATE, 1);
-
+        
         this.marcacionList = this.marc.buscarXEmpleadoEntreFecha(empleado, desde1, cal.getTime());
+        if(this.marcacionList == null){
+            System.out.println(String.format("Listado NULL -> Empleado: %s, desde1: %s hasta: %s", empleado.getNombreCompleto(),desde1,hasta1));
+        }
     }
 
     private List<Permiso> buscarPermisoXHora(Empleado empleado, Date dia) {

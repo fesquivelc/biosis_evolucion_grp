@@ -174,7 +174,7 @@ public class VistaEmpleado extends javax.swing.JInternalFrame {
         });
         pnlNavegacion.add(btnAnterior);
 
-        spPagina.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
+        spPagina.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(1), Integer.valueOf(1), null, Integer.valueOf(1)));
         spPagina.setMinimumSize(new java.awt.Dimension(60, 20));
         spPagina.setPreferredSize(new java.awt.Dimension(60, 20));
         spPagina.addChangeListener(new javax.swing.event.ChangeListener() {
@@ -228,14 +228,14 @@ public class VistaEmpleado extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 980, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 638, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 530, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -355,13 +355,13 @@ public class VistaEmpleado extends javax.swing.JInternalFrame {
         JTableBinding binding = SwingBindings.createJTableBinding(AutoBinding.UpdateStrategy.READ, lista, tblEmpleado);
 
         BeanProperty pNroDocumento = BeanProperty.create("nroDocumento");
-        BeanProperty pCodigoModular = BeanProperty.create("fichaLaboral.codigoTrabajador");
+//        BeanProperty pCodigoModular = BeanProperty.create("fichaLaboral.codigoTrabajador");
         BeanProperty pTipoDocumento = BeanProperty.create("tipoDocumento.abreviatura");
         BeanProperty pNombre = BeanProperty.create("nombre");
         BeanProperty pApellidoPaterno = BeanProperty.create("paterno");
         BeanProperty pApellidoMaterno = BeanProperty.create("materno");
 
-        binding.addColumnBinding(pCodigoModular).setColumnName("Código modular").setEditable(false);
+//        binding.addColumnBinding(pCodigoModular).setColumnName("Código modular").setEditable(false);
         binding.addColumnBinding(pNroDocumento).setColumnName("Nro. Documento").setEditable(false);
         binding.addColumnBinding(pTipoDocumento).setColumnName("Tipo de documento").setEditable(false);
         binding.addColumnBinding(pNombre).setColumnName("Nombre").setEditable(false);

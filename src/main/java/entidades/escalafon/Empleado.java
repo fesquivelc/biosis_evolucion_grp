@@ -29,7 +29,7 @@ public class Empleado implements Serializable {
     @Basic
     private String nombre;
     @Column(name = "condicion")
-    @Basic
+    @Basic(fetch = FetchType.LAZY)    
     private char condicion = 'A';
 //    @OneToOne(fetch = FetchType.LAZY, targetEntity = FichaGeneral.class, mappedBy = "empleado")
 //    private FichaGeneral fcihaGeneral;
@@ -40,20 +40,20 @@ public class Empleado implements Serializable {
     @JoinColumn(name = "tipo_documento_codigo", referencedColumnName = "codigo")
     private TipoDocumento tipoDocumento;
     @Column(name = "sexo", nullable = false)
-    @Basic
+    @Basic(fetch = FetchType.LAZY)    
     private char sexo;
     @Column(name = "paterno", nullable = false)
     @Basic
     private String paterno;
-    @OneToOne(fetch = FetchType.EAGER, targetEntity = FichaLaboral.class, mappedBy = "empleado",cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, targetEntity = FichaLaboral.class, mappedBy = "empleado",cascade = CascadeType.ALL)
     private FichaLaboral fichaLaboral;
     @OneToOne(fetch = FetchType.LAZY, targetEntity = FichaGeneral.class, mappedBy = "empleado",cascade = CascadeType.ALL)
     private FichaGeneral fichaGeneral;
-    @OneToMany(fetch = FetchType.EAGER, targetEntity = Contrato.class,mappedBy = "empleado",cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, targetEntity = Contrato.class,mappedBy = "empleado",cascade = CascadeType.ALL)
     private List<Contrato> contratoList;
     @Column(name = "fecha_nacimiento")
     @Temporal(TemporalType.DATE)
-    @Basic
+    @Basic(fetch = FetchType.LAZY)    
     private Date fechaNacimiento;
     
     @OneToMany(fetch = FetchType.LAZY, targetEntity = DetalleGrupoHorario.class,mappedBy = "empleado")
