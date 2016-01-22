@@ -22,6 +22,7 @@ public abstract class Controlador<T>{
     public static final int NUEVO = 1;
     public static final int MODIFICAR = 2;
     public static final int ELIMINAR = 3;
+    public static final int LEER = 4;
     private T seleccionado;
     private final Class<T> seleccionadoClass;
 

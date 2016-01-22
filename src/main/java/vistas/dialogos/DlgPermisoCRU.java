@@ -6,11 +6,28 @@
 package vistas.dialogos;
 
 import com.personal.utiles.FormularioUtil;
+import controladores.Controlador;
+import controladores.PermisoControlador;
+import entidades.AsignacionPermiso;
+import entidades.Permiso;
+import entidades.TipoPermiso;
 import entidades.escalafon.Empleado;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.JInternalFrame;
+import javax.swing.JOptionPane;
 import javax.swing.text.MaskFormatter;
+import org.jdesktop.beansbinding.AutoBinding;
+import org.jdesktop.beansbinding.BeanProperty;
+import org.jdesktop.observablecollections.ObservableCollections;
+import org.jdesktop.swingbinding.JComboBoxBinding;
+import org.jdesktop.swingbinding.JTableBinding;
+import org.jdesktop.swingbinding.SwingBindings;
+import utiles.HerramientaGeneral;
 
 /**
  *
@@ -21,11 +38,32 @@ public class DlgPermisoCRU extends javax.swing.JDialog {
     /**
      * Creates new form DlgPermisoCRU
      */
+    private List<AsignacionPermiso> asignacionList;
+    private List<TipoPermiso> tipoPermisoList;
+    private Permiso permiso;
+    private int accion;
+    private final PermisoControlador permc = new PermisoControlador();
+    
     public DlgPermisoCRU(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         iniciarMascara();
         initComponents();
         spinners();
+        bindeoSalvaje();
+        permc.prepararCrear();
+        this.permiso = permc.getSeleccionado();
+        this.accion = Controlador.NUEVO;
+        inicializar(permiso,accion);
+    }
+    
+    public DlgPermisoCRU(JInternalFrame parent, Permiso permiso, int accion) {
+        super(JOptionPane.getFrameForComponent(parent), true);
+        iniciarMascara();
+        initComponents();
+        spinners();
+        bindeoSalvaje();
+        
+        inicializar(permiso,accion);
     }
 
     /**
@@ -39,55 +77,75 @@ public class DlgPermisoCRU extends javax.swing.JDialog {
         java.awt.GridBagConstraints gridBagConstraints;
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        lblTitulo = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnGuardar = new javax.swing.JButton();
+        btnEditar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        cboTipoPermiso = new javax.swing.JComboBox();
+        txtDocumento = new javax.swing.JTextField();
+        txtMotivo = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        radFecha = new javax.swing.JRadioButton();
+        radHora = new javax.swing.JRadioButton();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         pnlFin = new javax.swing.JPanel();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField(this.mascaraFecha);
+        txtFechaFin = new javax.swing.JFormattedTextField(this.mascaraFecha);
         jLabel7 = new javax.swing.JLabel();
         spHoraFin = new javax.swing.JSpinner();
         pnlInicio = new javax.swing.JPanel();
-        jFormattedTextField2 = new javax.swing.JFormattedTextField(this.mascaraFecha);
+        txtFechaInicio = new javax.swing.JFormattedTextField(this.mascaraFecha);
         jLabel8 = new javax.swing.JLabel();
         spHoraInicio = new javax.swing.JSpinner();
         pnlEmpleados = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jPanel5 = new javax.swing.JPanel();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        tblEmpleado = new javax.swing.JTable();
+        pnlAccionesEmpleado = new javax.swing.JPanel();
+        btnAnadir = new javax.swing.JButton();
+        btnQuitar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setLayout(new java.awt.BorderLayout(0, 5));
 
-        jLabel1.setBackground(new java.awt.Color(204, 204, 255));
-        jLabel1.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Asignar Permiso");
-        jLabel1.setOpaque(true);
-        jPanel1.add(jLabel1, java.awt.BorderLayout.PAGE_START);
+        lblTitulo.setBackground(new java.awt.Color(204, 204, 255));
+        lblTitulo.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
+        lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTitulo.setText("Asignar Permiso");
+        lblTitulo.setOpaque(true);
+        jPanel1.add(lblTitulo, java.awt.BorderLayout.PAGE_START);
 
-        jButton1.setFont(new java.awt.Font("SansSerif", 0, 13)); // NOI18N
-        jButton1.setText("Guardar permiso");
-        jPanel2.add(jButton1);
+        btnGuardar.setFont(new java.awt.Font("SansSerif", 0, 13)); // NOI18N
+        btnGuardar.setText("Guardar permiso");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnGuardar);
 
-        jButton2.setFont(new java.awt.Font("SansSerif", 0, 13)); // NOI18N
-        jButton2.setText("Cancelar");
-        jPanel2.add(jButton2);
+        btnEditar.setFont(new java.awt.Font("SansSerif", 0, 13)); // NOI18N
+        btnEditar.setText("Editar");
+        jPanel2.add(btnEditar);
+
+        btnEliminar.setFont(new java.awt.Font("SansSerif", 0, 13)); // NOI18N
+        btnEliminar.setText("Eliminar");
+        jPanel2.add(btnEliminar);
+
+        btnCancelar.setFont(new java.awt.Font("SansSerif", 0, 13)); // NOI18N
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnCancelar);
 
         jPanel1.add(jPanel2, java.awt.BorderLayout.PAGE_END);
 
@@ -97,6 +155,7 @@ public class DlgPermisoCRU extends javax.swing.JDialog {
         jPanel3Layout.rowHeights = new int[] {0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0};
         jPanel3.setLayout(jPanel3Layout);
 
+        jLabel2.setFont(new java.awt.Font("SansSerif", 0, 13)); // NOI18N
         jLabel2.setText("Tipo de permiso:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -104,6 +163,7 @@ public class DlgPermisoCRU extends javax.swing.JDialog {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jPanel3.add(jLabel2, gridBagConstraints);
 
+        jLabel3.setFont(new java.awt.Font("SansSerif", 0, 13)); // NOI18N
         jLabel3.setText("Documento:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -111,6 +171,7 @@ public class DlgPermisoCRU extends javax.swing.JDialog {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jPanel3.add(jLabel3, gridBagConstraints);
 
+        jLabel4.setFont(new java.awt.Font("SansSerif", 0, 13)); // NOI18N
         jLabel4.setText("Motivo:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -118,34 +179,41 @@ public class DlgPermisoCRU extends javax.swing.JDialog {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jPanel3.add(jLabel4, gridBagConstraints);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cboTipoPermiso.setFont(new java.awt.Font("SansSerif", 0, 13)); // NOI18N
+        cboTipoPermiso.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 0.1;
-        jPanel3.add(jComboBox1, gridBagConstraints);
+        jPanel3.add(cboTipoPermiso, gridBagConstraints);
+
+        txtDocumento.setFont(new java.awt.Font("SansSerif", 0, 13)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 0.1;
-        jPanel3.add(jTextField1, gridBagConstraints);
+        jPanel3.add(txtDocumento, gridBagConstraints);
+
+        txtMotivo.setFont(new java.awt.Font("SansSerif", 0, 13)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 0.1;
-        jPanel3.add(jTextField2, gridBagConstraints);
+        jPanel3.add(txtMotivo, gridBagConstraints);
 
         jPanel4.setLayout(new javax.swing.BoxLayout(jPanel4, javax.swing.BoxLayout.LINE_AXIS));
 
-        jRadioButton1.setSelected(true);
-        jRadioButton1.setText("Por fecha");
-        jPanel4.add(jRadioButton1);
+        radFecha.setFont(new java.awt.Font("SansSerif", 0, 13)); // NOI18N
+        radFecha.setSelected(true);
+        radFecha.setText("Por fecha");
+        jPanel4.add(radFecha);
 
-        jRadioButton2.setText("Por hora");
-        jPanel4.add(jRadioButton2);
+        radHora.setFont(new java.awt.Font("SansSerif", 0, 13)); // NOI18N
+        radHora.setText("Por hora");
+        jPanel4.add(radHora);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -153,6 +221,7 @@ public class DlgPermisoCRU extends javax.swing.JDialog {
         gridBagConstraints.gridwidth = 3;
         jPanel3.add(jPanel4, gridBagConstraints);
 
+        jLabel5.setFont(new java.awt.Font("SansSerif", 0, 13)); // NOI18N
         jLabel5.setText("Fecha/Hora de inicio:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -160,6 +229,7 @@ public class DlgPermisoCRU extends javax.swing.JDialog {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jPanel3.add(jLabel5, gridBagConstraints);
 
+        jLabel6.setFont(new java.awt.Font("SansSerif", 0, 13)); // NOI18N
         jLabel6.setText("Fecha/Hora de fin:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -169,13 +239,15 @@ public class DlgPermisoCRU extends javax.swing.JDialog {
 
         pnlFin.setLayout(new java.awt.GridBagLayout());
 
-        jFormattedTextField1.setColumns(10);
-        jFormattedTextField1.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        pnlFin.add(jFormattedTextField1, new java.awt.GridBagConstraints());
+        txtFechaFin.setColumns(10);
+        txtFechaFin.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        txtFechaFin.setFont(new java.awt.Font("SansSerif", 0, 13)); // NOI18N
+        pnlFin.add(txtFechaFin, new java.awt.GridBagConstraints());
 
         jLabel7.setText(" / ");
         pnlFin.add(jLabel7, new java.awt.GridBagConstraints());
 
+        spHoraFin.setFont(new java.awt.Font("SansSerif", 0, 13)); // NOI18N
         spHoraFin.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(1453266000000L), null, null, java.util.Calendar.DAY_OF_MONTH));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
@@ -191,13 +263,15 @@ public class DlgPermisoCRU extends javax.swing.JDialog {
 
         pnlInicio.setLayout(new java.awt.GridBagLayout());
 
-        jFormattedTextField2.setColumns(10);
-        jFormattedTextField2.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        pnlInicio.add(jFormattedTextField2, new java.awt.GridBagConstraints());
+        txtFechaInicio.setColumns(10);
+        txtFechaInicio.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        txtFechaInicio.setFont(new java.awt.Font("SansSerif", 0, 13)); // NOI18N
+        pnlInicio.add(txtFechaInicio, new java.awt.GridBagConstraints());
 
         jLabel8.setText(" / ");
         pnlInicio.add(jLabel8, new java.awt.GridBagConstraints());
 
+        spHoraInicio.setFont(new java.awt.Font("SansSerif", 0, 13)); // NOI18N
         spHoraInicio.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(1453266000000L), null, null, java.util.Calendar.DAY_OF_MONTH));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
@@ -212,9 +286,9 @@ public class DlgPermisoCRU extends javax.swing.JDialog {
         jPanel3.add(pnlInicio, gridBagConstraints);
 
         pnlEmpleados.setBorder(javax.swing.BorderFactory.createTitledBorder("Empleados"));
-        pnlEmpleados.setLayout(new java.awt.BorderLayout());
+        pnlEmpleados.setLayout(new java.awt.BorderLayout(0, 5));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblEmpleado.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -225,24 +299,26 @@ public class DlgPermisoCRU extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblEmpleado);
 
         pnlEmpleados.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
-        jPanel5.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 5, 0));
+        pnlAccionesEmpleado.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 5, 0));
 
-        jButton3.setText("Añadir");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnAnadir.setFont(new java.awt.Font("SansSerif", 0, 13)); // NOI18N
+        btnAnadir.setText("Añadir");
+        btnAnadir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btnAnadirActionPerformed(evt);
             }
         });
-        jPanel5.add(jButton3);
+        pnlAccionesEmpleado.add(btnAnadir);
 
-        jButton4.setText("Quitar");
-        jPanel5.add(jButton4);
+        btnQuitar.setFont(new java.awt.Font("SansSerif", 0, 13)); // NOI18N
+        btnQuitar.setText("Quitar");
+        pnlAccionesEmpleado.add(btnQuitar);
 
-        pnlEmpleados.add(jPanel5, java.awt.BorderLayout.PAGE_START);
+        pnlEmpleados.add(pnlAccionesEmpleado, java.awt.BorderLayout.PAGE_START);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -275,12 +351,31 @@ public class DlgPermisoCRU extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void btnAnadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnadirActionPerformed
         // TODO add your handling code here:
         DlgEmpleado dlgEmpleado = new DlgEmpleado(this);
         Empleado empleado = dlgEmpleado.getSeleccionado();
+        if(empleado != null){
+            long conteo = asignacionList.stream().filter(a -> a.getEmpleado().equals(empleado)).count();
+            
+            if(conteo == 0){
+                AsignacionPermiso asignacion = new AsignacionPermiso();
+                asignacion.setPermiso(permiso);
+                asignacion.setEmpleado(empleado);
+                asignacionList.add(asignacion);
+            }
+        }
         System.out.println("EMPLEADO: "+empleado.getNombreCompleto());
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_btnAnadirActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -325,14 +420,13 @@ public class DlgPermisoCRU extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JComboBox jComboBox1;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
-    private javax.swing.JFormattedTextField jFormattedTextField2;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton btnAnadir;
+    private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnQuitar;
+    private javax.swing.JComboBox cboTipoPermiso;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -344,18 +438,21 @@ public class DlgPermisoCRU extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JLabel lblTitulo;
+    private javax.swing.JPanel pnlAccionesEmpleado;
     private javax.swing.JPanel pnlEmpleados;
     private javax.swing.JPanel pnlFin;
     private javax.swing.JPanel pnlInicio;
+    private javax.swing.JRadioButton radFecha;
+    private javax.swing.JRadioButton radHora;
     private javax.swing.JSpinner spHoraFin;
     private javax.swing.JSpinner spHoraInicio;
+    private javax.swing.JTable tblEmpleado;
+    private javax.swing.JTextField txtDocumento;
+    private javax.swing.JFormattedTextField txtFechaFin;
+    private javax.swing.JFormattedTextField txtFechaInicio;
+    private javax.swing.JTextField txtMotivo;
     // End of variables declaration//GEN-END:variables
 
     private MaskFormatter mascaraFecha;
@@ -373,5 +470,65 @@ public class DlgPermisoCRU extends javax.swing.JDialog {
         } catch (ParseException ex) {
             Logger.getLogger(pruebas.DlgPermisoCRU.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    /*
+    NUEVO = campos en blanco
+    EDITAR = campos llenos con lo que existe del permiso
+    VER = campos llenos con lo que existe en el permiso sin capacidad de editar
+    */
+    private void inicializar(Permiso permiso, int accion) {
+        switch(accion){
+            case Controlador.NUEVO:
+                lblTitulo.setText("Generar permiso");
+                break;
+            case Controlador.MODIFICAR:
+                lblTitulo.setText("Modificar permiso");
+                break;
+            case Controlador.LEER:
+                lblTitulo.setText("Ver permiso");  
+                btnEliminar.setText("Cerrar");
+                break;
+        }
+        
+        inicializarControles(accion);
+//        if(accion == Controlador.MODIFICAR || accion == Controlador.LEER){
+//            llenarCampos(permiso);
+//        }
+        
+    }
+
+    private void bindeoSalvaje() {
+        asignacionList = ObservableCollections.observableList(new ArrayList<AsignacionPermiso>());
+        
+        BeanProperty pDocumento = BeanProperty.create("empleado.nroDocumento");
+        BeanProperty pNombreCompleto = BeanProperty.create("empleado.nombreCompleto");
+        
+        JTableBinding bindTable = SwingBindings.createJTableBinding(AutoBinding.UpdateStrategy.READ, asignacionList, tblEmpleado);
+        bindTable.addColumnBinding(pDocumento).setColumnName("DNI").setEditable(false);
+        bindTable.addColumnBinding(pNombreCompleto).setColumnName("Apellidos y nombres").setEditable(false);
+        
+        JComboBoxBinding bindCombo = SwingBindings.createJComboBoxBinding(AutoBinding.UpdateStrategy.READ, asignacionList, cboTipoPermiso);
+        
+        bindCombo.bind();
+        bindTable.bind();
+        
+        cboTipoPermiso.setRenderer(new DefaultListCellRenderer(){
+            
+        });
+    }
+
+    private void inicializarControles(int accion) {
+        boolean leerModificar = accion == Controlador.LEER || accion == Controlador.MODIFICAR;
+        boolean nuevoModificar = accion == Controlador.NUEVO || accion == Controlador.MODIFICAR;
+        
+        this.btnEditar.setVisible(accion == Controlador.LEER);
+        this.btnEliminar.setVisible(leerModificar);
+        this.btnGuardar.setVisible(nuevoModificar);
+        this.pnlAccionesEmpleado.setVisible(nuevoModificar);
+    }
+
+    private void llenarCampos(Permiso permiso) {
+        
     }
 }
